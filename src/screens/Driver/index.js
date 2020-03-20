@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import { Box, TextField, Typography, Container } from "@material-ui/core";
 
 import Buttons from "../../components/Button";
 
