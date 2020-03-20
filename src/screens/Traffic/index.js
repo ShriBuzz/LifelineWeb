@@ -5,6 +5,7 @@ import { Box, TextField, Typography, Container } from "@material-ui/core";
 
 import Buttons from "../../components/Button";
 import Success from "../../components/Success";
+import Failure from "../../components/Failure";
 
 import * as T from "./styles";
 
@@ -15,10 +16,12 @@ const Traffic = () => {
   const [password, setPassword] = useState("");
   // const [upload, setUpload] = useState();
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
 
   const handleClose = () => {
-    setOpen(false);
+    setSuccess(false);
+    setFail(false);
   };
 
   function resetForm() {
@@ -42,16 +45,17 @@ const Traffic = () => {
       })
       .then(response => {
         console.log(response.data);
-        setOpen(true);
+        setSuccess(true);
         resetForm();
       })
       .catch(error => {
+        setFail(true);
         console.log(error);
       });
 
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
   }
 
   return (
@@ -102,9 +106,10 @@ const Traffic = () => {
           title={"Traffic Officer"}
           Contact={contact}
           Password={password}
-          open={open}
+          open={success}
           handleClose={handleClose}
         />
+        <Failure open={fail} handleClose={handleClose} />
       </Box>
     </Container>
   );

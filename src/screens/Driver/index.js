@@ -5,6 +5,7 @@ import axios from "axios";
 
 import Buttons from "../../components/Button";
 import Success from "../../components/Success";
+import Failure from "../../components/Failure";
 
 import * as D from "./styles";
 
@@ -16,10 +17,12 @@ const Driver = () => {
   const [password, setPassword] = useState("");
   // const [upload, setUpload] = useState();
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
 
   const handleClose = () => {
-    setOpen(false);
+    setSuccess(false);
+    setFail(false);
   };
 
   function resetForm() {
@@ -45,16 +48,17 @@ const Driver = () => {
       })
       .then(response => {
         console.log(response.data);
-        setOpen(true);
+        setSuccess(true);
         resetForm();
       })
       .catch(error => {
+        setFail(true);
         console.log(error);
       });
 
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
   }
 
   return (
@@ -112,11 +116,10 @@ const Driver = () => {
         <Buttons title="Submit" loading={loading} onSubmit={postData} />
         <Success
           title={"Ambulance Driver"}
-          Contact={contact}
-          Password={password}
-          open={open}
+          open={success}
           handleClose={handleClose}
         />
+        <Failure open={fail} handleClose={handleClose} />
       </Box>
     </Container>
   );
