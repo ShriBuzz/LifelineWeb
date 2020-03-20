@@ -1,20 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 import * as S from "./styles";
 
+import Driver from "../../screens/Driver";
+import Traffic from "../../screens/Traffic";
+
 function Signup() {
+  const [toggle, setToggle] = useState(true);
+
+  function renderScreen() {
+    if (toggle === true) {
+      return <Driver />;
+    } else {
+      return <Traffic />;
+    }
+  }
+
   return (
-    <ButtonGroup
-      variant="contained"
-      aria-label="outlined secondary button group"
-      style={S.container}
-    >
-      <Button style={S.button}>Driver Signup</Button>
-      <Button style={S.button}>Traffic Signup</Button>
-    </ButtonGroup>
+    <React.Fragment>
+      <ButtonGroup
+        variant="contained"
+        aria-label="outlined secondary button group"
+        style={S.container}
+      >
+        <Button
+          style={S.button}
+          onClick={e => {
+            e.preventDefault();
+            setToggle(true);
+          }}
+        >
+          Driver Signup
+        </Button>
+        <Button
+          style={S.button}
+          onClick={e => {
+            e.preventDefault();
+            setToggle(false);
+          }}
+        >
+          Traffic Signup
+        </Button>
+      </ButtonGroup>
+      {renderScreen()}
+    </React.Fragment>
   );
 }
 
