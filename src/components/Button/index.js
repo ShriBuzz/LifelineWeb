@@ -10,8 +10,9 @@ const Buttons = ({ title, loading, onSubmit }) => {
       variant="contained"
       color="secondary"
       disabled={loading}
+      type="submit"
       style={B.button}
-      onClick={() => onSubmit()}
+      onClick={e => onSubmit(e)}
     >
       {loading && (
         <CircularProgress color="#000" size={20} style={{ marginRight: 5 }} />
