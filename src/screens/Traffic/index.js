@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 
+import axios from "axios";
 import { Box, TextField, Typography, Container } from "@material-ui/core";
 
 import Buttons from "../../components/Button";
+import Success from "../../components/Success";
 
 import * as T from "./styles";
 
@@ -11,12 +13,42 @@ const Traffic = () => {
   const [contact, setContact] = useState();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [upload, setUpload] = useState();
+  // const [upload, setUpload] = useState();
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  function fetchData() {
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function resetForm() {
+    setName("");
+    setContact("");
+    setEmail("");
+    setPassword("");
+  }
+
+  function postData(e) {
+    e.preventDefault();
     setLoading(true);
     //API call here
+    axios
+      .post(`/traffic_signup`, {
+        // data to be sent
+        name,
+        email,
+        password,
+        contact
+      })
+      .then(response => {
+        console.log(response.data);
+        setOpen(true);
+        resetForm();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -30,45 +62,49 @@ const Traffic = () => {
       <Box component="form" style={T.Form}>
         <TextField
           required
-          id="standard"
           label="Name"
           type="text"
           value={name}
           placeholder="Enter your name"
-          autoComplete="text"
+          onChange={e => setName(e.target.value)}
           style={T.input}
         />
         <TextField
           required
-          id="standard"
           label="Email"
           type="email"
           value={email}
           placeholder="Enter your email"
-          autoComplete="email"
+          onChange={e => setEmail(e.target.value)}
           style={T.input}
         />
         <TextField
           required
-          id="standard"
           label="Contact"
           type="number"
           value={contact}
           placeholder="Enter your mobile no."
-          autoComplete="number"
+          onChange={e => setContact(e.target.value)}
           style={T.input}
         />
         <TextField
           required
-          id="standard"
           label="Password"
           type="password"
           value={password}
           placeholder="Enter your password"
           autoComplete="current-password"
+          onChange={e => setPassword(e.target.value)}
           style={T.input}
         />
-        <Buttons title="Submit" loading={loading} onSubmit={fetchData} />
+        <Buttons title="Submit" loading={loading} onSubmit={postData} />
+        <Success
+          title={"Traffic Officer"}
+          Contact={contact}
+          Password={password}
+          open={open}
+          handleClose={handleClose}
+        />
       </Box>
     </Container>
   );
