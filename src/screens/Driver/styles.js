@@ -26,7 +26,8 @@ export const text = {
 };
 
 export const input = {
-  width: 400,
+  minWidth: 250,
+  width: "30%",
   textAlign: "center",
   margin: 20
 };
