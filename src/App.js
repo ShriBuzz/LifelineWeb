@@ -1,15 +1,9 @@
 import React from "react";
 
-import NavBar from "./components/NavBar";
-import Signup from "./components/Signup";
+import Routes from "./navigation/router";
 
 const App = () => {
-  return (
-    <React.Fragment>
-      <NavBar />
-      <Signup />
-    </React.Fragment>
-  );
+  return <Routes />;
 };
 
 export default App;
