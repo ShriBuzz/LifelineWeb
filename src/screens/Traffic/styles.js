@@ -13,6 +13,23 @@ export const bg = {
   backgroundSize: "cover"
 };
 
+export const avatar = {
+  display: "flex",
+  marginLeft: "auto",
+  marginRight: "auto",
+  width: 80,
+  height: 80
+};
+
+export const row = {
+  display: "flex",
+  flexDirection: "row"
+};
+
+export const icon = {
+  marginLeft: 10
+};
+
 export const Form = {
   display: "flex",
   flexDirection: "column",
