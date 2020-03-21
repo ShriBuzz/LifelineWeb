@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { Drawer, IconButton } from "@material-ui/core";
+import { Drawer, Divider, IconButton, Typography } from "@material-ui/core";
 
 import history from "../../navigation/history";
 import ListIcon from "../ListIcon";
 
 import MenuIcon from "@material-ui/icons/Menu";
+import HomeIcon from "@material-ui/icons/Home";
 import DriveEtaIcon from "@material-ui/icons/DriveEta";
 import TrafficIcon from "@material-ui/icons/Traffic";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
+
+import * as D from "./styles";
 
 export default function TemporaryDrawer() {
   const [left, setLeft] = useState(false);
@@ -23,6 +26,16 @@ export default function TemporaryDrawer() {
     setLeft({ left, [anchor]: open });
   };
 
+  function routeHome(e) {
+    e.preventDefault();
+    history.push("/Home");
+  }
+
+  function routeDlist(e) {
+    e.preventDefault();
+    history.push("/Dlist");
+  }
+
   function handleLogout(e) {
     e.preventDefault();
     history.push("/");
@@ -35,7 +48,14 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
       style={{ width: 250 }}
     >
-      <ListIcon text={"Driver List"} icon={<DriveEtaIcon />} />
+      <Typography style={D.title}>Menu</Typography>
+      <Divider />
+      <ListIcon text={"Home"} icon={<HomeIcon />} onSubmit={routeHome} />
+      <ListIcon
+        text={"Driver List"}
+        icon={<DriveEtaIcon />}
+        onSubmit={routeDlist}
+      />
       <ListIcon text={"Traffic List"} icon={<TrafficIcon />} />
       <ListIcon
         text={"Logout"}
