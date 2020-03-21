@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Drawer, IconButton } from "@material-ui/core";
 
+import history from "../../navigation/history";
 import ListIcon from "../ListIcon";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -22,6 +23,11 @@ export default function TemporaryDrawer() {
     setLeft({ left, [anchor]: open });
   };
 
+  function handleLogout(e) {
+    e.preventDefault();
+    history.push("/");
+  }
+
   const list = anchor => (
     <div
       role="presentation"
@@ -31,7 +37,11 @@ export default function TemporaryDrawer() {
     >
       <ListIcon text={"Driver List"} icon={<DriveEtaIcon />} />
       <ListIcon text={"Traffic List"} icon={<TrafficIcon />} />
-      <ListIcon text={"Logout"} icon={<MeetingRoomIcon />} />
+      <ListIcon
+        text={"Logout"}
+        icon={<MeetingRoomIcon />}
+        onSubmit={handleLogout}
+      />
     </div>
   );
 
