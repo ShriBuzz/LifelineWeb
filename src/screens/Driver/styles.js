@@ -4,13 +4,31 @@ export const bg = {
   display: "flex",
   flexDirection: "column",
   maxWidth: "100%",
-  height: "80vh",
+  height: "100%",
   margin: 0,
+  padding: 30,
   justifyContent: "flex-start",
   //   alignItems: "center",
   backgroundImage: `url(${background})`,
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover"
+};
+
+export const avatar = {
+  display: "flex",
+  marginLeft: "auto",
+  marginRight: "auto",
+  width: 80,
+  height: 80
+};
+
+export const row = {
+  display: "flex",
+  flexDirection: "row"
+};
+
+export const icon = {
+  marginLeft: 10
 };
 
 export const Form = {
