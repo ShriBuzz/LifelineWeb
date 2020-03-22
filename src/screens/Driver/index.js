@@ -33,6 +33,8 @@ const Driver = () => {
 
   const [url, setUrl] = useState(null);
 
+  const driver_pic = "/driver_pic/" + contact;
+
   const handleClose = () => {
     setSuccess(false);
     setFail(false);
@@ -49,20 +51,25 @@ const Driver = () => {
   function postData(e) {
     e.preventDefault();
     setLoading(true);
+
     //API call here
     axios
-      .post(`/driver_signup`, {
-        // data to be sent
-        name,
-        email,
-        password,
-        driver_id,
-        contact
-      })
+      .post(
+        `/driver_signup`,
+        {
+          // data to be sent
+          name,
+          email,
+          password,
+          driver_id,
+          contact
+        },
+        {}
+      )
       .then(response => {
         console.log(response.data);
         setSuccess(true);
-        resetForm();
+        // resetForm();
       })
       .catch(error => {
         setFail(true);
@@ -80,11 +87,13 @@ const Driver = () => {
     setUrl(objectUrl);
     let file = new FormData();
     file.append("file", upload, upload.name);
+    console.log(upload);
 
     axios
-      .post("/file_upload", file, {})
+      .post(driver_pic, file, {})
       .then(response => {
         console.log(response.statusText, "Sent image!!!!!");
+        resetForm();
       })
       .catch(error => {
         console.log(error);
