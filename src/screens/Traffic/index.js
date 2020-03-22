@@ -31,6 +31,8 @@ const Traffic = () => {
 
   const [url, setUrl] = useState(null);
 
+  const traffic_pic = "/traffic_pic/" + contact;
+
   const handleClose = () => {
     setSuccess(false);
     setFail(false);
@@ -58,7 +60,6 @@ const Traffic = () => {
       .then(response => {
         console.log(response.data);
         setSuccess(true);
-        resetForm();
       })
       .catch(error => {
         setFail(true);
@@ -78,9 +79,10 @@ const Traffic = () => {
     file.append("file", upload, upload.name);
 
     axios
-      .post("/file_upload", file, {})
+      .post(traffic_pic, file, {})
       .then(response => {
         console.log(response.statusText, "Sent image!!!!!");
+        resetForm();
       })
       .catch(error => {
         console.log(error);
