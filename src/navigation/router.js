@@ -6,6 +6,7 @@ import history from "./history";
 import Login from "../screens/Login";
 import Home from "../screens/Home";
 import DriverList from "../screens/Driver List";
+import TrafficList from "../screens/Traffic List";
 
 function Routes() {
   return (
@@ -14,6 +15,7 @@ function Routes() {
         <Route path="/" exact component={Login} />
         <Route path="/Home" component={Home} />
         <Route path="/Dlist" component={DriverList} />
+        <Route path="/Tlist" component={TrafficList} />
       </Switch>
     </Router>
   );

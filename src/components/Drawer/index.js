@@ -36,6 +36,11 @@ export default function TemporaryDrawer() {
     history.push("/Dlist");
   }
 
+  function routeTlist(e) {
+    e.preventDefault();
+    history.push("/Tlist");
+  }
+
   function handleLogout(e) {
     e.preventDefault();
     history.push("/");
@@ -56,7 +61,11 @@ export default function TemporaryDrawer() {
         icon={<DriveEtaIcon />}
         onSubmit={routeDlist}
       />
-      <ListIcon text={"Traffic List"} icon={<TrafficIcon />} />
+      <ListIcon
+        text={"Traffic List"}
+        icon={<TrafficIcon />}
+        onSubmit={routeTlist}
+      />
       <ListIcon
         text={"Logout"}
         icon={<MeetingRoomIcon />}
