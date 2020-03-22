@@ -2,11 +2,9 @@ import React, { useState } from "react";
 
 import {
   Box,
-  Typography,
   Table,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   TableBody
 } from "@material-ui/core";
