@@ -14,9 +14,7 @@ const Buttons = ({ title, loading, onSubmit }) => {
       style={B.button}
       onClick={e => onSubmit(e)}
     >
-      {loading && (
-        <CircularProgress color="#000" size={20} style={{ marginRight: 5 }} />
-      )}
+      {loading && <CircularProgress size={20} style={{ marginRight: 5 }} />}
       {!loading && title}
     </Button>
   );
