@@ -2,17 +2,15 @@ import React, { useState } from "react";
 
 import {
   Box,
-  Button,
   Avatar,
   TextField,
   Typography,
-  Container,
-  IconButton
+  Container
 } from "@material-ui/core";
-import { PhotoCamera } from "@material-ui/icons";
 import axios from "axios";
 
 import Buttons from "../../components/Button";
+import Upload from "../../components/Upload";
 import Success from "../../components/Success";
 import Failure from "../../components/Failure";
 
@@ -96,6 +94,7 @@ const Driver = () => {
         resetForm();
       })
       .catch(error => {
+        setFail(true);
         console.log(error);
       });
   }
@@ -162,34 +161,7 @@ const Driver = () => {
           style={D.input}
         />
 
-        {/* image upload */}
-        <Box component="div" style={D.row}>
-          <input
-            accept="image/*"
-            id="icon-button-file"
-            type="file"
-            name="file"
-            onChange={e => setUpload(e.target.files[0])}
-            style={{ display: "none" }}
-          />
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={e => handleUpload(e)}
-          >
-            Upload
-          </Button>
-          <label htmlFor="icon-button-file">
-            <IconButton
-              color="secondary"
-              aria-label="upload picture"
-              component="span"
-              style={D.icon}
-            >
-              <PhotoCamera />
-            </IconButton>
-          </label>
-        </Box>
+        <Upload setUpload={setUpload} handleUpload={handleUpload} />
 
         {/* submit button */}
         <Buttons title="Submit" loading={loading} onSubmit={postData} />

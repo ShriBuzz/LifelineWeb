@@ -3,16 +3,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import {
   Box,
-  Button,
   Avatar,
   TextField,
   Typography,
-  Container,
-  IconButton
+  Container
 } from "@material-ui/core";
-import { PhotoCamera } from "@material-ui/icons";
 import Profile from "../../assets/Profile.jpg";
 
+import Upload from "../../components/Upload";
 import Buttons from "../../components/Button";
 import Success from "../../components/Success";
 import Failure from "../../components/Failure";
@@ -142,34 +140,7 @@ const Traffic = () => {
           style={T.input}
         />
 
-        {/* image upload */}
-        <Box component="div" style={T.row}>
-          <input
-            accept="image/*"
-            id="icon-button-file"
-            type="file"
-            name="file"
-            onChange={e => setUpload(e.target.files[0])}
-            style={{ display: "none" }}
-          />
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={e => handleUpload(e)}
-          >
-            Upload
-          </Button>
-          <label htmlFor="icon-button-file">
-            <IconButton
-              color="secondary"
-              aria-label="upload picture"
-              component="span"
-              style={T.icon}
-            >
-              <PhotoCamera />
-            </IconButton>
-          </label>
-        </Box>
+        <Upload setUpload={setUpload} handleUpload={handleUpload} />
 
         <Buttons title="Submit" loading={loading} onSubmit={postData} />
         <Success
