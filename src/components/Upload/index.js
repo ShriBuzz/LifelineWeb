@@ -19,7 +19,7 @@ const Upload = ({ setUpload, handleUpload }) => {
       <Tooltip
         disableFocusListener
         disableTouchListener
-        title="Fill all above data before upload"
+        title="Fill all above data and choose image before upload"
         placement="top"
       >
         <Button
