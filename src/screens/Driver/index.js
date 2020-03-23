@@ -44,6 +44,7 @@ const Driver = () => {
     setEmail("");
     setDriverId("");
     setPassword("");
+    setUpload(null);
   }
 
   function postData(e) {
@@ -81,22 +82,33 @@ const Driver = () => {
 
   function handleUpload(e) {
     e.preventDefault();
-    const objectUrl = URL.createObjectURL(upload);
-    setUrl(objectUrl);
-    let file = new FormData();
-    file.append("file", upload, upload.name);
-    console.log(upload);
+    if (upload == null) {
+      alert("Submit form and choose image before upload.");
+    } else {
+      let file = new FormData();
+      file.append("file", upload, upload.name);
+      axios
+        .post(driver_pic, file, {})
+        .then(response => {
+          console.log(response.statusText, "Sent image!!!!!");
+          alert("Successfully uploaded image to server.");
+          resetForm();
+        })
+        .catch(error => {
+          setFail(true);
+          console.log(error);
+        });
+    }
+  }
 
-    axios
-      .post(driver_pic, file, {})
-      .then(response => {
-        console.log(response.statusText, "Sent image!!!!!");
-        resetForm();
-      })
-      .catch(error => {
-        setFail(true);
-        console.log(error);
-      });
+  function handlePreview(e) {
+    e.preventDefault();
+    if (upload == null) {
+      alert("Choose an image to preview.");
+    } else {
+      const objectUrl = URL.createObjectURL(upload);
+      setUrl(objectUrl);
+    }
   }
 
   function renderAvatar() {
@@ -161,7 +173,11 @@ const Driver = () => {
           style={D.input}
         />
 
-        <Upload setUpload={setUpload} handleUpload={handleUpload} />
+        <Upload
+          setUpload={setUpload}
+          handleUpload={handleUpload}
+          handlePreview={handlePreview}
+        />
 
         {/* submit button */}
         <Buttons title="Submit" loading={loading} onSubmit={postData} />
@@ -170,7 +186,14 @@ const Driver = () => {
           open={success}
           handleClose={handleClose}
         />
-        <Failure open={fail} handleClose={handleClose} />
+        <Failure
+          open={fail}
+          handleClose={handleClose}
+          title={"Failed Registration!"}
+          message={
+            "Error processing data. Please fill all (*) required data and try again."
+          }
+        />
       </Box>
     </Container>
   );
