@@ -1,11 +1,17 @@
 import React from "react";
 
-import { Box, Button, IconButton, Tooltip } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  IconButton,
+  Tooltip
+} from "@material-ui/core";
 import { PhotoCamera } from "@material-ui/icons";
 
 import * as U from "./styles";
 
-const Upload = ({ setUpload, handleUpload }) => {
+const Upload = ({ setUpload, handleUpload, handlePreview }) => {
   return (
     <Box component="div" style={U.row}>
       <input
@@ -16,20 +22,36 @@ const Upload = ({ setUpload, handleUpload }) => {
         onChange={e => setUpload(e.target.files[0])}
         style={{ display: "none" }}
       />
-      <Tooltip
-        disableFocusListener
-        disableTouchListener
-        title="Fill all above data and choose image before upload"
-        placement="top"
-      >
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={e => handleUpload(e)}
+      <ButtonGroup aria-label="outlined primary button group">
+        <Tooltip
+          disableFocusListener
+          disableTouchListener
+          title="Fill all above data and submit before upload"
+          placement="top"
         >
-          Upload
-        </Button>
-      </Tooltip>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={e => handleUpload(e)}
+          >
+            Upload
+          </Button>
+        </Tooltip>
+        <Tooltip
+          disableFocusListener
+          disableTouchListener
+          title="Preview image"
+          placement="top"
+        >
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={e => handlePreview(e)}
+          >
+            Preview
+          </Button>
+        </Tooltip>
+      </ButtonGroup>
       <label htmlFor="icon-button-file">
         <Tooltip
           disableFocusListener
