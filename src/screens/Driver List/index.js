@@ -4,10 +4,13 @@ import {
   Box,
   Table,
   TableCell,
+  TableHead,
   TableContainer,
   TableRow,
   TableBody
 } from "@material-ui/core";
+import Paper from "@material-ui/core/Paper";
+
 import axios from "axios";
 
 import NavBar from "../../components/NavBar";
@@ -17,31 +20,15 @@ import * as D from "./styles";
 
 const DriverList = () => {
   const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [email, setEmail] = useState([]);
-  const [contact, setContact] = useState([]);
-  const [driverId, setDriverId] = useState([]);
+  const [users, setUsers] = useState(null);
+  const nlist = [];
 
   function getUsers(e) {
     e.preventDefault();
     setLoading(true);
-    const nlist = [];
-    const elist = [];
-    const clist = [];
-    const dlist = [];
     axios.get("/driver").then(res => {
-      res.data.map(
-        c => (
-          nlist.push(c.name),
-          elist.push(c.email),
-          clist.push(c.contact),
-          dlist.push(c.driver_id)
-        )
-      );
+      res.data.map(c => nlist.push(c));
       setUsers(nlist);
-      setEmail(elist);
-      setContact(clist);
-      setDriverId(dlist);
     });
 
     setTimeout(() => {
@@ -49,57 +36,56 @@ const DriverList = () => {
     }, 1000);
   }
 
+  function table() {
+    if (users == null) {
+      return (
+        <TableRow key={"name"}>
+          <TableCell component="th" scope="row">
+            -
+          </TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+          <TableCell align="right">-</TableCell>
+          {/* <TableCell align="right">{row.protein}</TableCell> */}
+        </TableRow>
+      );
+    } else {
+      return users.map(row => (
+        <TableRow key={row.name}>
+          <TableCell component="th" scope="row">
+            {row.name}
+          </TableCell>
+          <TableCell align="right">{row.contact}</TableCell>
+          <TableCell align="right">{row.email}</TableCell>
+          <TableCell align="right">{row.driver_id}</TableCell>
+        </TableRow>
+      ));
+    }
+  }
+
+  console.log(users);
   return (
     <React.Fragment>
       <NavBar />
       <Box component="div" style={D.container}>
         <Buttons title={"View"} loading={loading} onSubmit={getUsers} />
-        <TableContainer style={D.tableContainer}>
+        <TableContainer component={Paper} style={D.table}>
           <Table aria-label="simple table">
-            <TableBody>
-              <TableRow style={D.tableHeader}>
-                <TableCell align="right" style={D.cell}>
-                  Name
-                  {users.map(c => {
-                    return (
-                      <TableRow component="th" scope="row" style={D.row}>
-                        {c}{" "}
-                      </TableRow>
-                    );
-                  })}
-                </TableCell>
-                <TableCell align="right" style={D.cell}>
-                  Email
-                  {email.map(c => {
-                    return (
-                      <TableRow component="th" scope="row" style={D.row}>
-                        {c}{" "}
-                      </TableRow>
-                    );
-                  })}
-                </TableCell>
-                <TableCell align="right" style={D.cell}>
+            <TableHead>
+              <TableRow>
+                <TableCell style={D.head}>Name</TableCell>
+                <TableCell align="right" style={D.head}>
                   Contact
-                  {contact.map(c => {
-                    return (
-                      <TableRow component="th" scope="row" style={D.row}>
-                        {c}{" "}
-                      </TableRow>
-                    );
-                  })}
                 </TableCell>
-                <TableCell align="right" style={D.cell}>
+                <TableCell align="right" style={D.head}>
+                  Email
+                </TableCell>
+                <TableCell align="right" style={D.head}>
                   Driver ID
-                  {driverId.map(c => {
-                    return (
-                      <TableRow component="th" scope="row" style={D.row}>
-                        {c}{" "}
-                      </TableRow>
-                    );
-                  })}
                 </TableCell>
               </TableRow>
-            </TableBody>
+            </TableHead>
+            <TableBody>{table()}</TableBody>
           </Table>
         </TableContainer>
       </Box>
