@@ -40,24 +40,23 @@ const DriverList = () => {
     if (users == null) {
       return (
         <TableRow key={"name"}>
-          <TableCell component="th" scope="row">
+          <TableCell component="th" scope="row" style={D.cell}>
             -
           </TableCell>
-          <TableCell align="right">-</TableCell>
-          <TableCell align="right">-</TableCell>
-          <TableCell align="right">-</TableCell>
-          {/* <TableCell align="right">{row.protein}</TableCell> */}
+          <TableCell style={D.cell}>-</TableCell>
+          <TableCell style={D.cell}>-</TableCell>
+          <TableCell style={D.cell}>-</TableCell>
         </TableRow>
       );
     } else {
       return users.map(row => (
         <TableRow key={row.name}>
-          <TableCell component="th" scope="row">
+          <TableCell component="th" scope="row" style={D.cell}>
             {row.name}
           </TableCell>
-          <TableCell align="right">{row.contact}</TableCell>
-          <TableCell align="right">{row.email}</TableCell>
-          <TableCell align="right">{row.driver_id}</TableCell>
+          <TableCell style={D.cell}>{row.contact}</TableCell>
+          <TableCell style={D.cell}>{row.email}</TableCell>
+          <TableCell style={D.cell}>{row.driver_id}</TableCell>
         </TableRow>
       ));
     }

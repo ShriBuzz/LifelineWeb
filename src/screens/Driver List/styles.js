@@ -13,5 +13,10 @@ export const table = {
 };
 
 export const head = {
-  fontWeight: 600
+  fontWeight: 600,
+  textAlign: "center"
+};
+
+export const cell = {
+  textAlign: "center"
 };
