@@ -8,7 +8,7 @@ import {
   Button
 } from "@material-ui/core";
 
-const Failure = ({ open, handleClose }) => {
+const Failure = ({ open, handleClose, title, message }) => {
   return (
     <Dialog
       open={open}
@@ -16,13 +16,10 @@ const Failure = ({ open, handleClose }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        {"Failed Registration!"}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Error processing data. Please fill all (*) required data and try
-          again.
+          {message}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
