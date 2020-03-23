@@ -21,14 +21,14 @@ import * as D from "./styles";
 const DriverList = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState(null);
-  const nlist = [];
+  const list = [];
 
   function getUsers(e) {
     e.preventDefault();
     setLoading(true);
     axios.get("/driver").then(res => {
-      res.data.map(c => nlist.push(c));
-      setUsers(nlist);
+      res.data.map(c => list.push(c));
+      setUsers(list);
     });
 
     setTimeout(() => {
@@ -63,7 +63,6 @@ const DriverList = () => {
     }
   }
 
-  console.log(users);
   return (
     <React.Fragment>
       <NavBar />
