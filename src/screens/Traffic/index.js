@@ -29,7 +29,7 @@ const Traffic = () => {
 
   const [url, setUrl] = useState(null);
 
-  const traffic_pic = "/traffic_pic/" + contact;
+  const traffic_pic = "/update_traffic_pic/" + contact;
 
   const handleClose = () => {
     setSuccess(false);
