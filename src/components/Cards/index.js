@@ -17,21 +17,23 @@ import * as C from "./styles";
 
 const Cards = ({ users }) => {
   const handleDelete = url => {
-    console.log(url);
     axios
       .delete(url)
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res);
+        window.location.reload(false);
+      })
       .catch(error => console.log(error));
   };
 
-  function renderAvatar(key) {
+  const renderAvatar = key => {
     if (key === null) {
       return <Avatar style={{ width: 90, height: 90 }} src={Dummy} />;
     } else {
       const url = "http://192.168.0.117:5000/get_driver_pic/" + key;
       return <Avatar style={{ width: 90, height: 90 }} src={url} />;
     }
-  }
+  };
 
   if (users == null) {
     return (
