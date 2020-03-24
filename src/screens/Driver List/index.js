@@ -64,7 +64,7 @@ const DriverList = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Box component="div" style={{ width: "100%" }}>
+        <Box component="div" style={{ width: "100%", textAlign: "center" }}>
           <Cards users={users} />
         </Box>
       </Box>
