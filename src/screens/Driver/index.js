@@ -31,7 +31,7 @@ const Driver = () => {
 
   const [url, setUrl] = useState(null);
 
-  const driver_pic = "/driver_pic/" + contact;
+  const driver_pic = "/update_driver_pic/" + contact;
 
   const handleClose = () => {
     setSuccess(false);
