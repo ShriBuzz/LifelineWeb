@@ -15,6 +15,7 @@ import axios from "axios";
 
 import NavBar from "../../components/NavBar";
 import Buttons from "../../components/Button";
+import GetTable from "../../components/GetTable";
 
 import * as D from "./styles";
 
@@ -35,33 +36,7 @@ const DriverList = () => {
       setLoading(false);
     }, 1000);
   }
-
-  function table() {
-    if (users == null) {
-      return (
-        <TableRow key={"name"}>
-          <TableCell component="th" scope="row" style={D.cell}>
-            -
-          </TableCell>
-          <TableCell style={D.cell}>-</TableCell>
-          <TableCell style={D.cell}>-</TableCell>
-          <TableCell style={D.cell}>-</TableCell>
-        </TableRow>
-      );
-    } else {
-      return users.map(row => (
-        <TableRow key={row.name}>
-          <TableCell component="th" scope="row" style={D.cell}>
-            {row.name}
-          </TableCell>
-          <TableCell style={D.cell}>{row.contact}</TableCell>
-          <TableCell style={D.cell}>{row.email}</TableCell>
-          <TableCell style={D.cell}>{row.driver_id}</TableCell>
-        </TableRow>
-      ));
-    }
-  }
-
+  console.log(users);
   return (
     <React.Fragment>
       <NavBar />
@@ -83,7 +58,9 @@ const DriverList = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>{table()}</TableBody>
+            <TableBody>
+              <GetTable users={users} />
+            </TableBody>
           </Table>
         </TableContainer>
       </Box>

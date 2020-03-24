@@ -15,6 +15,7 @@ import axios from "axios";
 
 import NavBar from "../../components/NavBar";
 import Buttons from "../../components/Button";
+import GetTable from "../../components/GetTable";
 
 import * as T from "./styles";
 
@@ -36,30 +37,6 @@ const TrafficList = () => {
     }, 1000);
   }
 
-  function table() {
-    if (users == null) {
-      return (
-        <TableRow key={"name"}>
-          <TableCell component="th" scope="row" style={T.cell}>
-            -
-          </TableCell>
-          <TableCell style={T.cell}>-</TableCell>
-          <TableCell style={T.cell}>-</TableCell>
-        </TableRow>
-      );
-    } else {
-      return users.map(row => (
-        <TableRow key={row.name}>
-          <TableCell component="th" scope="row" style={T.cell}>
-            {row.name}
-          </TableCell>
-          <TableCell style={T.cell}>{row.contact}</TableCell>
-          <TableCell style={T.cell}>{row.email}</TableCell>
-        </TableRow>
-      ));
-    }
-  }
-
   return (
     <React.Fragment>
       <NavBar />
@@ -78,7 +55,9 @@ const TrafficList = () => {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>{table()}</TableBody>
+            <TableBody>
+              <GetTable users={users} cells={3} />
+            </TableBody>
           </Table>
         </TableContainer>
       </Box>
