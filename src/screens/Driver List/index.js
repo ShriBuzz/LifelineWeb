@@ -16,6 +16,7 @@ import axios from "axios";
 import NavBar from "../../components/NavBar";
 import Buttons from "../../components/Button";
 import GetTable from "../../components/GetTable";
+import Cards from "../../components/Cards";
 
 import * as D from "./styles";
 
@@ -36,7 +37,7 @@ const DriverList = () => {
       setLoading(false);
     }, 1000);
   }
-  console.log(users);
+
   return (
     <React.Fragment>
       <NavBar />
@@ -63,6 +64,9 @@ const DriverList = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Box component="div" style={{ width: "100%" }}>
+          <Cards users={users} />
+        </Box>
       </Box>
     </React.Fragment>
   );
