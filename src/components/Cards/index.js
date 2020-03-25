@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import axios from "axios";
 import {
@@ -14,8 +14,19 @@ import {
 import Dummy from "../../assets/Profile.jpg";
 
 import * as C from "./styles";
+import Edit from "../Edit";
 
 const Cards = ({ users, type }) => {
+  const [open, setOpen] = useState(false);
+  const [key, setKey] = useState();
+  const [r_name, setName] = useState();
+  const [r_email, setEmail] = useState();
+  const [r_driverid, setDriverId] = useState();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleDelete = url => {
     axios
       .delete(url)
@@ -60,13 +71,22 @@ const Cards = ({ users, type }) => {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="secondary">
+            <Button
+              size="small"
+              color="secondary"
+              onClick={() => setOpen(true)}
+            >
               Edit
             </Button>
             <Button size="small" color="secondary">
               Delete
             </Button>
           </CardActions>
+          <Edit
+            title="Edit Driver info"
+            open={open}
+            handleClose={handleClose}
+          />
         </Card>
       );
     } else {
@@ -119,7 +139,13 @@ const Cards = ({ users, type }) => {
             <Button
               size="small"
               color="secondary"
-              onClick={() => console.log(data.contact)}
+              onClick={() => {
+                setKey(data.contact.toString());
+                setName(data.name.toString());
+                setEmail(data.email.toString());
+                setDriverId(data.driver_id.toString());
+                setOpen(true);
+              }}
             >
               Edit
             </Button>
@@ -134,6 +160,17 @@ const Cards = ({ users, type }) => {
               Delete
             </Button>
           </CardActions>
+          <Edit
+            title="Edit Driver info"
+            open={open}
+            handleClose={handleClose}
+            users={users}
+            o_contact={key}
+            o_name={r_name}
+            o_email={r_email}
+            o_driverid={r_driverid}
+            // o_img={r_img}
+          />
         </Card>
       ));
     } else {
@@ -177,4 +214,4 @@ const Cards = ({ users, type }) => {
   }
 };
 
-export default Cards;
+export default React.memo(Cards);
