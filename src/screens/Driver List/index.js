@@ -72,4 +72,4 @@ const DriverList = () => {
   );
 };
 
-export default DriverList;
+export default React.memo(DriverList);
