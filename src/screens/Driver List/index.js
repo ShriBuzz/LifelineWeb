@@ -65,7 +65,7 @@ const DriverList = () => {
           </Table>
         </TableContainer>
         <Box component="div" style={{ width: "100%", textAlign: "center" }}>
-          <Cards users={users} />
+          <Cards users={users} type="driver" />
         </Box>
       </Box>
     </React.Fragment>

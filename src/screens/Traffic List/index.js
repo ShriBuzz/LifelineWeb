@@ -16,6 +16,7 @@ import axios from "axios";
 import NavBar from "../../components/NavBar";
 import Buttons from "../../components/Button";
 import GetTable from "../../components/GetTable";
+import Cards from "../../components/Cards";
 
 import * as T from "./styles";
 
@@ -60,6 +61,9 @@ const TrafficList = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Box component="div" style={{ width: "100%", textAlign: "center" }}>
+          <Cards users={users} />
+        </Box>
       </Box>
     </React.Fragment>
   );
