@@ -82,11 +82,6 @@ const Cards = ({ users, type }) => {
               Delete
             </Button>
           </CardActions>
-          <Edit
-            title="Edit Driver info"
-            open={open}
-            handleClose={handleClose}
-          />
         </Card>
       );
     } else {
