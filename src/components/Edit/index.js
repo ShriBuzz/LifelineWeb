@@ -12,6 +12,8 @@ import {
 
 import * as E from "./styles";
 
+import axios from "axios";
+
 const Edit = ({
   title,
   open,
@@ -27,6 +29,32 @@ const Edit = ({
   const [driver_id, setDriverId] = useState(o_driverid);
   const url = "http://192.168.0.117:5000/get_driver_pic/" + o_contact;
 
+  function handleUpdate(e) {
+    e.preventDefault();
+
+    axios
+      .put(
+        `/driver/` + o_contact,
+        {
+          // data to be sent
+          name,
+          email,
+          driver_id,
+          contact
+        },
+        {}
+      )
+      .then(response => {
+        console.log(response.data);
+        alert("succesfully updated!");
+        window.location.reload(false);
+      })
+      .catch(error => {
+        alert("failed to update!");
+        console.log(error);
+      });
+  }
+
   return (
     <Dialog
       open={open}
@@ -41,30 +69,30 @@ const Edit = ({
           <Avatar style={{ width: 90, height: 90 }} src={url} />
           <Box style={E.Form}>
             <TextField
-              label="Name"
+              label={o_name}
               type="text"
-              value={o_name}
+              value={name}
               onChange={e => setName(e.target.value)}
               style={E.Input}
             />
             <TextField
-              label="Contact"
+              label={o_contact}
               type="text"
-              value={o_contact}
+              value={contact}
               onChange={e => setContact(e.target.value)}
               style={E.Input}
             />
             <TextField
-              label="Email"
+              label={o_email}
               type="text"
-              value={o_email}
+              value={email}
               onChange={e => setEmail(e.target.value)}
               style={E.Input}
             />
             <TextField
-              label="Driver Id"
+              label={o_driverid}
               type="text"
-              value={o_driverid}
+              value={driver_id}
               onChange={e => setDriverId(e.target.value)}
               style={E.Input}
             />
@@ -72,7 +100,7 @@ const Edit = ({
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="secondary">
+        <Button onClick={e => handleUpdate(e)} color="secondary">
           Save
         </Button>
         <Button onClick={handleClose} color="secondary">
