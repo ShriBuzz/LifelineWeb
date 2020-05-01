@@ -22,6 +22,7 @@ const Cards = ({ users, type }) => {
   const [r_name, setName] = useState();
   const [r_email, setEmail] = useState();
   const [r_driverid, setDriverId] = useState();
+  let url;
 
   const handleClose = () => {
     setOpen(false);
@@ -32,6 +33,7 @@ const Cards = ({ users, type }) => {
       .delete(url)
       .then((res) => {
         console.log(res);
+        window.location.reload(false);
       })
       .catch((error) => console.log(error));
   };
@@ -64,9 +66,7 @@ const Cards = ({ users, type }) => {
               <br />
               Email: -----
               <br />
-              {type === "driver" ? (
-                <Typography>Driver ID: -----</Typography>
-              ) : null}
+              {type === "driver" ? `Driver ID: -----` : null}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -94,9 +94,7 @@ const Cards = ({ users, type }) => {
               <br />
               Email: {data.email}
               <br />
-              {data.driver_id ? (
-                <Typography>Driver ID: {data.driver_id}</Typography>
-              ) : null}
+              {data.driver_id ? `Driver ID: ${data.driver_id}` : null}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -118,7 +116,11 @@ const Cards = ({ users, type }) => {
             size="small"
             color="secondary"
             onClick={() => {
-              const url = "/driver/" + data.contact;
+              if (type === "driver") {
+                url = "/driver/" + data.contact;
+              } else {
+                url = "/traffic/" + data.contact;
+              }
               handleDelete(url);
             }}
           >
