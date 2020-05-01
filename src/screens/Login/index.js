@@ -30,7 +30,7 @@ function Login() {
 
   return (
     <Backdrop open={true} color={"#f0f1f2"}>
-      <Box component="div" style={L.container}>
+      <Box component="form" style={L.container} onSubmit={() => handleSubmit()}>
         <Typography style={L.Header}>Lifeline Admin Login</Typography>
         <Grid container spacing={1} style={L.Form}>
           <Grid item>
@@ -42,7 +42,7 @@ function Login() {
               color={"secondary"}
               required
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               style={L.Input}
             />
           </Grid>
@@ -58,12 +58,12 @@ function Login() {
               color={"secondary"}
               required
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               style={L.Input}
             />
           </Grid>
         </Grid>
-        <Buttons title={"Submit"} onSubmit={handleSubmit} />
+        <Buttons title={"Submit"} onSubmit={() => handleSubmit()} />
         <Failure open={fail} handleClose={handleClose} />
       </Box>
     </Backdrop>
