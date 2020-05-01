@@ -122,7 +122,8 @@ const Cards = ({ users, type }) => {
           </Button>
         </CardActions>
         <Edit
-          title="Edit Driver info"
+          title={type === "driver" ? "Edit Driver info" : "Edit Traffic info"}
+          type={type}
           open={open}
           handleClose={handleClose}
           o_contact={key}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import useDriverUpdate from "../../hooks/useDriverUpdate";
+import useUpdate from "../../hooks/useUpdate";
 
 import {
   Box,
@@ -15,11 +15,12 @@ import {
 
 import * as E from "./styles";
 
-const Edit = ({ title, open, handleClose, o_contact }) => {
+const Edit = ({ title, open, handleClose, o_contact, type }) => {
   const {
     user,
-    url,
-    handleUpdate,
+    urls,
+    handleDriverUpdate,
+    handleTrafficUpdate,
     name,
     setName,
     email,
@@ -28,7 +29,15 @@ const Edit = ({ title, open, handleClose, o_contact }) => {
     setContact,
     driver_id,
     setDriverId,
-  } = useDriverUpdate(o_contact);
+  } = useUpdate(o_contact, type);
+
+  function chooseUpdate(e) {
+    if (type === "driver") {
+      handleDriverUpdate(e);
+    } else {
+      handleTrafficUpdate(e);
+    }
+  }
 
   return (
     <Dialog
@@ -44,7 +53,8 @@ const Edit = ({ title, open, handleClose, o_contact }) => {
           `Loading...`
         ) : (
           <Box component="form" style={E.FormContainer}>
-            <Avatar style={{ width: 90, height: 90 }} src={url} />
+            <Avatar style={{ width: 90, height: 90 }} src={urls} />
+
             <Box style={E.Form}>
               <TextField
                 label="name"
@@ -67,19 +77,21 @@ const Edit = ({ title, open, handleClose, o_contact }) => {
                 onChange={(e) => setEmail(e.target.value)}
                 style={E.Input}
               />
-              <TextField
-                label="driverid"
-                type="text"
-                value={driver_id}
-                onChange={(e) => setDriverId(e.target.value)}
-                style={E.Input}
-              />
+              {type === "driver" ? (
+                <TextField
+                  label="driverid"
+                  type="text"
+                  value={driver_id}
+                  onChange={(e) => setDriverId(e.target.value)}
+                  style={E.Input}
+                />
+              ) : null}
             </Box>
           </Box>
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={(e) => handleUpdate(e)} color="secondary">
+        <Button onClick={(e) => chooseUpdate(e)} color="secondary">
           Save
         </Button>
         <Button onClick={handleClose} color="secondary">
