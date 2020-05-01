@@ -27,12 +27,35 @@ const TrafficList = () => {
     axios
       .get("/traffic")
       .then((res) => {
-        setUsers(Array.from(res.data));
+        setUsers(Array.from(res.data).sort(compare));
       })
       .catch((e) => {
         return <Typography>{e}</Typography>;
       });
   }, [users.length]);
+
+  function compare(a, b) {
+    // Use toUpperCase() to ignore character casing
+    const nameA = a.name.toUpperCase();
+    const nameB = b.name.toUpperCase();
+
+    let comparison = 0;
+    if (nameA > nameB) {
+      comparison = 1;
+    } else if (nameA < nameB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  if (!users) {
+    return (
+      <>
+        <NavBar />
+        <Typography>Loading ... </Typography>
+      </>
+    );
+  }
 
   return (
     <React.Fragment>
@@ -52,7 +75,7 @@ const TrafficList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <GetTable users={users} cells={3} />
+              <GetTable users={users} />
             </TableBody>
           </Table>
         </TableContainer>
