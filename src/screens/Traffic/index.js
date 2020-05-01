@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+// custom hook
+import useSubmit from "../../hooks/useSubmit";
 
-import axios from "axios";
 import {
   Box,
   Avatar,
@@ -18,88 +19,24 @@ import Failure from "../../components/Failure";
 import * as T from "./styles";
 
 const Traffic = () => {
-  const [name, setName] = useState("");
-  const [contact, setContact] = useState();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [upload, setUpload] = useState();
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [fail, setFail] = useState(false);
-
-  const [url, setUrl] = useState(null);
-
-  const traffic_pic = "/update_traffic_pic/" + contact;
-
-  const handleClose = () => {
-    setSuccess(false);
-    setFail(false);
-  };
-
-  function resetForm() {
-    setName("");
-    setContact("");
-    setEmail("");
-    setPassword("");
-    setUpload(null);
-  }
-
-  const postData = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    //API call here
-    await axios
-      .post(`/traffic_signup`, {
-        // data to be sent
-        name,
-        email,
-        password,
-        contact,
-      })
-      .then((response) => {
-        console.log(response.data);
-        handleUpload();
-        setSuccess(true);
-      })
-      .catch((error) => {
-        setFail(true);
-        console.log(error);
-      });
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
-
-  const handleUpload = async () => {
-    if (upload == null) {
-      alert("Submit form and choose image before upload.");
-    } else {
-      let file = new FormData();
-      file.append("file", upload, upload.name);
-      await axios
-        .post(traffic_pic, file, {})
-        .then((response) => {
-          console.log(response.statusText, "Sent image!!!!!");
-          alert("Successfully uploaded image to server.");
-          resetForm();
-        })
-        .catch((error) => {
-          setFail(true);
-          console.log(error);
-        });
-    }
-  };
-
-  function handlePreview(e) {
-    e.preventDefault();
-    if (upload == null) {
-      alert("Choose an image to preview.");
-    } else {
-      const objectUrl = URL.createObjectURL(upload);
-      setUrl(objectUrl);
-    }
-  }
+  const {
+    name,
+    setName,
+    email,
+    setEmail,
+    contact,
+    setContact,
+    password,
+    setPassword,
+    postTrafficData,
+    url,
+    setUpload,
+    handlePreview,
+    loading,
+    success,
+    handleClose,
+    fail,
+  } = useSubmit();
 
   function renderAvatar() {
     if (url == null) {
@@ -110,7 +47,7 @@ const Traffic = () => {
   }
 
   return (
-    <Container fluid style={T.bg}>
+    <Container style={T.bg}>
       <Typography variant="h5" style={T.text}>
         Lets get you registered for Lifeline Traffic App!
       </Typography>
@@ -156,7 +93,7 @@ const Traffic = () => {
 
         <Upload setUpload={setUpload} handlePreview={handlePreview} />
 
-        <Buttons title="Submit" loading={loading} onSubmit={postData} />
+        <Buttons title="Submit" loading={loading} onSubmit={postTrafficData} />
         <Success
           title={"Traffic Officer"}
           Contact={contact}
