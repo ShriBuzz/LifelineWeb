@@ -6,7 +6,7 @@ import {
   Avatar,
   TextField,
   Typography,
-  Container
+  Container,
 } from "@material-ui/core";
 import Profile from "../../assets/Profile.jpg";
 
@@ -44,23 +44,24 @@ const Traffic = () => {
     setUpload(null);
   }
 
-  function postData(e) {
+  const postData = async (e) => {
     e.preventDefault();
     setLoading(true);
     //API call here
-    axios
+    await axios
       .post(`/traffic_signup`, {
         // data to be sent
         name,
         email,
         password,
-        contact
+        contact,
       })
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
+        handleUpload();
         setSuccess(true);
       })
-      .catch(error => {
+      .catch((error) => {
         setFail(true);
         console.log(error);
       });
@@ -68,28 +69,27 @@ const Traffic = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }
+  };
 
-  function handleUpload(e) {
-    e.preventDefault();
+  const handleUpload = async () => {
     if (upload == null) {
       alert("Submit form and choose image before upload.");
     } else {
       let file = new FormData();
       file.append("file", upload, upload.name);
-      axios
+      await axios
         .post(traffic_pic, file, {})
-        .then(response => {
+        .then((response) => {
           console.log(response.statusText, "Sent image!!!!!");
           alert("Successfully uploaded image to server.");
           resetForm();
         })
-        .catch(error => {
+        .catch((error) => {
           setFail(true);
           console.log(error);
         });
     }
-  }
+  };
 
   function handlePreview(e) {
     e.preventDefault();
@@ -122,7 +122,7 @@ const Traffic = () => {
           type="text"
           value={name}
           placeholder="Enter your name"
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           style={T.input}
         />
         <TextField
@@ -131,7 +131,7 @@ const Traffic = () => {
           type="email"
           value={email}
           placeholder="Enter your email"
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           style={T.input}
         />
         <TextField
@@ -140,7 +140,7 @@ const Traffic = () => {
           type="number"
           value={contact}
           placeholder="Enter your mobile no."
-          onChange={e => setContact(e.target.value)}
+          onChange={(e) => setContact(e.target.value)}
           style={T.input}
         />
         <TextField
@@ -150,15 +150,11 @@ const Traffic = () => {
           value={password}
           placeholder="Enter your password"
           autoComplete="current-password"
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           style={T.input}
         />
 
-        <Upload
-          setUpload={setUpload}
-          handleUpload={handleUpload}
-          handlePreview={handlePreview}
-        />
+        <Upload setUpload={setUpload} handlePreview={handlePreview} />
 
         <Buttons title="Submit" loading={loading} onSubmit={postData} />
         <Success

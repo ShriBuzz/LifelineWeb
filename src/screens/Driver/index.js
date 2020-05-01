@@ -5,7 +5,7 @@ import {
   Avatar,
   TextField,
   Typography,
-  Container
+  Container,
 } from "@material-ui/core";
 import axios from "axios";
 
@@ -47,12 +47,12 @@ const Driver = () => {
     setUpload(null);
   }
 
-  function postData(e) {
+  const postData = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     //API call here
-    axios
+    await axios
       .post(
         `/driver_signup`,
         {
@@ -61,16 +61,17 @@ const Driver = () => {
           email,
           password,
           driver_id,
-          contact
+          contact,
         },
         {}
       )
-      .then(response => {
+      .then((response) => {
         console.log(response.data);
+        handleUpload();
         setSuccess(true);
         // resetForm();
       })
-      .catch(error => {
+      .catch((error) => {
         setFail(true);
         console.log(error);
       });
@@ -78,28 +79,27 @@ const Driver = () => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }
+  };
 
-  function handleUpload(e) {
-    e.preventDefault();
+  const handleUpload = async () => {
     if (upload == null) {
       alert("Submit form and choose image before upload.");
     } else {
       let file = new FormData();
       file.append("file", upload, upload.name);
-      axios
+      await axios
         .post(driver_pic, file, {})
-        .then(response => {
+        .then((response) => {
           console.log(response.statusText, "Sent image!!!!!");
           alert("Successfully uploaded image to server.");
           resetForm();
         })
-        .catch(error => {
+        .catch((error) => {
           setFail(true);
           console.log(error);
         });
     }
-  }
+  };
 
   function handlePreview(e) {
     e.preventDefault();
@@ -132,7 +132,7 @@ const Driver = () => {
           type="text"
           value={name}
           placeholder="Enter your name"
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           style={D.input}
         />
         <TextField
@@ -141,7 +141,7 @@ const Driver = () => {
           type="email"
           value={email}
           placeholder="Enter your email"
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           style={D.input}
         />
         <TextField
@@ -150,7 +150,7 @@ const Driver = () => {
           type="number"
           value={contact}
           placeholder="Enter your mobile no."
-          onChange={e => setContact(e.target.value)}
+          onChange={(e) => setContact(e.target.value)}
           style={D.input}
         />
         <TextField
@@ -159,7 +159,7 @@ const Driver = () => {
           type="text"
           value={driver_id}
           placeholder="Enter your driver id"
-          onChange={e => setDriverId(e.target.value)}
+          onChange={(e) => setDriverId(e.target.value)}
           style={D.input}
         />
         <TextField
@@ -169,15 +169,11 @@ const Driver = () => {
           value={password}
           placeholder="Enter your password"
           autoComplete="current-password"
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           style={D.input}
         />
 
-        <Upload
-          setUpload={setUpload}
-          handleUpload={handleUpload}
-          handlePreview={handlePreview}
-        />
+        <Upload setUpload={setUpload} handlePreview={handlePreview} />
 
         {/* submit button */}
         <Buttons title="Submit" loading={loading} onSubmit={postData} />
