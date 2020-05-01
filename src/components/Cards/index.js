@@ -19,9 +19,6 @@ import Edit from "../Edit";
 const Cards = ({ users, type }) => {
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState();
-  const [r_name, setName] = useState();
-  const [r_email, setEmail] = useState();
-  const [r_driverid, setDriverId] = useState();
   let url;
 
   const handleClose = () => {
@@ -104,9 +101,6 @@ const Cards = ({ users, type }) => {
             color="secondary"
             onClick={() => {
               setKey(data.contact.toString());
-              setName(data.name.toString());
-              setEmail(data.email.toString());
-              setDriverId(data.driver_id.toString());
               setOpen(true);
             }}
           >
@@ -131,11 +125,7 @@ const Cards = ({ users, type }) => {
           title="Edit Driver info"
           open={open}
           handleClose={handleClose}
-          users={users}
           o_contact={key}
-          o_name={r_name}
-          o_email={r_email}
-          o_driverid={r_driverid}
         />
       </Card>
     ));
