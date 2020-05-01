@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+
+import useDriverDate from "../../hooks/useDriverData";
 
 import {
   Box,
@@ -12,8 +14,6 @@ import {
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
-import axios from "axios";
-
 import NavBar from "../../components/NavBar";
 import GetTable from "../../components/GetTable";
 import Cards from "../../components/Cards";
@@ -21,33 +21,7 @@ import Cards from "../../components/Cards";
 import * as D from "./styles";
 
 const DriverList = () => {
-  const [users, setUsers] = useState([]);
-  console.log(users);
-
-  useEffect(() => {
-    axios
-      .get("/driver")
-      .then((res) => {
-        setUsers(Array.from(res.data).sort(compare));
-      })
-      .catch((e) => {
-        return <Typography>{e}</Typography>;
-      });
-  }, [users.length]);
-
-  function compare(a, b) {
-    // Use toUpperCase() to ignore character casing
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-
-    let comparison = 0;
-    if (nameA > nameB) {
-      comparison = 1;
-    } else if (nameA < nameB) {
-      comparison = -1;
-    }
-    return comparison;
-  }
+  const { users } = useDriverDate();
 
   if (!users) {
     return (
