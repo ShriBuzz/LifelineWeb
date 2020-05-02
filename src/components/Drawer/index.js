@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+
+import useDrawer from "../../hooks/useDrawer";
+import { LoginContext } from "../../hooks/LoginContext";
 import { Drawer, Divider, IconButton, Typography } from "@material-ui/core";
 
-import history from "../../navigation/history";
 import ListIcon from "../ListIcon";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -13,40 +15,18 @@ import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
 import * as D from "./styles";
 
 export default function TemporaryDrawer() {
-  const [left, setLeft] = useState(false);
+  const {
+    left,
+    toggleDrawer,
+    routeHome,
+    routeDlist,
+    routeTlist,
+    handleLogout,
+  } = useDrawer();
 
-  const toggleDrawer = (anchor, open) => event => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  const { success } = useContext(LoginContext);
 
-    setLeft({ left, [anchor]: open });
-  };
-
-  function routeHome(e) {
-    e.preventDefault();
-    history.push("/Home");
-  }
-
-  function routeDlist(e) {
-    e.preventDefault();
-    history.push("/Dlist");
-  }
-
-  function routeTlist(e) {
-    e.preventDefault();
-    history.push("/Tlist");
-  }
-
-  function handleLogout(e) {
-    e.preventDefault();
-    history.push("/");
-  }
-
-  const list = anchor => (
+  const list = (anchor) => (
     <div
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
@@ -56,18 +36,23 @@ export default function TemporaryDrawer() {
       <Typography style={D.title}>Menu</Typography>
       <Divider />
       <ListIcon text={"Home"} icon={<HomeIcon />} onSubmit={routeHome} />
+      {success ? (
+        <>
+          <ListIcon
+            text={"Driver List"}
+            icon={<DriveEtaIcon />}
+            onSubmit={routeDlist}
+          />
+          <ListIcon
+            text={"Traffic List"}
+            icon={<TrafficIcon />}
+            onSubmit={routeTlist}
+          />
+        </>
+      ) : null}
+
       <ListIcon
-        text={"Driver List"}
-        icon={<DriveEtaIcon />}
-        onSubmit={routeDlist}
-      />
-      <ListIcon
-        text={"Traffic List"}
-        icon={<TrafficIcon />}
-        onSubmit={routeTlist}
-      />
-      <ListIcon
-        text={"Logout"}
+        text={success ? "Logout" : "Login"}
         icon={<MeetingRoomIcon />}
         onSubmit={handleLogout}
       />
@@ -76,7 +61,7 @@ export default function TemporaryDrawer() {
 
   return (
     <div>
-      {["left"].map(anchor => (
+      {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
           <IconButton
             edge="start"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { Backdrop, Box, TextField, Grid, Typography } from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -10,23 +10,27 @@ import Buttons from "../../components/Button";
 import Failure from "../../components/Failure";
 
 import * as L from "./styles";
+import { LoginContext } from "../../hooks/LoginContext";
 
 function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [fail, setFail] = useState(false);
+  const { success, setSuccess } = useContext(LoginContext);
+  console.log(success);
 
   const handleClose = () => {
     setFail(false);
   };
 
-  function handleSubmit() {
+  const handleSubmit = async () => {
     if (name === "admin" && password === "admin") {
+      setSuccess(true);
       history.push("/Home");
     } else {
       setFail(true);
     }
-  }
+  };
 
   return (
     <Backdrop open={true} color={"#f0f1f2"}>

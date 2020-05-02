@@ -7,10 +7,11 @@ const useUpdate = (o_contact, type) => {
   const [email, setEmail] = useState("");
   const [driver_id, setDriverId] = useState("");
   const [user, setUser] = useState(null);
-  const urls = "http://192.168.0.117:5000/get_driver_pic/" + o_contact;
+  const [urls, setUrl] = useState("");
 
   useEffect(() => {
     if (type === "driver") {
+      setUrl("http://192.168.0.117:5000/get_driver_pic/" + o_contact);
       axios
         .get("/driver")
         .then((res) => {
@@ -25,6 +26,7 @@ const useUpdate = (o_contact, type) => {
         })
         .catch((e) => console.log(e));
     } else {
+      setUrl("http://192.168.0.117:5000/get_traffic_pic/" + o_contact);
       axios
         .get("/traffic")
         .then((res) => {
