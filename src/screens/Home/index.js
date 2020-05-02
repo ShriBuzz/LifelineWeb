@@ -6,7 +6,6 @@ import Signup from "../../components/Signup";
 
 const Home = () => {
   var { success } = useContext(LoginContext);
-  console.log(success);
   if (success === false) {
     return (
       <>
