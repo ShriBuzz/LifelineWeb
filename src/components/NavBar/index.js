@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { AppBar, Toolbar, Avatar, Typography, Button } from "@material-ui/core";
 
@@ -6,8 +6,10 @@ import TemporaryDrawer from "../Drawer";
 import history from "../../navigation/history";
 import * as N from "./styles";
 import Logo from "../../assets/logo.png";
+import { LoginContext } from "../../hooks/LoginContext";
 
 function NavBar() {
+  const { success } = useContext(LoginContext);
   function handleLogout(e) {
     e.preventDefault();
     history.push("/");
@@ -22,7 +24,7 @@ function NavBar() {
           Lifeline App Signup Portal
         </Typography>
         <Button color="inherit" onClick={handleLogout}>
-          Logout
+          {success ? "Logout" : "Login"}
         </Button>
       </Toolbar>
     </AppBar>
