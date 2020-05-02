@@ -5,18 +5,25 @@ export const container = {
   alignItems: "center",
   height: "100%",
   padding: 30,
-  backgroundColor: "#f0f1f2"
+  backgroundColor: "#f0f1f2",
 };
 
 export const table = {
-  marginTop: "1.2em"
+  marginTop: "1.2em",
 };
 
 export const head = {
   fontWeight: 600,
-  textAlign: "center"
+  textAlign: "center",
 };
 
 export const cell = {
-  textAlign: "center"
+  textAlign: "center",
+};
+
+export const error = {
+  marginTop: 20,
+  textAlign: "center",
+  fontSize: 28,
+  color: "red",
 };

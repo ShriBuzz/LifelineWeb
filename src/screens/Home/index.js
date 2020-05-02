@@ -10,7 +10,7 @@ const Home = () => {
     return (
       <>
         <NavBar />
-        <h3>User Not logged in ... </h3>
+        <p style={error}>User not logged in ... </p>
       </>
     );
   }
@@ -20,6 +20,12 @@ const Home = () => {
       <Signup />
     </>
   );
+};
+
+const error = {
+  textAlign: "center",
+  fontSize: 28,
+  color: "red",
 };
 
 export default Home;
