@@ -40,7 +40,7 @@ const useUpdate = (o_contact, type) => {
         })
         .catch((e) => console.log(e));
     }
-  }, [o_contact]);
+  }, [o_contact, type]);
 
   const handleDriverUpdate = async (e) => {
     e.preventDefault();
