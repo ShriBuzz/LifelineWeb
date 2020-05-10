@@ -3,12 +3,14 @@ import axios from "axios";
 
 const useDriverData = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get("/driver")
       .then((res) => {
         setUsers(Array.from(res.data).sort(compare));
+        setLoading(false);
       })
       .catch((e) => {
         console.log(e);
@@ -29,7 +31,7 @@ const useDriverData = () => {
     return comparison;
   }
 
-  return { users };
+  return { users, loading };
 };
 
 export default useDriverData;

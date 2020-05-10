@@ -3,12 +3,14 @@ import axios from "axios";
 
 const useTrafficData = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get("/traffic")
       .then((res) => {
         setUsers(Array.from(res.data).sort(compare));
+        setLoading(false);
       })
       .catch((e) => {
         return console.log(e);
@@ -29,7 +31,7 @@ const useTrafficData = () => {
     return comparison;
   }
 
-  return { users };
+  return { users, loading };
 };
 
 export default useTrafficData;
