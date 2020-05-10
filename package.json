@@ -2,7 +2,7 @@
   "name": "lifeline-v2",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://192.168.0.117:5000",
+  "proxy": "https://lifeline-rats.herokuapp.com/",
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
