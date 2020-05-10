@@ -7,10 +7,10 @@ import {
   Table,
   TableCell,
   TableHead,
-  Typography,
   TableContainer,
   TableRow,
   TableBody,
+  CircularProgress,
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
@@ -21,13 +21,15 @@ import Cards from "../../components/Cards";
 import * as T from "./styles";
 
 const TrafficList = () => {
-  const { users } = useTrafficData();
+  const { users, loading } = useTrafficData();
 
-  if (!users) {
+  if (!users || loading) {
     return (
       <>
         <NavBar />
-        <Typography>Loading ... </Typography>
+        <Box component="div" style={T.container}>
+          <CircularProgress color="secondary" />
+        </Box>
       </>
     );
   }

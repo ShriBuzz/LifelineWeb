@@ -10,7 +10,7 @@ import {
   TableContainer,
   TableRow,
   TableBody,
-  Typography,
+  CircularProgress,
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
@@ -21,13 +21,15 @@ import Cards from "../../components/Cards";
 import * as D from "./styles";
 
 const DriverList = () => {
-  const { users } = useDriverDate();
+  const { users, loading } = useDriverDate();
 
-  if (!users) {
+  if (!users || loading) {
     return (
       <>
         <NavBar />
-        <Typography>Loading ... </Typography>
+        <Box component="div" style={D.container}>
+          <CircularProgress color="secondary" />
+        </Box>
       </>
     );
   }
