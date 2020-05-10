@@ -8,10 +8,12 @@ const useUpdate = (o_contact, type) => {
   const [driver_id, setDriverId] = useState("");
   const [user, setUser] = useState(null);
   const [urls, setUrl] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (type === "driver") {
       setUrl(process.env.REACT_APP_BASE_URL + "get_driver_pic/" + o_contact);
+      setLoading(true);
       axios
         .get("/driver")
         .then((res) => {
@@ -23,10 +25,12 @@ const useUpdate = (o_contact, type) => {
           setContact(user[0].contact);
           setEmail(user[0].email);
           setDriverId(user[0].driver_id);
+          setLoading(false);
         })
         .catch((e) => console.log(e));
     } else {
       setUrl(process.env.REACT_APP_BASE_URL + "/get_traffic_pic/" + o_contact);
+      setLoading(true);
       axios
         .get("/traffic")
         .then((res) => {
@@ -37,6 +41,7 @@ const useUpdate = (o_contact, type) => {
           setName(user[0].name);
           setContact(user[0].contact);
           setEmail(user[0].email);
+          setLoading(false);
         })
         .catch((e) => console.log(e));
     }
@@ -106,6 +111,7 @@ const useUpdate = (o_contact, type) => {
     setContact,
     driver_id,
     setDriverId,
+    loading,
   };
 };
 
