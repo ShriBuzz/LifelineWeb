@@ -40,10 +40,10 @@ const Cards = ({ users, type }) => {
       return <Avatar style={{ width: 90, height: 90 }} src={Dummy} />;
     } else {
       if (type === "driver") {
-        const url = "http://192.168.0.117:5000/get_driver_pic/" + key;
+        const url = process.env.REACT_APP_BASE_URL + "get_driver_pic/" + key;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       } else {
-        const url = "http://192.168.0.117:5000/get_traffic_pic/" + key;
+        const url = process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + key;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       }
     }

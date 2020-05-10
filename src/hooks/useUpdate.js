@@ -11,7 +11,7 @@ const useUpdate = (o_contact, type) => {
 
   useEffect(() => {
     if (type === "driver") {
-      setUrl("http://192.168.0.117:5000/get_driver_pic/" + o_contact);
+      setUrl(process.env.REACT_APP_BASE_URL + "get_driver_pic/" + o_contact);
       axios
         .get("/driver")
         .then((res) => {
@@ -26,7 +26,7 @@ const useUpdate = (o_contact, type) => {
         })
         .catch((e) => console.log(e));
     } else {
-      setUrl("http://192.168.0.117:5000/get_traffic_pic/" + o_contact);
+      setUrl(process.env.REACT_APP_BASE_URL + "/get_traffic_pic/" + o_contact);
       axios
         .get("/traffic")
         .then((res) => {
