@@ -3,6 +3,7 @@ import React from "react";
 // custom hooks
 import useSubmit from "../../hooks/useSubmit";
 
+// packages
 import {
   Box,
   Avatar,
@@ -10,12 +11,16 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+// components
 import Buttons from "../../components/Button";
 import Upload from "../../components/Upload";
 import Success from "../../components/Success";
 import Failure from "../../components/Failure";
 
+// assets
 import Profile from "../../assets/Profile.jpg";
 
 import * as D from "./styles";
@@ -122,6 +127,7 @@ const Driver = () => {
           }
         />
       </Box>
+      <ToastContainer />
     </Container>
   );
 };

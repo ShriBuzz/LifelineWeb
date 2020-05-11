@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 const useUpdate = (o_contact, type) => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
@@ -65,11 +67,11 @@ const useUpdate = (o_contact, type) => {
       )
       .then((response) => {
         console.log(response.data);
-        alert("succesfully updated!");
+        toast.success("succesfully updated!");
         window.location.reload(false);
       })
       .catch((error) => {
-        alert("failed to update!");
+        toast.error("failed to update!");
         console.log(error);
       });
   };
@@ -90,11 +92,11 @@ const useUpdate = (o_contact, type) => {
       )
       .then((response) => {
         console.log(response.data);
-        alert("succesfully updated!");
+        toast.success("succesfully updated!");
         window.location.reload(false);
       })
       .catch((error) => {
-        alert("failed to update!");
+        toast.error("failed to update!");
         console.log(error);
       });
   };

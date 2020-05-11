@@ -10,6 +10,8 @@ import {
   Button,
   Typography,
 } from "@material-ui/core";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Dummy from "../../assets/Profile.jpg";
 
@@ -31,6 +33,7 @@ const Cards = ({ users, type }) => {
       .delete(url)
       .then((res) => {
         console.log(res);
+        toast.success("Succesfully deleted.");
         window.location.reload(false);
       })
       .catch((error) => console.log(error));
@@ -135,6 +138,7 @@ const Cards = ({ users, type }) => {
               o_contact={key}
             />
           ) : null}
+          <ToastContainer />
         </Card>
       </>
     ));
