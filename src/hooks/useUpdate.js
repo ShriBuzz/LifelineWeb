@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const useUpdate = (o_contact, type) => {
@@ -10,42 +10,43 @@ const useUpdate = (o_contact, type) => {
   const [urls, setUrl] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const getDriver = useCallback((o_contact) => {
+    axios
+      .get("/driver/" + o_contact)
+      .then((res) => {
+        let user = res.data;
+        console.log(res.data);
+        setUser(user);
+        setName(user.name);
+        setContact(user.contact);
+        setEmail(user.email);
+        setDriverId(user.driver_id);
+        setLoading(false);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   useEffect(() => {
     if (type === "driver") {
       setUrl(process.env.REACT_APP_BASE_URL + "get_driver_pic/" + o_contact);
       setLoading(true);
-      axios
-        .get("/driver")
-        .then((res) => {
-          let user = res.data.filter(function (obj) {
-            return obj.contact.toString() === o_contact;
-          });
-          setUser(user[0]);
-          setName(user[0].name);
-          setContact(user[0].contact);
-          setEmail(user[0].email);
-          setDriverId(user[0].driver_id);
-          setLoading(false);
-        })
-        .catch((e) => console.log(e));
+      getDriver(o_contact);
     } else {
       setUrl(process.env.REACT_APP_BASE_URL + "/get_traffic_pic/" + o_contact);
       setLoading(true);
       axios
-        .get("/traffic")
+        .get("/traffic/" + o_contact)
         .then((res) => {
-          let user = res.data.filter(function (obj) {
-            return obj.contact.toString() === o_contact;
-          });
-          setUser(user[0]);
-          setName(user[0].name);
-          setContact(user[0].contact);
-          setEmail(user[0].email);
+          let user = res.data;
+          setUser(user);
+          setName(user.name);
+          setContact(user.contact);
+          setEmail(user.email);
           setLoading(false);
         })
         .catch((e) => console.log(e));
     }
-  }, [o_contact, type]);
+  }, [getDriver, o_contact, type]);
 
   const handleDriverUpdate = async (e) => {
     e.preventDefault();

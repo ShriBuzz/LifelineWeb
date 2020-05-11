@@ -16,7 +16,7 @@ import {
 
 import * as E from "./styles";
 
-const Edit = ({ title, open, handleClose, o_contact, type }) => {
+const Edit = React.memo(({ title, open, handleClose, o_contact, type }) => {
   const {
     user,
     urls,
@@ -102,6 +102,6 @@ const Edit = ({ title, open, handleClose, o_contact, type }) => {
       </DialogActions>
     </Dialog>
   );
-};
+});
 
-export default React.memo(Edit);
+export default Edit;

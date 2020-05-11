@@ -19,6 +19,7 @@ import Edit from "../Edit";
 const Cards = ({ users, type }) => {
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState();
+  const [load, setLoad] = useState(false);
   let url;
 
   const handleClose = () => {
@@ -79,56 +80,63 @@ const Cards = ({ users, type }) => {
     );
   } else {
     return users.map((data) => (
-      <Card style={C.Container} key={data.contact}>
-        <CardActionArea style={C.CardContainer}>
-          {renderAvatar(data.contact)}
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {data.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Contact: {data.contact}
-              <br />
-              Email: {data.email}
-              <br />
-              {data.driver_id ? `Driver ID: ${data.driver_id}` : null}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button
-            size="small"
-            color="secondary"
-            onClick={() => {
-              setKey(data.contact.toString());
-              setOpen(true);
-            }}
-          >
-            Edit
-          </Button>
-          <Button
-            size="small"
-            color="secondary"
-            onClick={() => {
-              if (type === "driver") {
-                url = "/driver/" + data.contact;
-              } else {
-                url = "/traffic/" + data.contact;
+      <>
+        <Card style={C.Container} key={data.contact}>
+          <CardActionArea style={C.CardContainer}>
+            {renderAvatar(data.contact)}
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {data.name}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Contact: {data.contact}
+                <br />
+                Email: {data.email}
+                <br />
+                {data.driver_id ? `Driver ID: ${data.driver_id}` : null}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button
+              size="small"
+              color="secondary"
+              onClick={() => {
+                setKey(data.contact.toString());
+                setLoad(true);
+                setOpen(true);
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              size="small"
+              color="secondary"
+              onClick={() => {
+                if (type === "driver") {
+                  url = "/driver/" + data.contact;
+                } else {
+                  url = "/traffic/" + data.contact;
+                }
+                handleDelete(url);
+              }}
+            >
+              Delete
+            </Button>
+          </CardActions>
+          {load ? (
+            <Edit
+              title={
+                type === "driver" ? "Edit Driver info" : "Edit Traffic info"
               }
-              handleDelete(url);
-            }}
-          >
-            Delete
-          </Button>
-        </CardActions>
-        <Edit
-          title={type === "driver" ? "Edit Driver info" : "Edit Traffic info"}
-          type={type}
-          open={open}
-          handleClose={handleClose}
-          o_contact={key}
-        />
-      </Card>
+              type={type}
+              open={open}
+              handleClose={handleClose}
+              o_contact={key}
+            />
+          ) : null}
+        </Card>
+      </>
     ));
   }
 };

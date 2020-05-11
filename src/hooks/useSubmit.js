@@ -81,7 +81,6 @@ const useSubmit = () => {
           {}
         )
         .then((response) => {
-          console.log(response.data);
           handleDriverUpload();
           setSuccess(true);
           resetForm();
