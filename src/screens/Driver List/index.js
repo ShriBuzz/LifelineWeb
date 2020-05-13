@@ -1,69 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 
-import useDriverDate from "../../hooks/useDriverData";
-
-import {
-  Box,
-  Table,
-  TableCell,
-  TableHead,
-  TableContainer,
-  TableRow,
-  TableBody,
-  CircularProgress,
-} from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import { Box, FormControlLabel, Switch } from "@material-ui/core";
 
 import NavBar from "../../components/NavBar";
-import GetTable from "../../components/GetTable";
+import TableView from "../../components/TableView";
 import Cards from "../../components/Cards";
 
 import * as D from "./styles";
 
 const DriverList = () => {
-  const { users, loading } = useDriverDate();
-
-  if (!users || loading) {
-    return (
-      <>
-        <NavBar />
-        <Box component="div" style={D.container}>
-          <CircularProgress color="secondary" />
-        </Box>
-      </>
-    );
-  }
+  const [view, setView] = useState(false);
 
   return (
-    <React.Fragment>
+    <>
       <NavBar />
+
       <Box component="div" style={D.container}>
-        <TableContainer component={Paper} style={D.table}>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell style={D.head}>Name</TableCell>
-                <TableCell align="right" style={D.head}>
-                  Contact
-                </TableCell>
-                <TableCell align="right" style={D.head}>
-                  Email
-                </TableCell>
-                <TableCell align="right" style={D.head}>
-                  Driver ID
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <GetTable users={users} type="driver" />
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Box component="div" style={{ width: "100%", textAlign: "center" }}>
-          <Cards users={users} type="driver" />
-        </Box>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={view}
+              onChange={() => setView(!view)}
+              name={view ? "Cards" : "Table"}
+            />
+          }
+          label={view ? "Cards" : "Table"}
+        />
+        {view ? (
+          <Box component="div" style={D.cardsContainer}>
+            <Cards type="driver" />
+          </Box>
+        ) : (
+          <TableView type="driver" />
+        )}
       </Box>
-    </React.Fragment>
+    </>
   );
 };
 
