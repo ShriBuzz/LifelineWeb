@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import useDriverData from "../../hooks/useDriverData";
+import { LoginContext } from "../../hooks/LoginContext";
 
 import axios from "axios";
 import {
@@ -21,11 +22,21 @@ import * as C from "./styles";
 import Edit from "../Edit";
 
 const Cards = ({ type }) => {
-  const { users, loading } = useDriverData();
+  const { loading } = useDriverData();
+  const { Dusers, Tusers } = useContext(LoginContext);
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState();
   const [load, setLoad] = useState(false);
+  const [user, setUser] = useState();
   let url;
+
+  useEffect(() => {
+    if (type === "driver") {
+      setUser(Dusers);
+    } else {
+      setUser(Tusers);
+    }
+  }, [Dusers, Tusers, type]);
 
   const handleClose = () => {
     setOpen(false);
@@ -56,7 +67,7 @@ const Cards = ({ type }) => {
     }
   };
 
-  if (users.length === 0 || loading) {
+  if (Dusers.length === 0 || loading) {
     return (
       <Card style={C.Container} key={"name"}>
         <CardActionArea style={C.CardContainer}>
@@ -85,7 +96,7 @@ const Cards = ({ type }) => {
       </Card>
     );
   } else {
-    return users.map((data) => (
+    return user.map((data) => (
       <>
         <Card style={C.Container} key={data.contact}>
           <CardActionArea style={C.CardContainer}>

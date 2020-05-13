@@ -26,9 +26,11 @@ const TableView = ({ type }) => {
             <TableCell align="right" style={D.head}>
               Email
             </TableCell>
-            <TableCell align="right" style={D.head}>
-              Driver ID
-            </TableCell>
+            {type === "driver" ? (
+              <TableCell align="right" style={D.head}>
+                Driver ID
+              </TableCell>
+            ) : null}
           </TableRow>
         </TableHead>
         <TableBody>

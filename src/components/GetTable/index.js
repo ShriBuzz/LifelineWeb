@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { TableCell, TableRow } from "@material-ui/core";
 import useDriverData from "../../hooks/useDriverData";
+import useTrafficData from "../../hooks/useTrafficData";
+
+import { LoginContext } from "../../hooks/LoginContext";
 
 const GetTable = ({ type }) => {
-  const { users, loading } = useDriverData();
-  if (users.length === 0 || loading) {
+  const { loading } = useDriverData();
+  const { T_loading } = useTrafficData();
+  const { Dusers, Tusers } = useContext(LoginContext);
+  if (loading || T_loading) {
     return (
       <TableRow key={"name"}>
         <TableCell component="th" scope="row" style={cell}>
@@ -16,19 +21,28 @@ const GetTable = ({ type }) => {
       </TableRow>
     );
   } else {
-    console.log("table");
-    return users.map((row) => (
-      <TableRow key={row.contact}>
-        <TableCell component="th" scope="row" style={cell}>
-          {row.name}
-        </TableCell>
-        <TableCell style={cell}>{row.contact}</TableCell>
-        <TableCell style={cell}>{row.email}</TableCell>
-        {type === "driver" ? (
+    if (type === "driver") {
+      return Dusers.map((row) => (
+        <TableRow key={row.contact}>
+          <TableCell component="th" scope="row" style={cell}>
+            {row.name}
+          </TableCell>
+          <TableCell style={cell}>{row.contact}</TableCell>
+          <TableCell style={cell}>{row.email}</TableCell>
           <TableCell style={cell}>{row.driver_id}</TableCell>
-        ) : null}
-      </TableRow>
-    ));
+        </TableRow>
+      ));
+    } else {
+      return Tusers.map((row) => (
+        <TableRow key={row.contact}>
+          <TableCell component="th" scope="row" style={cell}>
+            {row.name}
+          </TableCell>
+          <TableCell style={cell}>{row.contact}</TableCell>
+          <TableCell style={cell}>{row.email}</TableCell>
+        </TableRow>
+      ));
+    }
   }
 };
 
