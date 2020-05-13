@@ -2,7 +2,7 @@
   "name": "lifeline-v2",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://lifeline-rats.herokuapp.com/",
+  "proxy": "http://192.168.0.117:5000/",  
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
@@ -14,7 +14,8 @@
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "react-toastify": "^6.0.0"
+    "react-toastify": "^6.0.0",
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
