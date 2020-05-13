@@ -34,7 +34,7 @@ const useUpdate = (o_contact, type) => {
       setLoading(true);
       getDriver(o_contact);
     } else {
-      setUrl(process.env.REACT_APP_BASE_URL + "/get_traffic_pic/" + o_contact);
+      setUrl(process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + o_contact);
       setLoading(true);
       axios
         .get("/traffic/" + o_contact)
