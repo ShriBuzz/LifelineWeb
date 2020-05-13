@@ -1,9 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
+import { LoginContext } from "./LoginContext";
 import axios from "axios";
 
 import { toast } from "react-toastify";
 
 const useUpdate = (o_contact, type) => {
+  const { Dusers, Tusers } = useContext(LoginContext);
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
@@ -12,43 +14,33 @@ const useUpdate = (o_contact, type) => {
   const [urls, setUrl] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const getDriver = useCallback((o_contact) => {
-    axios
-      .get("/driver/" + o_contact)
-      .then((res) => {
-        let user = res.data;
-        console.log(res.data);
-        setUser(user);
-        setName(user.name);
-        setContact(user.contact);
-        setEmail(user.email);
-        setDriverId(user.driver_id);
-        setLoading(false);
-      })
-      .catch((e) => console.log(e));
-  }, []);
-
   useEffect(() => {
     if (type === "driver") {
-      setUrl(process.env.REACT_APP_BASE_URL + "get_driver_pic/" + o_contact);
       setLoading(true);
-      getDriver(o_contact);
+      setUrl(process.env.REACT_APP_BASE_URL + "get_driver_pic/" + o_contact);
+      const data = Dusers.filter((user) => {
+        return user.contact === parseInt(o_contact);
+      });
+      setUser(data[0]);
+      setName(data[0].name);
+      setContact(data[0].contact);
+      setEmail(data[0].email);
+      setDriverId(data[0].driver_id);
+      setLoading(false);
     } else {
       setUrl(process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + o_contact);
       setLoading(true);
-      axios
-        .get("/traffic/" + o_contact)
-        .then((res) => {
-          let user = res.data;
-          setUser(user);
-          setName(user.name);
-          setContact(user.contact);
-          setEmail(user.email);
-          setLoading(false);
-        })
-        .catch((e) => console.log(e));
+      const data = Tusers.filter((user) => {
+        return user.contact === parseInt(o_contact);
+      });
+      setUser(data[0]);
+      setName(data[0].name);
+      setContact(data[0].contact);
+      setEmail(data[0].email);
+      setDriverId(data[0].driver_id);
+      setLoading(false);
     }
-  }, [getDriver, o_contact, type]);
+  }, [Dusers, Tusers, o_contact, type]);
 
   const handleDriverUpdate = async (e) => {
     e.preventDefault();

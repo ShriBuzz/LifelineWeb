@@ -1,21 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { LoginContext } from "./LoginContext";
 import axios from "axios";
 
 const useTrafficData = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [T_loading, setLoading] = useState(true);
+  const { setTusers } = useContext(LoginContext);
 
   useEffect(() => {
     axios
       .get("/traffic")
       .then((res) => {
-        setUsers(Array.from(res.data).sort(compare));
+        setTusers(Array.from(res.data).sort(compare));
         setLoading(false);
       })
       .catch((e) => {
         return console.log(e);
       });
-  }, [users.length]);
+  }, []);
 
   function compare(a, b) {
     // Use toUpperCase() to ignore character casing
@@ -31,7 +32,7 @@ const useTrafficData = () => {
     return comparison;
   }
 
-  return { users, loading };
+  return { T_loading };
 };
 
 export default useTrafficData;

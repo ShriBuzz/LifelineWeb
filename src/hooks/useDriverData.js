@@ -1,25 +1,22 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useContext } from "react";
+import { LoginContext } from "./LoginContext";
 import axios from "axios";
 
 const useDriverData = () => {
-  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { setDusers } = useContext(LoginContext);
 
-  const getData = useCallback(() => {
+  useEffect(() => {
     axios
       .get("/driver")
       .then((res) => {
-        setUsers(Array.from(res.data).sort(compare));
+        setDusers(Array.from(res.data).sort(compare));
         setLoading(false);
       })
       .catch((e) => {
         console.log(e);
       });
   }, []);
-
-  useEffect(() => {
-    getData();
-  }, [getData]);
 
   function compare(a, b) {
     // Use toUpperCase() to ignore character casing
@@ -35,7 +32,7 @@ const useDriverData = () => {
     return comparison;
   }
 
-  return { users, loading };
+  return { loading };
 };
 
 export default useDriverData;
