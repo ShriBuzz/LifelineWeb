@@ -70,7 +70,7 @@ const Cards = ({ type }) => {
     }
   };
 
-  if (!user) {
+  if (!user || Dusers.length === 0 || Tusers.length === 0) {
     return (
       <Card style={C.Container} key={"name"}>
         <CardActionArea style={C.CardContainer}>
