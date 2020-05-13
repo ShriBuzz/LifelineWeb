@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import useDriverData from "../../hooks/useDriverData";
+
 import axios from "axios";
 import {
   Card,
@@ -18,7 +20,8 @@ import Dummy from "../../assets/Profile.jpg";
 import * as C from "./styles";
 import Edit from "../Edit";
 
-const Cards = ({ users, type }) => {
+const Cards = ({ type }) => {
+  const { users, loading } = useDriverData();
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState();
   const [load, setLoad] = useState(false);
@@ -53,7 +56,7 @@ const Cards = ({ users, type }) => {
     }
   };
 
-  if (users == null) {
+  if (users.length === 0 || loading) {
     return (
       <Card style={C.Container} key={"name"}>
         <CardActionArea style={C.CardContainer}>
@@ -127,19 +130,17 @@ const Cards = ({ users, type }) => {
               Delete
             </Button>
           </CardActions>
-          {load ? (
-            <Edit
-              title={
-                type === "driver" ? "Edit Driver info" : "Edit Traffic info"
-              }
-              type={type}
-              open={open}
-              handleClose={handleClose}
-              o_contact={key}
-            />
-          ) : null}
           <ToastContainer />
         </Card>
+        {load ? (
+          <Edit
+            title={type === "driver" ? "Edit Driver info" : "Edit Traffic info"}
+            type={type}
+            open={open}
+            handleClose={handleClose}
+            o_contact={key}
+          />
+        ) : null}
       </>
     ));
   }

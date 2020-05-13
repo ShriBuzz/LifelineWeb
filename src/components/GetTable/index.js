@@ -1,8 +1,10 @@
 import React from "react";
 import { TableCell, TableRow } from "@material-ui/core";
+import useDriverData from "../../hooks/useDriverData";
 
-const GetTable = ({ users, type }) => {
-  if (users == null) {
+const GetTable = ({ type }) => {
+  const { users, loading } = useDriverData();
+  if (users.length === 0 || loading) {
     return (
       <TableRow key={"name"}>
         <TableCell component="th" scope="row" style={cell}>
@@ -14,8 +16,9 @@ const GetTable = ({ users, type }) => {
       </TableRow>
     );
   } else {
+    console.log("table");
     return users.map((row) => (
-      <TableRow key={row.name}>
+      <TableRow key={row.contact}>
         <TableCell component="th" scope="row" style={cell}>
           {row.name}
         </TableCell>
@@ -33,4 +36,4 @@ const cell = {
   textAlign: "center",
 };
 
-export default GetTable;
+export default React.memo(GetTable);
