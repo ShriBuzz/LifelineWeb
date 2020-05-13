@@ -8,7 +8,7 @@ import Cards from "../../components/Cards";
 import * as T from "./styles";
 
 const TrafficList = () => {
-  const [view, setView] = useState(false);
+  const [view, setView] = useState(true);
   return (
     <>
       <NavBar />

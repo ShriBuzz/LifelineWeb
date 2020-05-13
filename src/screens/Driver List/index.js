@@ -9,7 +9,7 @@ import Cards from "../../components/Cards";
 import * as D from "./styles";
 
 const DriverList = () => {
-  const [view, setView] = useState(false);
+  const [view, setView] = useState(true);
 
   return (
     <>
