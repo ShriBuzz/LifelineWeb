@@ -11,12 +11,18 @@ import TrafficList from "../screens/Traffic List";
 
 function Routes() {
   const [success, setSuccess] = useState(true);
+  const [Dusers, setDusers] = useState([]);
+  const [Tusers, setTusers] = useState([]);
   const providerValue = useMemo(
     () => ({
       success,
       setSuccess,
+      Dusers,
+      setDusers,
+      Tusers,
+      setTusers,
     }),
-    [success, setSuccess]
+    [success, setSuccess, Dusers, setDusers, Tusers, setTusers]
   );
   return (
     <Router history={history}>
