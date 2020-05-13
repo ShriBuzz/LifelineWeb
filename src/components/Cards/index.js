@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import useDriverData from "../../hooks/useDriverData";
+import useTrafficData from "../../hooks/useTrafficData";
 import { LoginContext } from "../../hooks/LoginContext";
 
 import axios from "axios";
@@ -16,13 +17,16 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Edit from "../Edit";
+
 import Dummy from "../../assets/Profile.jpg";
 
 import * as C from "./styles";
-import Edit from "../Edit";
 
 const Cards = ({ type }) => {
-  const { loading } = useDriverData();
+  useDriverData();
+  useTrafficData();
+
   const { Dusers, Tusers } = useContext(LoginContext);
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState();
@@ -46,9 +50,8 @@ const Cards = ({ type }) => {
     axios
       .delete(url)
       .then((res) => {
-        console.log(res);
         toast.success("Succesfully deleted.");
-        window.location.reload(false);
+        window.location.reload();
       })
       .catch((error) => console.log(error));
   };
@@ -67,7 +70,7 @@ const Cards = ({ type }) => {
     }
   };
 
-  if (Dusers.length === 0 || loading) {
+  if (!user) {
     return (
       <Card style={C.Container} key={"name"}>
         <CardActionArea style={C.CardContainer}>
