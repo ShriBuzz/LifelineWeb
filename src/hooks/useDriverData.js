@@ -16,7 +16,7 @@ const useDriverData = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [setDusers]);
 
   function compare(a, b) {
     // Use toUpperCase() to ignore character casing

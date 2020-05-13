@@ -16,7 +16,7 @@ const useTrafficData = () => {
       .catch((e) => {
         return console.log(e);
       });
-  }, []);
+  }, [setTusers]);
 
   function compare(a, b) {
     // Use toUpperCase() to ignore character casing
