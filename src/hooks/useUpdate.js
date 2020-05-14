@@ -1,46 +1,46 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
+import { LoginContext } from "./LoginContext";
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 const useUpdate = (o_contact, type) => {
+  const { Dusers, Tusers } = useContext(LoginContext);
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [driver_id, setDriverId] = useState("");
   const [user, setUser] = useState(null);
   const [urls, setUrl] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (type === "driver") {
-      setUrl("http://192.168.0.117:5000/get_driver_pic/" + o_contact);
-      axios
-        .get("/driver")
-        .then((res) => {
-          let user = res.data.filter(function (obj) {
-            return obj.contact.toString() === o_contact;
-          });
-          setUser(user[0]);
-          setName(user[0].name);
-          setContact(user[0].contact);
-          setEmail(user[0].email);
-          setDriverId(user[0].driver_id);
-        })
-        .catch((e) => console.log(e));
+      setLoading(true);
+      setUrl(process.env.REACT_APP_BASE_URL + "get_driver_pic/" + o_contact);
+      const data = Dusers.filter((user) => {
+        return user.contact === parseInt(o_contact);
+      });
+      setUser(data[0]);
+      setName(data[0].name);
+      setContact(data[0].contact);
+      setEmail(data[0].email);
+      setDriverId(data[0].driver_id);
+      setLoading(false);
     } else {
-      setUrl("http://192.168.0.117:5000/get_traffic_pic/" + o_contact);
-      axios
-        .get("/traffic")
-        .then((res) => {
-          let user = res.data.filter(function (obj) {
-            return obj.contact.toString() === o_contact;
-          });
-          setUser(user[0]);
-          setName(user[0].name);
-          setContact(user[0].contact);
-          setEmail(user[0].email);
-        })
-        .catch((e) => console.log(e));
+      setUrl(process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + o_contact);
+      setLoading(true);
+      const data = Tusers.filter((user) => {
+        return user.contact === parseInt(o_contact);
+      });
+      setUser(data[0]);
+      setName(data[0].name);
+      setContact(data[0].contact);
+      setEmail(data[0].email);
+      setDriverId(data[0].driver_id);
+      setLoading(false);
     }
-  }, [o_contact]);
+  }, [Dusers, Tusers, o_contact, type]);
 
   const handleDriverUpdate = async (e) => {
     e.preventDefault();
@@ -59,11 +59,11 @@ const useUpdate = (o_contact, type) => {
       )
       .then((response) => {
         console.log(response.data);
-        alert("succesfully updated!");
+        toast.success("succesfully updated!");
         window.location.reload(false);
       })
       .catch((error) => {
-        alert("failed to update!");
+        toast.error("failed to update!");
         console.log(error);
       });
   };
@@ -84,11 +84,11 @@ const useUpdate = (o_contact, type) => {
       )
       .then((response) => {
         console.log(response.data);
-        alert("succesfully updated!");
+        toast.success("succesfully updated!");
         window.location.reload(false);
       })
       .catch((error) => {
-        alert("failed to update!");
+        toast.error("failed to update!");
         console.log(error);
       });
   };
@@ -106,6 +106,7 @@ const useUpdate = (o_contact, type) => {
     setContact,
     driver_id,
     setDriverId,
+    loading,
   };
 };
 

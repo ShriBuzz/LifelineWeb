@@ -1,6 +1,12 @@
 import React, { useState, useContext } from "react";
 
-import { Backdrop, Box, TextField, Grid, Typography } from "@material-ui/core";
+import {
+  Backdrop,
+  Paper,
+  TextField,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
 
@@ -34,7 +40,12 @@ function Login() {
 
   return (
     <Backdrop open={true} color={"#f0f1f2"}>
-      <Box component="form" style={L.container} onSubmit={() => handleSubmit()}>
+      <Paper
+        elevation="3"
+        component="form"
+        style={L.container}
+        onSubmit={() => handleSubmit()}
+      >
         <Typography style={L.Header}>Lifeline Admin Login</Typography>
         <Grid container spacing={1} style={L.Form}>
           <Grid item>
@@ -68,8 +79,13 @@ function Login() {
           </Grid>
         </Grid>
         <Buttons title={"Submit"} onSubmit={() => handleSubmit()} />
-        <Failure open={fail} handleClose={handleClose} />
-      </Box>
+        <Failure
+          open={fail}
+          handleClose={handleClose}
+          title="Login Error"
+          message="Please enter both name and password."
+        />
+      </Paper>
     </Backdrop>
   );
 }

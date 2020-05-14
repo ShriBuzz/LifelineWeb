@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { TableCell, TableRow } from "@material-ui/core";
+import useDriverData from "../../hooks/useDriverData";
+import useTrafficData from "../../hooks/useTrafficData";
 
-const GetTable = ({ users, type }) => {
-  if (users == null) {
+import { LoginContext } from "../../hooks/LoginContext";
+
+const GetTable = ({ type }) => {
+  const { loading } = useDriverData();
+  const { T_loading } = useTrafficData();
+  const { Dusers, Tusers } = useContext(LoginContext);
+  if (loading || T_loading) {
     return (
       <TableRow key={"name"}>
         <TableCell component="th" scope="row" style={cell}>
@@ -14,18 +21,28 @@ const GetTable = ({ users, type }) => {
       </TableRow>
     );
   } else {
-    return users.map((row) => (
-      <TableRow key={row.name}>
-        <TableCell component="th" scope="row" style={cell}>
-          {row.name}
-        </TableCell>
-        <TableCell style={cell}>{row.contact}</TableCell>
-        <TableCell style={cell}>{row.email}</TableCell>
-        {type === "driver" ? (
+    if (type === "driver") {
+      return Dusers.map((row) => (
+        <TableRow key={row.contact}>
+          <TableCell component="th" scope="row" style={cell}>
+            {row.name}
+          </TableCell>
+          <TableCell style={cell}>{row.contact}</TableCell>
+          <TableCell style={cell}>{row.email}</TableCell>
           <TableCell style={cell}>{row.driver_id}</TableCell>
-        ) : null}
-      </TableRow>
-    ));
+        </TableRow>
+      ));
+    } else {
+      return Tusers.map((row) => (
+        <TableRow key={row.contact}>
+          <TableCell component="th" scope="row" style={cell}>
+            {row.name}
+          </TableCell>
+          <TableCell style={cell}>{row.contact}</TableCell>
+          <TableCell style={cell}>{row.email}</TableCell>
+        </TableRow>
+      ));
+    }
   }
 };
 
@@ -33,4 +50,4 @@ const cell = {
   textAlign: "center",
 };
 
-export default GetTable;
+export default React.memo(GetTable);

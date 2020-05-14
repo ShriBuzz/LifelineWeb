@@ -2,6 +2,7 @@ import React from "react";
 // custom hook
 import useSubmit from "../../hooks/useSubmit";
 
+// packages
 import {
   Box,
   Avatar,
@@ -9,8 +10,13 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// assets
 import Profile from "../../assets/Profile.jpg";
 
+// components
 import Upload from "../../components/Upload";
 import Buttons from "../../components/Button";
 import Success from "../../components/Success";
@@ -110,6 +116,7 @@ const Traffic = () => {
           }
         />
       </Box>
+      <ToastContainer />
     </Container>
   );
 };

@@ -6,6 +6,7 @@ import {
   Box,
   Avatar,
   TextField,
+  CircularProgress,
   Dialog,
   DialogTitle,
   DialogActions,
@@ -15,7 +16,7 @@ import {
 
 import * as E from "./styles";
 
-const Edit = ({ title, open, handleClose, o_contact, type }) => {
+const Edit = React.memo(({ title, open, handleClose, o_contact, type }) => {
   const {
     user,
     urls,
@@ -29,6 +30,7 @@ const Edit = ({ title, open, handleClose, o_contact, type }) => {
     setContact,
     driver_id,
     setDriverId,
+    loading,
   } = useUpdate(o_contact, type);
 
   function chooseUpdate(e) {
@@ -49,8 +51,8 @@ const Edit = ({ title, open, handleClose, o_contact, type }) => {
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 
       <DialogContent>
-        {!user ? (
-          `Loading...`
+        {loading || !user ? (
+          <CircularProgress color="secondary" />
         ) : (
           <Box component="form" style={E.FormContainer}>
             <Avatar style={{ width: 90, height: 90 }} src={urls} />
@@ -100,6 +102,6 @@ const Edit = ({ title, open, handleClose, o_contact, type }) => {
       </DialogActions>
     </Dialog>
   );
-};
+});
 
-export default React.memo(Edit);
+export default Edit;

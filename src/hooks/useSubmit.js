@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 const useSubmit = () => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
@@ -30,7 +32,7 @@ const useSubmit = () => {
         .post(driver_pic, file, {})
         .then((response) => {
           console.log(response.statusText, "Sent image!!!!!");
-          alert("Successfully uploaded image to server.");
+          toast.success("Successfully uploaded image.");
         })
         .catch((error) => {
           setFail(true);
@@ -42,7 +44,7 @@ const useSubmit = () => {
   function handlePreview(e) {
     e.preventDefault();
     if (upload == null) {
-      alert("Choose an image to preview.");
+      toast.warn("Choose an image to preview.");
     } else {
       const objectUrl = URL.createObjectURL(upload);
       setUrl(objectUrl);
@@ -62,7 +64,9 @@ const useSubmit = () => {
     e.preventDefault();
     setLoading(true);
     if (!upload) {
-      alert("Please upload an image!");
+      toast.error("Please upload an image!");
+      setLoading(false);
+      return;
     }
 
     //API call here
@@ -81,7 +85,6 @@ const useSubmit = () => {
           {}
         )
         .then((response) => {
-          console.log(response.data);
           handleDriverUpload();
           setSuccess(true);
           resetForm();
@@ -102,7 +105,9 @@ const useSubmit = () => {
     setLoading(true);
 
     if (!upload) {
-      alert("Please upload an image!");
+      toast.error("Please upload an image!");
+      setLoading(false);
+      return;
     }
 
     //API call here
@@ -140,7 +145,7 @@ const useSubmit = () => {
       await axios
         .post(traffic_pic, file, {})
         .then((response) => {
-          console.log(response.statusText, "Sent image!!!!!");
+          toast.success("Successfully uploaded image.");
           resetForm();
         })
         .catch((error) => {
