@@ -2,10 +2,10 @@ import React from "react";
 
 import Routes from "./navigation/router";
 
-import { connect } from "./sock";
+// import { connect } from "./sock";
 
 const App = () => {
-  connect();
+  // connect();
   return <Routes />;
 };
 
