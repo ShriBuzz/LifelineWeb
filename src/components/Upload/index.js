@@ -5,13 +5,13 @@ import {
   Button,
   ButtonGroup,
   IconButton,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import { PhotoCamera } from "@material-ui/icons";
 
 import * as U from "./styles";
 
-const Upload = ({ setUpload, handleUpload, handlePreview }) => {
+const Upload = ({ setUpload, handlePreview }) => {
   return (
     <Box component="div" style={U.row}>
       <input
@@ -19,24 +19,10 @@ const Upload = ({ setUpload, handleUpload, handlePreview }) => {
         id="icon-button-file"
         type="file"
         name="file"
-        onChange={e => setUpload(e.target.files[0])}
+        onChange={(e) => setUpload(e.target.files[0])}
         style={{ display: "none" }}
       />
       <ButtonGroup aria-label="outlined primary button group">
-        <Tooltip
-          disableFocusListener
-          disableTouchListener
-          title="Fill all above data and submit before upload"
-          placement="top"
-        >
-          <Button
-            variant="outlined"
-            color="secondary"
-            onClick={e => handleUpload(e)}
-          >
-            Upload
-          </Button>
-        </Tooltip>
         <Tooltip
           disableFocusListener
           disableTouchListener
@@ -46,7 +32,7 @@ const Upload = ({ setUpload, handleUpload, handlePreview }) => {
           <Button
             variant="outlined"
             color="secondary"
-            onClick={e => handlePreview(e)}
+            onClick={(e) => handlePreview(e)}
           >
             Preview
           </Button>

@@ -5,18 +5,10 @@ export const container = {
   alignItems: "center",
   height: "100%",
   padding: 30,
-  backgroundColor: "#f0f1f2"
+  backgroundColor: "#f0f1f2",
 };
 
-export const table = {
-  marginTop: "1.2em"
-};
-
-export const head = {
-  fontWeight: 600,
-  textAlign: "center"
-};
-
-export const cell = {
-  textAlign: "center"
+export const cardsContainer = {
+  width: "100%",
+  textAlign: "center",
 };

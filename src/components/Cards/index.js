@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+
+import useDriverData from "../../hooks/useDriverData";
+import useTrafficData from "../../hooks/useTrafficData";
+import { LoginContext } from "../../hooks/LoginContext";
 
 import axios from "axios";
 import {
@@ -8,112 +12,95 @@ import {
   CardContent,
   Avatar,
   Button,
-  Typography
+  Typography,
 } from "@material-ui/core";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import Edit from "../Edit";
 
 import Dummy from "../../assets/Profile.jpg";
 
 import * as C from "./styles";
-import Edit from "../Edit";
 
-const Cards = ({ users, type }) => {
+const Cards = ({ type }) => {
+  useDriverData();
+  useTrafficData();
+
+  const { Dusers, Tusers } = useContext(LoginContext);
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState();
-  const [r_name, setName] = useState();
-  const [r_email, setEmail] = useState();
-  const [r_driverid, setDriverId] = useState();
+  const [load, setLoad] = useState(false);
+  const [user, setUser] = useState();
+  let url;
+
+  useEffect(() => {
+    if (type === "driver") {
+      setUser(Dusers);
+    } else {
+      setUser(Tusers);
+    }
+  }, [Dusers, Tusers, type]);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleDelete = url => {
+  const handleDelete = (url) => {
     axios
       .delete(url)
-      .then(res => {
-        console.log(res);
-        window.location.reload(false);
+      .then((res) => {
+        toast.success("Succesfully deleted.");
+        window.location.reload();
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   };
 
-  const renderAvatar = key => {
+  const renderAvatar = (key) => {
     if (key === null) {
       return <Avatar style={{ width: 90, height: 90 }} src={Dummy} />;
     } else {
       if (type === "driver") {
-        const url = "http://192.168.0.117:5000/get_driver_pic/" + key;
+        const url = process.env.REACT_APP_BASE_URL + "get_driver_pic/" + key;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       } else {
-        const url = "http://192.168.0.117:5000/get_traffic_pic/" + key;
+        const url = process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + key;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       }
     }
   };
 
-  if (users == null) {
-    if (type === "driver") {
-      return (
-        <Card style={C.Container} key={"name"}>
-          <CardActionArea style={C.CardContainer}>
-            <Avatar style={{ width: 90, height: 90 }} src={Dummy} />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                Name: -----
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Contact: -----
-                <br />
-                Email: -----
-                <br />
-                Driver ID: -----
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button
-              size="small"
-              color="secondary"
-              onClick={() => setOpen(true)}
-            >
-              Edit
-            </Button>
-            <Button size="small" color="secondary">
-              Delete
-            </Button>
-          </CardActions>
-        </Card>
-      );
-    } else {
-      return (
-        <Card style={C.Container} key={"name"}>
-          <CardActionArea style={C.CardContainer}>
-            <Avatar style={{ width: 90, height: 90 }} src={Dummy} />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                Name: -----
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Contact: -----
-                <br />
-                Email: -----
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="secondary">
-              Edit
-            </Button>
-            <Button size="small" color="secondary">
-              Delete
-            </Button>
-          </CardActions>
-        </Card>
-      );
-    }
+  if (!user || Dusers.length === 0 || Tusers.length === 0) {
+    return (
+      <Card style={C.Container} key={"name"}>
+        <CardActionArea style={C.CardContainer}>
+          <Avatar style={{ width: 90, height: 90 }} src={Dummy} />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              Name: -----
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Contact: -----
+              <br />
+              Email: -----
+              <br />
+              {type === "driver" ? `Driver ID: -----` : null}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions>
+          <Button size="small" color="secondary">
+            Edit
+          </Button>
+          <Button size="small" color="secondary">
+            Delete
+          </Button>
+        </CardActions>
+      </Card>
+    );
   } else {
-    if (type === "driver") {
-      return users.map(data => (
+    return user.map((data) => (
+      <>
         <Card style={C.Container} key={data.contact}>
           <CardActionArea style={C.CardContainer}>
             {renderAvatar(data.contact)}
@@ -126,7 +113,7 @@ const Cards = ({ users, type }) => {
                 <br />
                 Email: {data.email}
                 <br />
-                Driver ID: {data.driver_id}
+                {data.driver_id ? `Driver ID: ${data.driver_id}` : null}
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -136,9 +123,7 @@ const Cards = ({ users, type }) => {
               color="secondary"
               onClick={() => {
                 setKey(data.contact.toString());
-                setName(data.name.toString());
-                setEmail(data.email.toString());
-                setDriverId(data.driver_id.toString());
+                setLoad(true);
                 setOpen(true);
               }}
             >
@@ -148,64 +133,30 @@ const Cards = ({ users, type }) => {
               size="small"
               color="secondary"
               onClick={() => {
-                const url = "/driver/" + data.contact;
+                if (type === "driver") {
+                  url = "/driver/" + data.contact;
+                } else {
+                  url = "/traffic/" + data.contact;
+                }
                 handleDelete(url);
               }}
             >
               Delete
             </Button>
           </CardActions>
+          <ToastContainer />
+        </Card>
+        {load ? (
           <Edit
-            title="Edit Driver info"
+            title={type === "driver" ? "Edit Driver info" : "Edit Traffic info"}
+            type={type}
             open={open}
             handleClose={handleClose}
-            users={users}
             o_contact={key}
-            o_name={r_name}
-            o_email={r_email}
-            o_driverid={r_driverid}
-            // o_img={r_img}
           />
-        </Card>
-      ));
-    } else {
-      return users.map(data => (
-        <Card style={C.Container} key={data.contact}>
-          <CardActionArea style={C.CardContainer}>
-            {renderAvatar(data.contact)}
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {data.name}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Contact: {data.contact}
-                <br />
-                Email: {data.email}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions>
-            <Button
-              size="small"
-              color="secondary"
-              onClick={() => console.log(data.contact)}
-            >
-              Edit
-            </Button>
-            <Button
-              size="small"
-              color="secondary"
-              onClick={() => {
-                const url = "/traffic/" + data.contact;
-                handleDelete(url);
-              }}
-            >
-              Delete
-            </Button>
-          </CardActions>
-        </Card>
-      ));
-    }
+        ) : null}
+      </>
+    ));
   }
 };
 

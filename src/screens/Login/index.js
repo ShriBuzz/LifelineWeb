@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
-import { Backdrop, Box, TextField, Grid, Typography } from "@material-ui/core";
+import {
+  Backdrop,
+  Paper,
+  TextField,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import LockIcon from "@material-ui/icons/Lock";
 
@@ -10,27 +16,36 @@ import Buttons from "../../components/Button";
 import Failure from "../../components/Failure";
 
 import * as L from "./styles";
+import { LoginContext } from "../../hooks/LoginContext";
 
 function Login() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [fail, setFail] = useState(false);
+  const { success, setSuccess } = useContext(LoginContext);
+  console.log(success);
 
   const handleClose = () => {
     setFail(false);
   };
 
-  function handleSubmit() {
+  const handleSubmit = async () => {
     if (name === "admin" && password === "admin") {
+      setSuccess(true);
       history.push("/Home");
     } else {
       setFail(true);
     }
-  }
+  };
 
   return (
     <Backdrop open={true} color={"#f0f1f2"}>
-      <Box component="div" style={L.container}>
+      <Paper
+        elevation="3"
+        component="form"
+        style={L.container}
+        onSubmit={() => handleSubmit()}
+      >
         <Typography style={L.Header}>Lifeline Admin Login</Typography>
         <Grid container spacing={1} style={L.Form}>
           <Grid item>
@@ -42,7 +57,7 @@ function Login() {
               color={"secondary"}
               required
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               style={L.Input}
             />
           </Grid>
@@ -58,14 +73,19 @@ function Login() {
               color={"secondary"}
               required
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               style={L.Input}
             />
           </Grid>
         </Grid>
-        <Buttons title={"Submit"} onSubmit={handleSubmit} />
-        <Failure open={fail} handleClose={handleClose} />
-      </Box>
+        <Buttons title={"Submit"} onSubmit={() => handleSubmit()} />
+        <Failure
+          open={fail}
+          handleClose={handleClose}
+          title="Login Error"
+          message="Please enter both name and password."
+        />
+      </Paper>
     </Backdrop>
   );
 }
