@@ -61,10 +61,10 @@ const Cards = ({ type }) => {
       return <Avatar style={{ width: 90, height: 90 }} src={Dummy} />;
     } else {
       if (type === "driver") {
-        const url = process.env.REACT_APP_BASE_URL + "get_driver_pic/" + key;
+        const url = process.env.REACT_APP_BASE_URL + "/get_driver_pic/" + key;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       } else {
-        const url = process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + key;
+        const url = process.env.REACT_APP_BASE_URL + "/get_traffic_pic/" + key;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       }
     }
@@ -134,9 +134,11 @@ const Cards = ({ type }) => {
               color="secondary"
               onClick={() => {
                 if (type === "driver") {
-                  url = "/driver/" + data.contact;
+                  url =
+                    process.env.REACT_APP_BASE_URL + "/driver/" + data.contact;
                 } else {
-                  url = "/traffic/" + data.contact;
+                  url =
+                    process.env.REACT_APP_BASE_URL + "/traffic/" + data.contact;
                 }
                 handleDelete(url);
               }}

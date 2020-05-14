@@ -8,7 +8,7 @@ const useDriverData = () => {
 
   useEffect(() => {
     axios
-      .get("/driver")
+      .get(process.env.REACT_APP_BASE_URL + "/driver")
       .then((res) => {
         setDusers(Array.from(res.data).sort(compare));
         setLoading(false);

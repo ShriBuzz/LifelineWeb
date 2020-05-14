@@ -14,8 +14,10 @@ const useSubmit = () => {
   const [success, setSuccess] = useState(false);
   const [fail, setFail] = useState(false);
   const [url, setUrl] = useState(null);
-  const driver_pic = "/update_driver_pic/" + contact;
-  const traffic_pic = "/update_traffic_pic/" + contact;
+  const driver_pic =
+    process.env.REACT_APP_BASE_URL + "/update_driver_pic/" + contact;
+  const traffic_pic =
+    process.env.REACT_APP_BASE_URL + "/update_traffic_pic/" + contact;
 
   const handleClose = () => {
     setSuccess(false);
@@ -73,7 +75,7 @@ const useSubmit = () => {
     if (upload) {
       await axios
         .post(
-          `/driver_signup`,
+          process.env.REACT_APP_BASE_URL + `/driver_signup`,
           {
             // data to be sent
             name,
@@ -113,7 +115,7 @@ const useSubmit = () => {
     //API call here
     if (upload) {
       await axios
-        .post(`/traffic_signup`, {
+        .post(process.env.REACT_APP_BASE_URL + `/traffic_signup`, {
           // data to be sent
           name,
           email,
