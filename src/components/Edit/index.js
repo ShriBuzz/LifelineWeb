@@ -51,39 +51,6 @@ const Edit = React.memo(({ title, open, handleClose, o_contact, type }) => {
       <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 
       <DialogContent>
-<<<<<<< HEAD
-        <Box component="form" style={E.FormContainer}>
-          <Avatar style={{ width: 90, height: 90 }} src={url} />
-          <Box style={E.Form}>
-            <TextField
-              label={o_name}
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              style={E.Input}
-            />
-            <TextField
-              label={o_contact}
-              type="text"
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
-              style={E.Input}
-            />
-            <TextField
-              label={o_email}
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={E.Input}
-            />
-            <TextField
-              label={o_driverid}
-              type="text"
-              value={driver_id}
-              onChange={(e) => setDriverId(e.target.value)}
-              style={E.Input}
-            />
-=======
         {loading || !user ? (
           <CircularProgress color="secondary" />
         ) : (
@@ -122,16 +89,11 @@ const Edit = React.memo(({ title, open, handleClose, o_contact, type }) => {
                 />
               ) : null}
             </Box>
->>>>>>> 194831f840a801546f7dc6004904cf511ad9068a
           </Box>
         )}
       </DialogContent>
       <DialogActions>
-<<<<<<< HEAD
-        <Button onClick={(e) => handleUpdate(e)} color="secondary">
-=======
         <Button onClick={(e) => chooseUpdate(e)} color="secondary">
->>>>>>> 194831f840a801546f7dc6004904cf511ad9068a
           Save
         </Button>
         <Button onClick={handleClose} color="secondary">
