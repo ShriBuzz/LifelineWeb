@@ -62,6 +62,7 @@ function Login() {
               label="Username"
               color={"secondary"}
               required
+              autoComplete="username"
               value={name}
               onChange={(e) => setName(e.target.value)}
               style={L.Input}

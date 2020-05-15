@@ -66,6 +66,7 @@ const Driver = () => {
           required
           label="Name"
           type="text"
+          autoComplete="username"
           value={name}
           placeholder="Enter your name"
           onChange={(e) => setName(e.target.value)}
@@ -75,6 +76,7 @@ const Driver = () => {
           required
           label="Email"
           type="email"
+          autoComplete="email"
           value={email}
           placeholder="Enter your email"
           onChange={(e) => setEmail(e.target.value)}
@@ -84,6 +86,7 @@ const Driver = () => {
           required
           label="Contact"
           type="number"
+          autoComplete="tel"
           value={contact}
           placeholder="Enter your mobile no."
           onChange={(e) => setContact(e.target.value)}
@@ -93,6 +96,7 @@ const Driver = () => {
           required
           label="Driver Id"
           type="text"
+          autoComplete="name"
           value={driver_id}
           placeholder="Enter your driver id"
           onChange={(e) => setDriverId(e.target.value)}
