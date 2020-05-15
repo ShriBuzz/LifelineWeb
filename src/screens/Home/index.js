@@ -1,10 +1,17 @@
 import React, { useContext } from "react";
-import { LoginContext } from "../../hooks/LoginContext";
 
+// hooks
+import { LoginContext } from "../../hooks/LoginContext";
+import useDriverData from "../../hooks/useDriverData";
+import useTrafficData from "../../hooks/useTrafficData";
+
+// components
 import NavBar from "../../components/NavBar";
 import Signup from "../../components/Signup";
 
 const Home = () => {
+  useDriverData();
+  useTrafficData();
   var { success } = useContext(LoginContext);
   if (success === false) {
     return (
