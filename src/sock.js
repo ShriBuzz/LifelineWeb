@@ -5,7 +5,7 @@ const data = {
   age: "12",
   gender: "male",
 };
-const name = "harry";
+
 export function connect() {
   socket.on("connect", function () {
     socket.emit("json", data);
