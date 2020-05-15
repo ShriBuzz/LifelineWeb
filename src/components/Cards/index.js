@@ -46,14 +46,23 @@ const Cards = ({ type }) => {
     setOpen(false);
   };
 
+  function newData(contact) {
+    const newSet = user.filter((data) => {
+      return data.contact !== parseInt(contact);
+    });
+    setUser(newSet);
+  }
+
   const handleDelete = (url) => {
     axios
       .delete(url)
       .then((res) => {
         toast.success("Succesfully deleted.");
-        window.location.reload();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        toast.error("Couldnot delete user. Try again!");
+      });
   };
 
   const renderAvatar = (key) => {
@@ -138,6 +147,7 @@ const Cards = ({ type }) => {
                 } else {
                   url = "/traffic/" + data.contact;
                 }
+                newData(data.contact);
                 handleDelete(url);
               }}
             >
