@@ -1,11 +1,21 @@
 import React, { useContext } from "react";
 
+// packages
 import { AppBar, Toolbar, Avatar, Typography, Button } from "@material-ui/core";
 
+// componets
 import TemporaryDrawer from "../Drawer";
+
+// routes
 import history from "../../navigation/history";
+
+// styles
 import * as N from "./styles";
+
+// assets
 import Logo from "../../assets/logo.png";
+
+// hook
 import { LoginContext } from "../../hooks/LoginContext";
 
 function NavBar() {

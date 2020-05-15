@@ -1,15 +1,14 @@
 import React, { useContext } from "react";
-import { TableCell, TableRow } from "@material-ui/core";
-import useDriverData from "../../hooks/useDriverData";
-import useTrafficData from "../../hooks/useTrafficData";
 
+// package
+import { TableCell, TableRow } from "@material-ui/core";
+
+// hook
 import { LoginContext } from "../../hooks/LoginContext";
 
 const GetTable = ({ type }) => {
-  const { loading } = useDriverData();
-  const { T_loading } = useTrafficData();
   const { Dusers, Tusers } = useContext(LoginContext);
-  if (loading || T_loading) {
+  if (Dusers.length === 0 || Tusers.length === 0) {
     return (
       <TableRow key={"name"}>
         <TableCell component="th" scope="row" style={cell}>

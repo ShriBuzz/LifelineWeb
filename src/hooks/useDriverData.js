@@ -1,6 +1,11 @@
 import { useState, useEffect, useContext } from "react";
+
+// hook
 import { LoginContext } from "./LoginContext";
+
+// packages
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const useDriverData = () => {
   const [loading, setLoading] = useState(true);
@@ -14,7 +19,7 @@ const useDriverData = () => {
         setLoading(false);
       })
       .catch((e) => {
-        console.log(e);
+        toast.warn("Could not connect to server!");
       });
   }, [setDusers]);
 

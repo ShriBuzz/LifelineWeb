@@ -1,16 +1,19 @@
 import React, { useContext } from "react";
 
+// hooks
 import useDrawer from "../../hooks/useDrawer";
 import { LoginContext } from "../../hooks/LoginContext";
+
+// package
 import { Drawer, Divider, IconButton, Typography } from "@material-ui/core";
-
-import ListIcon from "../ListIcon";
-
 import MenuIcon from "@material-ui/icons/Menu";
 import HomeIcon from "@material-ui/icons/Home";
 import DriveEtaIcon from "@material-ui/icons/DriveEta";
 import TrafficIcon from "@material-ui/icons/Traffic";
 import MeetingRoomIcon from "@material-ui/icons/MeetingRoom";
+
+// components
+import ListIcon from "../ListIcon";
 
 import * as D from "./styles";
 

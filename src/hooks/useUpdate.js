@@ -1,7 +1,10 @@
-import { useState, useEffect, useCallback, useContext } from "react";
-import { LoginContext } from "./LoginContext";
-import axios from "axios";
+import { useState, useEffect, useContext } from "react";
 
+// hook
+import { LoginContext } from "./LoginContext";
+
+// packages
+import axios from "axios";
 import { toast } from "react-toastify";
 
 const useUpdate = (o_contact, type) => {

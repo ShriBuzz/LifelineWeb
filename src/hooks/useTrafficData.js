@@ -1,6 +1,11 @@
 import { useState, useEffect, useContext } from "react";
+
+// hook
 import { LoginContext } from "./LoginContext";
+
+// packages
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const useTrafficData = () => {
   const [T_loading, setLoading] = useState(true);
@@ -14,7 +19,7 @@ const useTrafficData = () => {
         setLoading(false);
       })
       .catch((e) => {
-        return console.log(e);
+        toast.warn("Could not connect to server!");
       });
   }, [setTusers]);
 

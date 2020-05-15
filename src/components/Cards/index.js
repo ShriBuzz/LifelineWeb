@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 
-import useDriverData from "../../hooks/useDriverData";
-import useTrafficData from "../../hooks/useTrafficData";
+// hooks
 import { LoginContext } from "../../hooks/LoginContext";
 
+// packages
 import axios from "axios";
 import {
   Card,
@@ -17,16 +17,16 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// component
 import Edit from "../Edit";
 
+// assets
 import Dummy from "../../assets/Profile.jpg";
 
+// style
 import * as C from "./styles";
 
 const Cards = ({ type }) => {
-  useDriverData();
-  useTrafficData();
-
   const { Dusers, Tusers } = useContext(LoginContext);
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState();

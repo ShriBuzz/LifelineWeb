@@ -1,7 +1,9 @@
 import React from "react";
 
+// hooks
 import useUpdate from "../../hooks/useUpdate";
 
+// package
 import {
   Box,
   Avatar,
@@ -14,6 +16,7 @@ import {
   Button,
 } from "@material-ui/core";
 
+// styles
 import * as E from "./styles";
 
 const Edit = React.memo(({ title, open, handleClose, o_contact, type }) => {
