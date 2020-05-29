@@ -12,13 +12,21 @@ import useDriverData from "../../hooks/useDriverData";
 import NavBar from "../../components/NavBar";
 import TableView from "../../components/TableView";
 import Cards from "../../components/Cards";
+import Edit from "../../components/Edit";
 
 // styles
 import * as D from "./styles";
 
 const DriverList = () => {
   const [view, setView] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [key, setKey] = useState();
+
   useDriverData();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
@@ -37,12 +45,23 @@ const DriverList = () => {
         />
         {view ? (
           <Box component="div" style={D.cardsContainer}>
-            <Cards type="driver" />
+            <Cards type="driver" setOpen={setOpen} setKey={setKey} />
           </Box>
         ) : (
           <TableView type="driver" />
         )}
       </Box>
+      {key ? (
+        <Edit
+          title={"Edit Driver info"}
+          type="driver"
+          open={open}
+          setOpen={setOpen}
+          handleClose={handleClose}
+          o_contact={key}
+        />
+      ) : null}
+
       <ToastContainer />
     </>
   );
