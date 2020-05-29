@@ -16,95 +16,126 @@ import {
   Button,
 } from "@material-ui/core";
 
+import Upload from "../Upload";
+
 // styles
 import * as E from "./styles";
 
-const Edit = React.memo(({ title, open, handleClose, o_contact, type }) => {
-  const {
-    user,
-    urls,
-    handleDriverUpdate,
-    handleTrafficUpdate,
-    name,
-    setName,
-    email,
-    setEmail,
-    contact,
-    setContact,
-    driver_id,
-    setDriverId,
-    loading,
-  } = useUpdate(o_contact, type);
+const Edit = React.memo(
+  ({ title, open, setOpen, handleClose, o_contact, type }) => {
+    const {
+      user,
+      url,
+      urls,
+      handleDriverUpdate,
+      handleTrafficUpdate,
+      name,
+      setName,
+      email,
+      setEmail,
+      contact,
+      setContact,
+      driver_id,
+      setDriverId,
+      loading,
+      setUpload,
+      handlePreview,
+    } = useUpdate(o_contact, type);
 
-  function chooseUpdate(e) {
-    if (type === "driver") {
-      handleDriverUpdate(e);
-    } else {
-      handleTrafficUpdate(e);
+    function chooseUpdate(e) {
+      if (type === "driver") {
+        handleDriverUpdate(e);
+        setOpen(false);
+      } else {
+        handleTrafficUpdate(e);
+        setOpen(false);
+      }
     }
-  }
 
-  return (
-    <Dialog
-      open={open}
-      onClose={() => handleClose()}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+    function renderAvatar() {
+      if (url == null) {
+        return (
+          <Avatar
+            style={{ width: 90, height: 90, marginBottom: 18 }}
+            src={urls}
+          />
+        );
+      } else {
+        return (
+          <Avatar
+            style={{ width: 90, height: 90, marginBottom: 18 }}
+            src={url}
+          />
+        );
+      }
+    }
 
-      <DialogContent>
-        {loading || !user ? (
-          <CircularProgress color="secondary" />
-        ) : (
-          <Box component="form" style={E.FormContainer}>
-            <Avatar style={{ width: 90, height: 90 }} src={urls} />
+    return (
+      <Dialog
+        open={open}
+        onClose={() => handleClose()}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 
-            <Box style={E.Form}>
-              <TextField
-                label="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                style={E.Input}
-              />
-              <TextField
-                label="contact"
-                type="text"
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-                style={E.Input}
-              />
-              <TextField
-                label="email"
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                style={E.Input}
-              />
-              {type === "driver" ? (
+        <DialogContent>
+          {loading || !user ? (
+            <CircularProgress color="secondary" />
+          ) : (
+            <Box component="form" style={E.FormContainer}>
+              {/* <Avatar style={{ width: 90, height: 90 }} src={urls} /> */}
+              <Box component="div" style={E.Upload}>
+                {renderAvatar()}
+                <Upload setUpload={setUpload} handlePreview={handlePreview} />
+              </Box>
+
+              <Box style={E.Form}>
                 <TextField
-                  label="driverid"
+                  label="name"
                   type="text"
-                  value={driver_id}
-                  onChange={(e) => setDriverId(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   style={E.Input}
                 />
-              ) : null}
+                <TextField
+                  label="contact"
+                  type="text"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  style={E.Input}
+                />
+                <TextField
+                  label="email"
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={E.Input}
+                />
+                {type === "driver" ? (
+                  <TextField
+                    label="driverid"
+                    type="text"
+                    value={driver_id}
+                    onChange={(e) => setDriverId(e.target.value)}
+                    style={E.Input}
+                  />
+                ) : null}
+              </Box>
             </Box>
-          </Box>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={(e) => chooseUpdate(e)} color="secondary">
-          Save
-        </Button>
-        <Button onClick={handleClose} color="secondary">
-          Exit
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-});
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={(e) => chooseUpdate(e)} color="secondary">
+            Save
+          </Button>
+          <Button onClick={handleClose} color="secondary">
+            Exit
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+);
 
 export default Edit;

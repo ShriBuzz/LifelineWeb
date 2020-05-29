@@ -17,20 +17,14 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// component
-import Edit from "../Edit";
-
 // assets
 import Dummy from "../../assets/Profile.jpg";
 
 // style
 import * as C from "./styles";
 
-const Cards = ({ type }) => {
+const Cards = ({ type, setKey, setOpen }) => {
   const { Dusers, Tusers } = useContext(LoginContext);
-  const [open, setOpen] = useState(false);
-  const [key, setKey] = useState();
-  const [load, setLoad] = useState(false);
   const [user, setUser] = useState();
   let url;
 
@@ -41,10 +35,6 @@ const Cards = ({ type }) => {
       setUser(Tusers);
     }
   }, [Dusers, Tusers, type]);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   function newData(contact) {
     const newSet = user.filter((data) => {
@@ -79,7 +69,7 @@ const Cards = ({ type }) => {
     }
   };
 
-  if (!user || Dusers.length === 0 || Tusers.length === 0) {
+  if (!user) {
     return (
       <Card style={C.Container} key={"name"}>
         <CardActionArea style={C.CardContainer}>
@@ -132,7 +122,6 @@ const Cards = ({ type }) => {
               color="secondary"
               onClick={() => {
                 setKey(data.contact.toString());
-                setLoad(true);
                 setOpen(true);
               }}
             >
@@ -156,15 +145,6 @@ const Cards = ({ type }) => {
           </CardActions>
           <ToastContainer />
         </Card>
-        {load ? (
-          <Edit
-            title={type === "driver" ? "Edit Driver info" : "Edit Traffic info"}
-            type={type}
-            open={open}
-            handleClose={handleClose}
-            o_contact={key}
-          />
-        ) : null}
       </>
     ));
   }
