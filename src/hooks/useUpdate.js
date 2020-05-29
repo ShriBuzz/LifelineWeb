@@ -14,13 +14,17 @@ const useUpdate = (o_contact, type) => {
   const [email, setEmail] = useState("");
   const [driver_id, setDriverId] = useState("");
   const [user, setUser] = useState(null);
-  const [urls, setUrl] = useState("");
+  const [urls, setUrls] = useState("");
   const [loading, setLoading] = useState(true);
+  const [upload, setUpload] = useState(null);
+  const [url, setUrl] = useState(null);
+  const driver_pic = "/update_driver_pic/" + o_contact;
+  const traffic_pic = "/update_traffic_pic/" + o_contact;
 
   useEffect(() => {
     if (type === "driver") {
       setLoading(true);
-      setUrl(process.env.REACT_APP_BASE_URL + "get_driver_pic/" + o_contact);
+      setUrls(process.env.REACT_APP_BASE_URL + "get_driver_pic/" + o_contact);
       const data = Dusers.filter((user) => {
         return user.contact === parseInt(o_contact);
       });
@@ -31,7 +35,7 @@ const useUpdate = (o_contact, type) => {
       setDriverId(data[0].driver_id);
       setLoading(false);
     } else {
-      setUrl(process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + o_contact);
+      setUrls(process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + o_contact);
       setLoading(true);
       const data = Tusers.filter((user) => {
         return user.contact === parseInt(o_contact);
@@ -44,6 +48,16 @@ const useUpdate = (o_contact, type) => {
       setLoading(false);
     }
   }, [Dusers, Tusers, o_contact, type]);
+
+  function handlePreview(e) {
+    e.preventDefault();
+    if (upload == null) {
+      toast.warn("Choose an image to preview.");
+    } else {
+      const objectUrl = URL.createObjectURL(upload);
+      setUrl(objectUrl);
+    }
+  }
 
   const handleDriverUpdate = async (e) => {
     e.preventDefault();
@@ -61,14 +75,32 @@ const useUpdate = (o_contact, type) => {
         {}
       )
       .then((response) => {
-        console.log(response.data);
+        handleDriverUpload();
         toast.success("succesfully updated!");
-        window.location.reload(false);
+        // window.location.reload(false);
       })
       .catch((error) => {
         toast.error("failed to update!");
         console.log(error);
       });
+  };
+
+  const handleDriverUpload = async () => {
+    if (upload == null) {
+      return;
+    } else {
+      let file = new FormData();
+      file.append("file", upload, upload.name);
+      await axios
+        .post(driver_pic, file, {})
+        .then((response) => {
+          // console.log(response.statusText, "Sent image!!!!!");
+          toast.success("Successfully uploaded image.");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const handleTrafficUpdate = async (e) => {
@@ -86,14 +118,31 @@ const useUpdate = (o_contact, type) => {
         {}
       )
       .then((response) => {
-        console.log(response.data);
+        handleTrafficUpload();
         toast.success("succesfully updated!");
-        window.location.reload(false);
+        // window.location.reload(false);
       })
       .catch((error) => {
         toast.error("failed to update!");
         console.log(error);
       });
+  };
+
+  const handleTrafficUpload = async () => {
+    if (upload == null) {
+      return;
+    } else {
+      let file = new FormData();
+      file.append("file", upload, upload.name);
+      await axios
+        .post(traffic_pic, file, {})
+        .then((response) => {
+          toast.success("Successfully uploaded image.");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return {
@@ -110,6 +159,9 @@ const useUpdate = (o_contact, type) => {
     driver_id,
     setDriverId,
     loading,
+    url,
+    setUpload,
+    handlePreview,
   };
 };
 
