@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
 // packages
 import {
@@ -7,26 +7,26 @@ import {
   TextField,
   Grid,
   Typography,
-} from "@material-ui/core";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import LockIcon from "@material-ui/icons/Lock";
+} from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import LockIcon from '@material-ui/icons/Lock';
 
 // route
-import history from "../../navigation/history";
+import history from '../../navigation/history';
 
 // components
-import Buttons from "../../components/Button";
-import Failure from "../../components/Failure";
+import Buttons from '../../components/Button';
+import Failure from '../../components/Failure';
 
 // style
-import * as L from "./styles";
+import * as L from './styles';
 
 // hook
-import { LoginContext } from "../../hooks/LoginContext";
+import { LoginContext } from '../../hooks/LoginContext';
 
 function Login() {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
   const [fail, setFail] = useState(false);
   const { success, setSuccess } = useContext(LoginContext);
   console.log(success);
@@ -36,19 +36,23 @@ function Login() {
   };
 
   const handleSubmit = async () => {
-    if (name === "admin" && password === "admin") {
+    if (name === 'admin' && password === 'admin@123') {
       setSuccess(true);
-      history.push("/Home");
+      history.push('/Home');
     } else {
       setFail(true);
     }
   };
 
   return (
-    <Backdrop open={true} color={"#f0f1f2"}>
+    <Backdrop
+      open={true}
+      color={'#f0f1f2'}
+      style={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
+    >
       <Paper
-        elevation="3"
-        component="form"
+        elevation='3'
+        component='form'
         style={L.container}
         onSubmit={() => handleSubmit()}
       >
@@ -59,10 +63,10 @@ function Login() {
           </Grid>
           <Grid item>
             <TextField
-              label="Username"
-              color={"secondary"}
+              label='Username'
+              color={'secondary'}
               required
-              autoComplete="username"
+              autoComplete='username'
               value={name}
               onChange={(e) => setName(e.target.value)}
               style={L.Input}
@@ -75,9 +79,9 @@ function Login() {
           </Grid>
           <Grid item>
             <TextField
-              type="password"
-              label="Password"
-              color={"secondary"}
+              type='password'
+              label='Password'
+              color={'secondary'}
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -85,12 +89,12 @@ function Login() {
             />
           </Grid>
         </Grid>
-        <Buttons title={"Submit"} onSubmit={() => handleSubmit()} />
+        <Buttons title={'Submit'} onSubmit={() => handleSubmit()} />
         <Failure
           open={fail}
           handleClose={handleClose}
-          title="Login Error"
-          message="Please enter both name and password."
+          title='Login Error'
+          message='Please enter both name and password.'
         />
       </Paper>
     </Backdrop>

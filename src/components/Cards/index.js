@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from 'react';
 
 // hooks
-import { LoginContext } from "../../hooks/LoginContext";
+import { LoginContext } from '../../hooks/LoginContext';
 
 // packages
-import axios from "axios";
+import axios from 'axios';
 import {
   Card,
   CardActionArea,
@@ -13,15 +13,15 @@ import {
   Avatar,
   Button,
   Typography,
-} from "@material-ui/core";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+} from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // assets
-import Dummy from "../../assets/Profile.jpg";
+import Dummy from '../../assets/Profile.jpg';
 
 // style
-import * as C from "./styles";
+import * as C from './styles';
 
 const Cards = ({ type, setKey, setOpen }) => {
   const { Dusers, Tusers } = useContext(LoginContext);
@@ -29,7 +29,7 @@ const Cards = ({ type, setKey, setOpen }) => {
   let url;
 
   useEffect(() => {
-    if (type === "driver") {
+    if (type === 'driver') {
       setUser(Dusers);
     } else {
       setUser(Tusers);
@@ -47,11 +47,11 @@ const Cards = ({ type, setKey, setOpen }) => {
     axios
       .delete(url)
       .then((res) => {
-        toast.success("Succesfully deleted.");
+        toast.success('Succesfully deleted.');
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Couldnot delete user. Try again!");
+        toast.error('Couldnot delete user. Try again!');
       });
   };
 
@@ -59,11 +59,11 @@ const Cards = ({ type, setKey, setOpen }) => {
     if (key === null) {
       return <Avatar style={{ width: 90, height: 90 }} src={Dummy} />;
     } else {
-      if (type === "driver") {
-        const url = process.env.REACT_APP_BASE_URL + "get_driver_pic/" + key;
+      if (type === 'driver') {
+        const url = process.env.REACT_APP_BASE_URL + 'get_driver_pic/' + key;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       } else {
-        const url = process.env.REACT_APP_BASE_URL + "get_traffic_pic/" + key;
+        const url = process.env.REACT_APP_BASE_URL + 'get_traffic_pic/' + key;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       }
     }
@@ -71,27 +71,27 @@ const Cards = ({ type, setKey, setOpen }) => {
 
   if (!user) {
     return (
-      <Card style={C.Container} key={"name"}>
+      <Card style={C.Container} key={'name'}>
         <CardActionArea style={C.CardContainer}>
           <Avatar style={{ width: 90, height: 90 }} src={Dummy} />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant='h5' component='h2'>
               Name: -----
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography variant='body2' color='textSecondary' component='p'>
               Contact: -----
               <br />
               Email: -----
               <br />
-              {type === "driver" ? `Driver ID: -----` : null}
+              {type === 'driver' ? `Driver ID: -----` : null}
             </Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="secondary">
+          <Button size='small' color='secondary'>
             Edit
           </Button>
-          <Button size="small" color="secondary">
+          <Button size='small' color='secondary'>
             Delete
           </Button>
         </CardActions>
@@ -104,10 +104,10 @@ const Cards = ({ type, setKey, setOpen }) => {
           <CardActionArea style={C.CardContainer}>
             {renderAvatar(data.contact)}
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant='h5' component='h2'>
                 {data.name}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant='body2' color='textSecondary' component='p'>
                 Contact: {data.contact}
                 <br />
                 Email: {data.email}
@@ -118,8 +118,8 @@ const Cards = ({ type, setKey, setOpen }) => {
           </CardActionArea>
           <CardActions>
             <Button
-              size="small"
-              color="secondary"
+              size='small'
+              color='secondary'
               onClick={() => {
                 setKey(data.contact.toString());
                 setOpen(true);
@@ -128,13 +128,13 @@ const Cards = ({ type, setKey, setOpen }) => {
               Edit
             </Button>
             <Button
-              size="small"
-              color="secondary"
+              size='small'
+              color='secondary'
               onClick={() => {
-                if (type === "driver") {
-                  url = "/driver/" + data.contact;
+                if (type === 'driver') {
+                  url = '/driver/' + data.contact;
                 } else {
-                  url = "/traffic/" + data.contact;
+                  url = '/traffic/' + data.contact;
                 }
                 newData(data.contact);
                 handleDelete(url);

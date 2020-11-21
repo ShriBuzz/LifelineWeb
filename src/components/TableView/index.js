@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   TableContainer,
   Paper,
@@ -7,27 +7,27 @@ import {
   TableRow,
   TableCell,
   TableBody,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import GetTable from "../GetTable";
+import GetTable from '../GetTable';
 
-import * as D from "./styles";
+import * as D from './styles';
 
 const TableView = ({ type }) => {
   return (
     <TableContainer component={Paper} style={D.table}>
-      <Table aria-label="simple table">
+      <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
             <TableCell style={D.head}>Name</TableCell>
-            <TableCell align="right" style={D.head}>
+            <TableCell align='right' style={D.head}>
               Contact
             </TableCell>
-            <TableCell align="right" style={D.head}>
+            <TableCell align='right' style={D.head}>
               Email
             </TableCell>
-            {type === "driver" ? (
-              <TableCell align="right" style={D.head}>
+            {type === 'driver' ? (
+              <TableCell align='right' style={D.head}>
                 Driver ID
               </TableCell>
             ) : null}

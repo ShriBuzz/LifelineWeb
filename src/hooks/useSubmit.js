@@ -1,22 +1,22 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 // packages
-import axios from "axios";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const useSubmit = () => {
-  const [name, setName] = useState("");
-  const [contact, setContact] = useState("");
-  const [email, setEmail] = useState("");
-  const [driver_id, setDriverId] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [contact, setContact] = useState('');
+  const [email, setEmail] = useState('');
+  const [driver_id, setDriverId] = useState('');
+  const [password, setPassword] = useState('');
   const [upload, setUpload] = useState(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [fail, setFail] = useState(false);
   const [url, setUrl] = useState(null);
-  const driver_pic = "/update_driver_pic/" + contact;
-  const traffic_pic = "/update_traffic_pic/" + contact;
+  const driver_pic = '/update_driver_pic/' + contact;
+  const traffic_pic = '/update_traffic_pic/' + contact;
 
   const handleClose = () => {
     setSuccess(false);
@@ -25,15 +25,15 @@ const useSubmit = () => {
 
   const handleDriverUpload = async () => {
     if (upload == null) {
-      alert("Submit form and choose image before upload.");
+      alert('Submit form and choose image before upload.');
     } else {
       let file = new FormData();
-      file.append("file", upload, upload.name);
+      file.append('file', upload, upload.name);
       await axios
         .post(driver_pic, file, {})
         .then((response) => {
-          console.log(response.statusText, "Sent image!!!!!");
-          toast.success("Successfully uploaded image.");
+          console.log(response.statusText, 'Sent image!!!!!');
+          toast.success('Successfully uploaded image.');
         })
         .catch((error) => {
           setFail(true);
@@ -45,7 +45,7 @@ const useSubmit = () => {
   function handlePreview(e) {
     e.preventDefault();
     if (upload == null) {
-      toast.warn("Choose an image to preview.");
+      toast.warn('Choose an image to preview.');
     } else {
       const objectUrl = URL.createObjectURL(upload);
       setUrl(objectUrl);
@@ -53,11 +53,11 @@ const useSubmit = () => {
   }
 
   function resetForm() {
-    setName("");
-    setContact("");
-    setEmail("");
-    setDriverId("");
-    setPassword("");
+    setName('');
+    setContact('');
+    setEmail('');
+    setDriverId('');
+    setPassword('');
     setUpload(null);
   }
 
@@ -65,7 +65,7 @@ const useSubmit = () => {
     e.preventDefault();
     setLoading(true);
     if (!upload) {
-      toast.error("Please upload an image!");
+      toast.error('Please upload an image!');
       setLoading(false);
       return;
     }
@@ -88,6 +88,7 @@ const useSubmit = () => {
         .then((response) => {
           handleDriverUpload();
           setSuccess(true);
+          setUrl(null);
           resetForm();
         })
         .catch((error) => {
@@ -106,7 +107,7 @@ const useSubmit = () => {
     setLoading(true);
 
     if (!upload) {
-      toast.error("Please upload an image!");
+      toast.error('Please upload an image!');
       setLoading(false);
       return;
     }
@@ -122,9 +123,10 @@ const useSubmit = () => {
           contact,
         })
         .then((response) => {
-          console.log(response.data);
           handleTrafficUpload();
           setSuccess(true);
+          setUrl(null);
+          resetForm();
         })
         .catch((error) => {
           setFail(true);
@@ -139,14 +141,14 @@ const useSubmit = () => {
 
   const handleTrafficUpload = async () => {
     if (upload == null) {
-      alert("Submit form and choose image before upload.");
+      alert('Submit form and choose image before upload.');
     } else {
       let file = new FormData();
-      file.append("file", upload, upload.name);
+      file.append('file', upload, upload.name);
       await axios
         .post(traffic_pic, file, {})
         .then((response) => {
-          toast.success("Successfully uploaded image.");
+          toast.success('Successfully uploaded image.');
           resetForm();
         })
         .catch((error) => {

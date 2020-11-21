@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 // hooks
-import useUpdate from "../../hooks/useUpdate";
+import useUpdate from '../../hooks/useUpdate';
 
 // package
 import {
@@ -14,12 +14,12 @@ import {
   DialogActions,
   DialogContent,
   Button,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import Upload from "../Upload";
+import Upload from '../Upload';
 
 // styles
-import * as E from "./styles";
+import * as E from './styles';
 
 const Edit = React.memo(
   ({ title, open, setOpen, handleClose, o_contact, type }) => {
@@ -43,7 +43,7 @@ const Edit = React.memo(
     } = useUpdate(o_contact, type);
 
     function chooseUpdate(e) {
-      if (type === "driver") {
+      if (type === 'driver') {
         handleDriverUpdate(e);
         setOpen(false);
       } else {
@@ -74,48 +74,48 @@ const Edit = React.memo(
       <Dialog
         open={open}
         onClose={() => handleClose()}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
 
         <DialogContent>
           {loading || !user ? (
-            <CircularProgress color="secondary" />
+            <CircularProgress color='secondary' />
           ) : (
-            <Box component="form" style={E.FormContainer}>
+            <Box component='form' style={E.FormContainer}>
               {/* <Avatar style={{ width: 90, height: 90 }} src={urls} /> */}
-              <Box component="div" style={E.Upload}>
+              <Box component='div' style={E.Upload}>
                 {renderAvatar()}
                 <Upload setUpload={setUpload} handlePreview={handlePreview} />
               </Box>
 
               <Box style={E.Form}>
                 <TextField
-                  label="name"
-                  type="text"
+                  label='name'
+                  type='text'
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   style={E.Input}
                 />
                 <TextField
-                  label="contact"
-                  type="text"
+                  label='contact'
+                  type='text'
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
                   style={E.Input}
                 />
                 <TextField
-                  label="email"
-                  type="text"
+                  label='email'
+                  type='text'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   style={E.Input}
                 />
-                {type === "driver" ? (
+                {type === 'driver' ? (
                   <TextField
-                    label="driverid"
-                    type="text"
+                    label='driverid'
+                    type='text'
                     value={driver_id}
                     onChange={(e) => setDriverId(e.target.value)}
                     style={E.Input}
@@ -126,10 +126,10 @@ const Edit = React.memo(
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={(e) => chooseUpdate(e)} color="secondary">
+          <Button onClick={(e) => chooseUpdate(e)} color='secondary'>
             Save
           </Button>
-          <Button onClick={handleClose} color="secondary">
+          <Button onClick={handleClose} color='secondary'>
             Exit
           </Button>
         </DialogActions>

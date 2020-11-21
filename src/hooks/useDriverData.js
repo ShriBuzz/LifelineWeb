@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from 'react';
 
 // hook
-import { LoginContext } from "./LoginContext";
+import { LoginContext } from './LoginContext';
 
 // packages
-import axios from "axios";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const useDriverData = () => {
   const [loading, setLoading] = useState(true);
@@ -13,13 +13,13 @@ const useDriverData = () => {
 
   useEffect(() => {
     axios
-      .get("/driver")
+      .get('/driver')
       .then((res) => {
         setDusers(Array.from(res.data).sort(compare));
         setLoading(false);
       })
       .catch((e) => {
-        toast.warn("Could not connect to server!");
+        toast.warn('Could not connect to server!');
       });
   }, [setDusers]);
 
