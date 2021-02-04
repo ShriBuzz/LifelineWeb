@@ -22,6 +22,7 @@ function NavBar() {
   const { success } = useContext(LoginContext);
   function handleLogout(e) {
     e.preventDefault();
+    localStorage.setItem('auth', false);
     history.push("/");
   }
 

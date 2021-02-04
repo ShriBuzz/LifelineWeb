@@ -32,6 +32,7 @@ const useDrawer = () => {
 
   function handleLogout(e) {
     e.preventDefault();
+    localStorage.setItem('auth', false);
     history.push("/");
   }
 
