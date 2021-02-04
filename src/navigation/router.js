@@ -8,6 +8,7 @@ import { LoginContext } from "../hooks/LoginContext";
 
 // routes
 import history from "./history";
+import PrivateRoute from './PrivateRoute';
 
 // screens
 import Login from "../screens/Login";
@@ -35,9 +36,15 @@ function Routes() {
       <Switch>
         <LoginContext.Provider value={providerValue}>
           <Route path="/" exact component={Login} />
-          <Route path="/Home" component={Home} />
-          <Route path="/Dlist" component={DriverList} />
-          <Route path="/Tlist" component={TrafficList} />
+          <PrivateRoute path="/Home" >
+            <Home/>
+          </PrivateRoute>
+          <PrivateRoute path="/Dlist" >
+            <DriverList/>
+          </PrivateRoute>
+          <PrivateRoute path="/Tlist" >
+            <TrafficList/>
+          </PrivateRoute>
         </LoginContext.Provider>
       </Switch>
     </Router>
