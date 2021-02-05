@@ -4,12 +4,12 @@ import { Button, CircularProgress } from "@material-ui/core";
 
 import * as B from "./styles";
 
-const Buttons = ({ title, loading, onSubmit }) => {
+const Buttons = ({ title, loading, onSubmit, disabled }) => {
   return (
     <Button
       variant="contained"
       color="secondary"
-      disabled={loading}
+      disabled={disabled}
       type="submit"
       style={B.button}
       onClick={e => onSubmit(e)}
