@@ -13,6 +13,7 @@ export const bg = {
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   backgroundColor: 'white',
+  backgroundAttachment: 'fixed',
 };
 
 export const avatar = {
