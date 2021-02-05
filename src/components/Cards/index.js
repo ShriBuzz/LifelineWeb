@@ -107,7 +107,7 @@ const Cards = ({ type, setKey, setOpen }) => {
               <Typography gutterBottom variant='h5' component='h2'>
                 {data.name}
               </Typography>
-              <Typography variant='body2' color='textSecondary' component='p'>
+              <Typography style={{width: 'max-content'}} variant='body2' color='textSecondary' component='p'>
                 Contact: {data.contact}
                 <br />
                 Email: {data.email}
