@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 // custom hooks
 import useSubmit from "../../hooks/useSubmit";
@@ -47,6 +47,11 @@ const Driver = () => {
     fail,
   } = useSubmit();
 
+  const [contactError, setContactError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [verifyForm, setVerifyForm] = useState(false);
+
   function renderAvatar() {
     if (url == null) {
       return <Avatar style={D.avatar} alt="Dummy profile" src={Profile} />;
@@ -54,6 +59,18 @@ const Driver = () => {
       return <Avatar style={D.avatar} alt="Dummy profile" src={url} />;
     }
   }
+
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  useEffect(()=>{
+    if(contactError.length > 0 || emailError.length > 0 || passwordError.length > 0){
+      setVerifyForm(true)
+    }
+    else setVerifyForm(false);
+  },[contactError, passwordError, emailError])
 
   return (
     <Container style={D.bg}>
@@ -79,8 +96,17 @@ const Driver = () => {
           autoComplete="email"
           value={email}
           placeholder="Enter your email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {setEmail(e.target.value)
+          if(validateEmail(email)|| e.target.value.length <= 0){
+            setEmailError('');
+          }
+          else{
+            setEmailError('Invalid email!');
+          }
+          }}
           style={D.input}
+          helperText={emailError}
+          error={validateEmail(email)|| email.length <= 0?false: true}
         />
         <TextField
           required
@@ -89,8 +115,17 @@ const Driver = () => {
           autoComplete="tel"
           value={contact}
           placeholder="Enter your mobile no."
-          onChange={(e) => setContact(e.target.value)}
+          onChange={(e) => {          
+            setContact(e.target.value)
+            if(e.target.value.length === 10){
+              setContactError('')
+            }else{
+              setContactError('Invalid contact!')
+            }
+          }}
           style={D.input}
+          helperText={contactError}
+          error={contactError.length > 0 ? true : false}
         />
         <TextField
           required
@@ -109,14 +144,24 @@ const Driver = () => {
           value={password}
           placeholder="Enter your password"
           autoComplete="current-password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value)
+            if(e.target.value.length < 8){
+              setPasswordError('password of min 8 characters required.');
+            }
+            else{
+              setPasswordError('');
+            }
+          }}
           style={D.input}
+          helperText={passwordError}
+          error={password.length < 8 ? true : false}
         />
 
         <Upload setUpload={setUpload} handlePreview={handlePreview} />
 
         {/* submit button */}
-        <Buttons title="Submit" loading={loading} onSubmit={postData} />
+        <Buttons title="Submit" loading={loading} onSubmit={postData} disabled={verifyForm}/>
         <Success
           title={"Ambulance Driver"}
           open={success}

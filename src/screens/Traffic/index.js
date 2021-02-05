@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 // custom hook
 import useSubmit from "../../hooks/useSubmit";
@@ -45,6 +45,11 @@ const Traffic = () => {
     fail,
   } = useSubmit();
 
+  const [contactError, setContactError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [verifyForm, setVerifyForm] = useState(false);
+
   function renderAvatar() {
     if (url == null) {
       return <Avatar style={T.avatar} alt="Dummy profile" src={Profile} />;
@@ -52,6 +57,18 @@ const Traffic = () => {
       return <Avatar style={T.avatar} alt="Dummy profile" src={url} />;
     }
   }
+
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
+
+  useEffect(()=>{
+    if(contactError.length > 0 || emailError.length > 0 || passwordError.length > 0){
+      setVerifyForm(true)
+    }
+    else setVerifyForm(false);
+  },[contactError, passwordError, emailError])
 
   return (
     <Container style={T.bg}>
@@ -75,8 +92,17 @@ const Traffic = () => {
           type="email"
           value={email}
           placeholder="Enter your email"
-          onChange={(e) => setEmail(e.target.value)}
           style={T.input}
+          onChange={(e) => {setEmail(e.target.value)
+            if(validateEmail(email)|| e.target.value.length <= 0){
+              setEmailError('');
+            }
+            else{
+              setEmailError('Invalid email!');
+            }
+            }}
+            helperText={emailError}
+            error={validateEmail(email)|| email.length <= 0?false: true}
         />
         <TextField
           required
@@ -84,8 +110,18 @@ const Traffic = () => {
           type="number"
           value={contact}
           placeholder="Enter your mobile no."
-          onChange={(e) => setContact(e.target.value)}
           style={T.input}
+          
+          onChange={(e) => {          
+            setContact(e.target.value)
+            if(e.target.value.length === 10){
+              setContactError('')
+            }else{
+              setContactError('Invalid contact!')
+            }
+          }}
+          helperText={contactError}
+          error={contactError.length > 0 ? true : false}
         />
         <TextField
           required
@@ -94,13 +130,23 @@ const Traffic = () => {
           value={password}
           placeholder="Enter your password"
           autoComplete="current-password"
-          onChange={(e) => setPassword(e.target.value)}
           style={T.input}
+          onChange={(e) => {
+            setPassword(e.target.value)
+            if(e.target.value.length < 8){
+              setPasswordError('password of min 8 characters required.');
+            }
+            else{
+              setPasswordError('');
+            }
+          }}
+          helperText={passwordError}
+          error={password.length < 8 ? true : false}
         />
 
         <Upload setUpload={setUpload} handlePreview={handlePreview} />
 
-        <Buttons title="Submit" loading={loading} onSubmit={postTrafficData} />
+        <Buttons title="Submit" loading={loading} onSubmit={postTrafficData} disabled={verifyForm} />
         <Success
           title={"Traffic Officer"}
           Contact={contact}
