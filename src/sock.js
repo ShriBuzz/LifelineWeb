@@ -16,25 +16,37 @@ const driverRoute = {
   },
 };
 const driverGps = {
-  latitude: 20.425,
-  longitude: 84.234,
+  operation: 'create',
+  driver_gps: {
+    latitude: 20.425,
+    longitude: 84.234,
+  }
+};
+
+const trafficGps = {
+  operation: 'create',
+  traffic_gps: {
+    latitude: 20.425,
+    longitude: 84.234,
+  }
 };
 
 export function connect() {
-  socket.on("connect", function () {
-    socket.emit("obstruction", obstruction);
-    socket.emit("driver_route", driverRoute);
-    socket.emit("driver_gps", driverGps);
+  socket.emit("traffic_gps", trafficGps);
+  // socket.on("connect", function () {
+  //   socket.emit("obstruction", obstruction);
+  //   socket.emit("driver_route", driverRoute);
+  //   socket.emit("driver_gps", driverGps);
 
-    // socket.emit("message", "string");
-  });
-  // socket.on("message", function (lol) {
-  //   console.log("Received message: ", lol);
+  //   // socket.emit("message", "string");
   // });
-  // socket.on("json", function (json) {
-  //   console.log("data: ", json);
-  // });
-  socket.on("json", function (json) {
+  // // socket.on("message", function (lol) {
+  // //   console.log("Received message: ", lol);
+  // // });
+  // // socket.on("json", function (json) {
+  // //   console.log("data: ", json);
+  // // });
+  socket.on("connect", function (json) {
     console.log("data: ", json);
   });
 }
