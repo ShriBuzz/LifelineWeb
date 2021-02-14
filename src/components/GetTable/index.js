@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 // package
 import { TableCell, TableRow } from '@material-ui/core';
@@ -6,32 +6,34 @@ import { TableCell, TableRow } from '@material-ui/core';
 // hook
 import { LoginContext } from '../../hooks/LoginContext';
 
-const GetTable = ({ type }) => {
+const GetTable = ({ type, searchResult }) => {
   const { Dusers, Tusers } = useContext(LoginContext);
-  if (type === 'driver') {
-    return Dusers.map((row) => (
-      <TableRow key={row.contact}>
-        <TableCell component='th' scope='row' style={cell}>
-          {row.name ? row.name : '-'}
-        </TableCell>
-        <TableCell style={cell}>{row.contact ? row.contact : '-'}</TableCell>
-        <TableCell style={cell}>{row.email ? row.email : '-'}</TableCell>
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    if (type === 'driver') {
+      searchResult.length > 0 ? setUser(searchResult) : setUser(Dusers);
+    } else {
+      searchResult.length > 0 ? setUser(searchResult) : setUser(Tusers);
+    }
+  }, [Dusers, Tusers, type, searchResult]);
+
+  return user.map((row) => (
+    <TableRow key={row.contact}>
+      <TableCell component='th' scope='row' style={cell}>
+        {row.name ? row.name : '-'}
+      </TableCell>
+      <TableCell style={cell}>{row.contact ? row.contact : '-'}</TableCell>
+      <TableCell style={cell}>{row.email ? row.email : '-'}</TableCell>
+      {type === 'driver' ? (
         <TableCell style={cell}>
           {row.driver_id ? row.driver_id : '-'}
         </TableCell>
-      </TableRow>
-    ));
-  } else {
-    return Tusers.map((row) => (
-      <TableRow key={row.contact}>
-        <TableCell component='th' scope='row' style={cell}>
-          {row.name ? row.name : '-'}
-        </TableCell>
-        <TableCell style={cell}>{row.contact ? row.contact : '-'}</TableCell>
-        <TableCell style={cell}>{row.email ? row.email : '-'}</TableCell>
-      </TableRow>
-    ));
-  }
+      ) : (
+        <React.Fragment />
+      )}
+    </TableRow>
+  ));
 };
 
 const cell = {

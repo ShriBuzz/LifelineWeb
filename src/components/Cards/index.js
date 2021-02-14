@@ -23,18 +23,18 @@ import Dummy from '../../assets/Profile.jpg';
 // style
 import * as C from './styles';
 
-const Cards = ({ type, setKey, setOpen }) => {
+const Cards = ({ type, setKey, setOpen, searchResult }) => {
   const { Dusers, Tusers } = useContext(LoginContext);
   const [user, setUser] = useState();
   let url;
 
   useEffect(() => {
     if (type === 'driver') {
-      setUser(Dusers);
+      searchResult.length > 0 ? setUser(searchResult) : setUser(Dusers);
     } else {
-      setUser(Tusers);
+      searchResult.length > 0 ? setUser(searchResult) : setUser(Tusers);
     }
-  }, [Dusers, Tusers, type]);
+  }, [Dusers, Tusers, type, searchResult]);
 
   function newData(contact) {
     const newSet = user.filter((data) => {
@@ -60,10 +60,10 @@ const Cards = ({ type, setKey, setOpen }) => {
       return <Avatar style={{ width: 90, height: 90 }} src={Dummy} />;
     } else {
       if (type === 'driver') {
-        const url = process.env.REACT_APP_BASE_URL + 'get_driver_pic/' + key;
+        const url = process.env.REACT_APP_BASE_URL + 'driver_pic/' + key + `?&timestamp=${new Date().getTime()}`;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       } else {
-        const url = process.env.REACT_APP_BASE_URL + 'get_traffic_pic/' + key;
+        const url = process.env.REACT_APP_BASE_URL + 'traffic_pic/' + key + `?&timestamp=${new Date().getTime()}`;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       }
     }

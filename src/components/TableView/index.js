@@ -13,7 +13,7 @@ import GetTable from '../GetTable';
 
 import * as D from './styles';
 
-const TableView = ({ type }) => {
+const TableView = ({ type, searchResult }) => {
   return (
     <TableContainer component={Paper} style={D.table}>
       <Table aria-label='simple table'>
@@ -34,7 +34,7 @@ const TableView = ({ type }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          <GetTable type={type} />
+          <GetTable type={type} searchResult={searchResult} />
         </TableBody>
       </Table>
     </TableContainer>
