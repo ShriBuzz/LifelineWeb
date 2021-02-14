@@ -11,7 +11,7 @@ import { PhotoCamera } from "@material-ui/icons";
 
 import * as U from "./styles";
 
-const Upload = ({ setUpload, handlePreview }) => {
+const Upload = ({ setUpload, handlePreview, setCropToggle }) => {
   return (
     <Box component="div" style={U.row}>
       <input
@@ -32,7 +32,9 @@ const Upload = ({ setUpload, handlePreview }) => {
           <Button
             variant="outlined"
             color="secondary"
-            onClick={(e) => handlePreview(e)}
+            onClick={(e) => {
+              setCropToggle(true)
+              handlePreview(e)}}
           >
             Preview
           </Button>

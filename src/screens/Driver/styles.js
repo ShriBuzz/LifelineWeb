@@ -51,3 +51,25 @@ export const input = {
   textAlign: 'center',
   margin: 20,
 };
+
+export const containerCropper = {
+  height: '100vh',
+  width: '100vw',
+  position: 'fixed',
+  left: 0,
+  top: 0,
+  zIndex: 2,
+}
+
+export const cropper = {
+  height: '90%',
+}
+
+export const cropButton = {
+  zIndex: 2,
+  margin: '0 auto',
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  bottom: '10%',
+}

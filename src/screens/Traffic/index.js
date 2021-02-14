@@ -6,6 +6,7 @@ import useSubmit from "../../hooks/useSubmit";
 // packages
 import {
   Box,
+  Button,
   Avatar,
   TextField,
   Typography,
@@ -13,6 +14,8 @@ import {
 } from "@material-ui/core";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cropper from "react-easy-crop";
+import Slider from "@material-ui/core/Slider";
 
 // assets
 import Profile from "../../assets/Profile.jpg";
@@ -43,12 +46,26 @@ const Traffic = () => {
     success,
     handleClose,
     fail,
+    generateDownload
   } = useSubmit();
 
+  const [cropToggle, setCropToggle] = useState(false);
   const [contactError, setContactError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [verifyForm, setVerifyForm] = useState(false);
+  const [croppedArea, setCroppedArea] = useState(null);
+	const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+
+  const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
+    setCroppedArea(croppedAreaPixels);
+  };
+  
+  const handleCrop = (e) => {
+    setCropToggle(false);
+    generateDownload(url, croppedArea);
+  }
 
   function renderAvatar() {
     if (url == null) {
@@ -144,7 +161,58 @@ const Traffic = () => {
           error={password.length < 8 ? true : false}
         />
 
-        <Upload setUpload={setUpload} handlePreview={handlePreview} />
+{
+          cropToggle && (
+            <div style={T.containerCropper}>
+				{url ? (
+					<>
+						<div style={T.cropper}>
+							<Cropper
+								image={url}
+								crop={crop}
+								zoom={zoom}
+								aspect={1}
+								onCropChange={setCrop}
+								onZoomChange={setZoom}
+								onCropComplete={onCropComplete}
+							/>
+						</div>
+
+						<div className='slider'>
+							<Slider
+								min={1}
+								max={3}
+								step={0.1}
+								value={zoom}
+                onChange={(e, zoom) => setZoom(zoom)}
+                style={
+                  {
+                    width: '60%',
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    margin: 'auto',
+                  }
+                }
+							/>
+						</div>
+
+            <Button
+            variant="outlined"
+            color="secondary"
+            onClick={(e) => handleCrop(e)}
+            style={T.cropButton}
+          >
+            Crop
+          </Button>
+					</>
+				) : null}
+			</div>
+          )
+        }
+
+
+        <Upload setUpload={setUpload} handlePreview={handlePreview} setCropToggle={setCropToggle} />
 
         <Buttons title="Submit" loading={loading} onSubmit={postTrafficData} disabled={verifyForm} />
         <Success
