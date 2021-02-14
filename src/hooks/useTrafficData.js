@@ -13,7 +13,7 @@ const useTrafficData = () => {
 
   useEffect(() => {
     axios
-      .get("/traffic")
+      .get(`/traffic?&timestamp=${new Date().getTime()}`)
       .then((res) => {
         setTusers(Array.from(res.data).sort(compare));
         setLoading(false);

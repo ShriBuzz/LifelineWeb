@@ -13,7 +13,7 @@ const useDriverData = () => {
 
   useEffect(() => {
     axios
-      .get('/driver')
+      .get(`/driver?&timestamp=${new Date().getTime()}`)
       .then((res) => {
         setDusers(Array.from(res.data).sort(compare));
         setLoading(false);
