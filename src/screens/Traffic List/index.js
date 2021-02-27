@@ -21,6 +21,7 @@ import NavBar from '../../components/NavBar';
 import TableView from '../../components/TableView';
 import Cards from '../../components/Cards';
 import Edit from '../../components/Edit';
+import PasswordChange from '../../components/PasswordChange';
 
 // styles
 import * as T from './styles';
@@ -28,6 +29,7 @@ import * as T from './styles';
 const TrafficList = () => {
   const [view, setView] = useState(true);
   const [open, setOpen] = useState(false);
+  const [openPass, setOpenPass] = useState(false);
   const [key, setKey] = useState();
   const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState([]);
@@ -36,6 +38,10 @@ const TrafficList = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handlePassClose = () => {
+    setOpenPass(false);
   };
 
   useEffect(() => {
@@ -92,6 +98,7 @@ const TrafficList = () => {
               type='traffic'
               setOpen={setOpen}
               setKey={setKey}
+              setPassOpen={setOpenPass}
               searchResult={searchResult}
             />
           </Box>
@@ -109,6 +116,17 @@ const TrafficList = () => {
           o_contact={key}
         />
       ) : null}
+
+      {key && (
+        <PasswordChange
+          title={'Change Password'}
+          type='traffic'
+          open={openPass}
+          setOpen={setOpenPass}
+          handleClose={handlePassClose}
+          o_contact={key}
+        />
+      )}
       <ToastContainer />
     </>
   );

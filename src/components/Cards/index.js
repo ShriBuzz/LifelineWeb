@@ -23,7 +23,7 @@ import Dummy from '../../assets/Profile.jpg';
 // style
 import * as C from './styles';
 
-const Cards = ({ type, setKey, setOpen, searchResult }) => {
+const Cards = ({ type, setKey, setOpen, setPassOpen, searchResult }) => {
   const { Dusers, Tusers } = useContext(LoginContext);
   const [user, setUser] = useState();
   let url;
@@ -60,10 +60,18 @@ const Cards = ({ type, setKey, setOpen, searchResult }) => {
       return <Avatar style={{ width: 90, height: 90 }} src={Dummy} />;
     } else {
       if (type === 'driver') {
-        const url = process.env.REACT_APP_BASE_URL + 'driver_pic/' + key + `?&timestamp=${new Date().getTime()}`;
+        const url =
+          process.env.REACT_APP_BASE_URL +
+          'driver_pic/' +
+          key +
+          `?&timestamp=${new Date().getTime()}`;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       } else {
-        const url = process.env.REACT_APP_BASE_URL + 'traffic_pic/' + key + `?&timestamp=${new Date().getTime()}`;
+        const url =
+          process.env.REACT_APP_BASE_URL +
+          'traffic_pic/' +
+          key +
+          `?&timestamp=${new Date().getTime()}`;
         return <Avatar style={{ width: 90, height: 90 }} src={url} />;
       }
     }
@@ -107,7 +115,12 @@ const Cards = ({ type, setKey, setOpen, searchResult }) => {
               <Typography gutterBottom variant='h5' component='h2'>
                 {data.name}
               </Typography>
-              <Typography style={{width: 'max-content'}} variant='body2' color='textSecondary' component='p'>
+              <Typography
+                style={{ width: 'max-content' }}
+                variant='body2'
+                color='textSecondary'
+                component='p'
+              >
                 Contact: {data.contact}
                 <br />
                 Email: {data.email}
@@ -141,6 +154,16 @@ const Cards = ({ type, setKey, setOpen, searchResult }) => {
               }}
             >
               Delete
+            </Button>
+            <Button
+              size='small'
+              color='secondary'
+              onClick={() => {
+                setKey(data.contact.toString());
+                setPassOpen(true);
+              }}
+            >
+              Change Password
             </Button>
           </CardActions>
           <ToastContainer />

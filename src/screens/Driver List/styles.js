@@ -22,6 +22,7 @@ export const row = {
   alignItems: 'center',
   flexDirection: 'row',
   width: '100%',
+  flexWrap: 'wrap',
 };
 
 export const toggle = {
@@ -33,6 +34,7 @@ export const search = {
   position: 'relative',
   borderRadius: 5,
   marginLeft: 10,
+  width: 'clamp(15vw, 242px, 80vw)',
   display: 'flex',
   justifyContent: 'center',
   backgroundColor: 'rgba(245,61,61,0.2)',
