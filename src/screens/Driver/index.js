@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react';
 
 // custom hooks
-import useSubmit from "../../hooks/useSubmit";
+import useSubmit from '../../hooks/useSubmit';
 
 // packages
 import {
@@ -11,22 +11,22 @@ import {
   TextField,
   Typography,
   Container,
-} from "@material-ui/core";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Cropper from "react-easy-crop";
-import Slider from "@material-ui/core/Slider";
+} from '@material-ui/core';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Cropper from 'react-easy-crop';
+import Slider from '@material-ui/core/Slider';
 
 // components
-import Buttons from "../../components/Button";
-import Upload from "../../components/Upload";
-import Success from "../../components/Success";
-import Failure from "../../components/Failure";
+import Buttons from '../../components/Button';
+import Upload from '../../components/Upload';
+import Success from '../../components/Success';
+import Failure from '../../components/Failure';
 
 // assets
-import Profile from "../../assets/Profile.jpg";
+import Profile from '../../assets/Profile.jpg';
 
-import * as D from "./styles";
+import * as D from './styles';
 
 const Driver = () => {
   const {
@@ -48,7 +48,7 @@ const Driver = () => {
     success,
     handleClose,
     fail,
-    generateDownload
+    generateDownload,
   } = useSubmit();
 
   const [cropToggle, setCropToggle] = useState(false);
@@ -57,23 +57,23 @@ const Driver = () => {
   const [passwordError, setPasswordError] = useState('');
   const [verifyForm, setVerifyForm] = useState(false);
   const [croppedArea, setCroppedArea] = useState(null);
-	const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  
+
   const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
     setCroppedArea(croppedAreaPixels);
   };
-  
+
   const handleCrop = (e) => {
     setCropToggle(false);
     generateDownload(url, croppedArea);
-  }
+  };
 
   function renderAvatar() {
     if (url == null) {
-      return <Avatar style={D.avatar} alt="Dummy profile" src={Profile} />;
+      return <Avatar style={D.avatar} alt='Dummy profile' src={Profile} />;
     } else {
-      return <Avatar style={D.avatar} alt="Dummy profile" src={url} />;
+      return <Avatar style={D.avatar} alt='Dummy profile' src={url} />;
     }
   }
 
@@ -82,62 +82,65 @@ const Driver = () => {
     return re.test(String(email).toLowerCase());
   }
 
-  useEffect(()=>{
-    if(contactError.length > 0 || emailError.length > 0 || passwordError.length > 0){
-      setVerifyForm(true)
-    }
-    else setVerifyForm(false);
-  },[contactError, passwordError, emailError])
+  useEffect(() => {
+    if (
+      contactError.length > 0 ||
+      emailError.length > 0 ||
+      passwordError.length > 0
+    ) {
+      setVerifyForm(true);
+    } else setVerifyForm(false);
+  }, [contactError, passwordError, emailError]);
 
   return (
     <Container style={D.bg}>
-      <Typography variant="h5" style={D.text}>
+      <Typography variant='h5' style={D.text}>
         Lets get you registered for Lifeline Driver App!
       </Typography>
       {renderAvatar()}
-      <Box component="form" style={D.Form}>
+      <Box component='form' style={D.Form}>
         <TextField
           required
-          label="Name"
-          type="text"
-          autoComplete="username"
+          label='Name'
+          type='text'
+          autoComplete='username'
           value={name}
-          placeholder="Enter your name"
+          placeholder='Enter your name'
           onChange={(e) => setName(e.target.value)}
           style={D.input}
         />
         <TextField
           required
-          label="Email"
-          type="email"
-          autoComplete="email"
+          label='Email'
+          type='email'
+          autoComplete='email'
           value={email}
-          placeholder="Enter your email"
-          onChange={(e) => {setEmail(e.target.value)
-          if(validateEmail(email)|| e.target.value.length <= 0){
-            setEmailError('');
-          }
-          else{
-            setEmailError('Invalid email!');
-          }
+          placeholder='Enter your email'
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (validateEmail(email) || e.target.value.length <= 0) {
+              setEmailError('');
+            } else {
+              setEmailError('Invalid email!');
+            }
           }}
           style={D.input}
           helperText={emailError}
-          error={validateEmail(email)|| email.length <= 0?false: true}
+          error={validateEmail(email) || email.length <= 0 ? false : true}
         />
         <TextField
           required
-          label="Contact"
-          type="number"
-          autoComplete="tel"
+          label='Contact'
+          type='number'
+          autoComplete='tel'
           value={contact}
-          placeholder="Enter your mobile no."
-          onChange={(e) => {          
-            setContact(e.target.value)
-            if(e.target.value.length === 10){
-              setContactError('')
-            }else{
-              setContactError('Invalid contact!')
+          placeholder='Enter your mobile no.'
+          onChange={(e) => {
+            setContact(e.target.value);
+            if (e.target.value.length === 10) {
+              setContactError('');
+            } else {
+              setContactError('Invalid contact!');
             }
           }}
           style={D.input}
@@ -146,27 +149,26 @@ const Driver = () => {
         />
         <TextField
           required
-          label="Driver Id"
-          type="text"
-          autoComplete="name"
+          label='Driver Id'
+          type='text'
+          autoComplete='name'
           value={driver_id}
-          placeholder="Enter your driver id"
+          placeholder='Enter your driver id'
           onChange={(e) => setDriverId(e.target.value)}
           style={D.input}
         />
         <TextField
           required
-          label="Password"
-          type="password"
+          label='Password'
+          type='password'
           value={password}
-          placeholder="Enter your password"
-          autoComplete="current-password"
+          placeholder='Enter your password'
+          autoComplete='current-password'
           onChange={(e) => {
-            setPassword(e.target.value)
-            if(e.target.value.length < 8){
+            setPassword(e.target.value);
+            if (e.target.value.length < 8) {
               setPasswordError('password of min 8 characters required.');
-            }
-            else{
+            } else {
               setPasswordError('');
             }
           }}
@@ -175,73 +177,81 @@ const Driver = () => {
           error={password.length < 8 ? true : false}
         />
 
-        {
-          cropToggle && (
-            <div style={D.containerCropper}>
-				{url ? (
-					<>
-						<div style={D.cropper}>
-							<Cropper
-								image={url}
-								crop={crop}
-								zoom={zoom}
-								aspect={1}
-								onCropChange={setCrop}
-								onZoomChange={setZoom}
-								onCropComplete={onCropComplete}
-							/>
-						</div>
-
-						<div className='slider'>
-							<Slider
-								min={1}
-								max={3}
-								step={0.1}
-								value={zoom}
-                onChange={(e, zoom) => setZoom(zoom)}
-                style={
-                  {
-                    width: '60%',
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    margin: 'auto',
-                  }
-                }
-							/>
-						</div>
-
-            <Button
-            variant="outlined"
-            color="secondary"
-            onClick={(e) => handleCrop(e)}
-            style={D.cropButton}
+        {cropToggle && (
+          <div
+            style={{
+              ...D.containerCropper,
+              pointerEvents: url ? 'auto' : 'none',
+            }}
           >
-            Crop
-          </Button>
-					</>
-				) : null}
-			</div>
-          )
-        }
+            {url ? (
+              <>
+                <div style={D.cropper}>
+                  <Cropper
+                    image={url}
+                    crop={crop}
+                    zoom={zoom}
+                    aspect={1}
+                    onCropChange={setCrop}
+                    onZoomChange={setZoom}
+                    onCropComplete={onCropComplete}
+                  />
+                </div>
 
-        
+                <div className='slider'>
+                  <Slider
+                    min={1}
+                    max={3}
+                    step={0.1}
+                    value={zoom}
+                    onChange={(e, zoom) => setZoom(zoom)}
+                    style={{
+                      width: '60%',
+                      position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      margin: 'auto',
+                    }}
+                  />
+                </div>
 
-        <Upload setUpload={setUpload} handlePreview={handlePreview} setCropToggle={setCropToggle} />
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  onClick={(e) => handleCrop(e)}
+                  style={D.cropButton}
+                >
+                  Crop
+                </Button>
+              </>
+            ) : null}
+          </div>
+        )}
+
+        <Upload
+          setUpload={setUpload}
+          handlePreview={handlePreview}
+          setCropToggle={setCropToggle}
+        />
 
         {/* submit button */}
-        <Buttons title="Submit" loading={loading} onSubmit={postData} disabled={verifyForm}/>
+        <Buttons
+          title='Submit'
+          loading={loading}
+          onSubmit={postData}
+          disabled={verifyForm}
+        />
         <Success
-          title={"Ambulance Driver"}
+          title={'Ambulance Driver'}
           open={success}
           handleClose={handleClose}
         />
         <Failure
           open={fail}
           handleClose={handleClose}
-          title={"Failed Registration!"}
+          title={'Failed Registration!'}
           message={
-            "Error processing data. Please fill all (*) required data and try again."
+            'Error processing data. Please fill all (*) required data and try again.'
           }
         />
       </Box>

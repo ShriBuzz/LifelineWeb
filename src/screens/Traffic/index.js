@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from 'react';
 
 // custom hook
-import useSubmit from "../../hooks/useSubmit";
+import useSubmit from '../../hooks/useSubmit';
 
 // packages
 import {
@@ -11,22 +11,22 @@ import {
   TextField,
   Typography,
   Container,
-} from "@material-ui/core";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Cropper from "react-easy-crop";
-import Slider from "@material-ui/core/Slider";
+} from '@material-ui/core';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Cropper from 'react-easy-crop';
+import Slider from '@material-ui/core/Slider';
 
 // assets
-import Profile from "../../assets/Profile.jpg";
+import Profile from '../../assets/Profile.jpg';
 
 // components
-import Upload from "../../components/Upload";
-import Buttons from "../../components/Button";
-import Success from "../../components/Success";
-import Failure from "../../components/Failure";
+import Upload from '../../components/Upload';
+import Buttons from '../../components/Button';
+import Success from '../../components/Success';
+import Failure from '../../components/Failure';
 
-import * as T from "./styles";
+import * as T from './styles';
 
 const Traffic = () => {
   const {
@@ -46,7 +46,7 @@ const Traffic = () => {
     success,
     handleClose,
     fail,
-    generateDownload
+    generateDownload,
   } = useSubmit();
 
   const [cropToggle, setCropToggle] = useState(false);
@@ -55,23 +55,23 @@ const Traffic = () => {
   const [passwordError, setPasswordError] = useState('');
   const [verifyForm, setVerifyForm] = useState(false);
   const [croppedArea, setCroppedArea] = useState(null);
-	const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
 
   const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
     setCroppedArea(croppedAreaPixels);
   };
-  
+
   const handleCrop = (e) => {
     setCropToggle(false);
     generateDownload(url, croppedArea);
-  }
+  };
 
   function renderAvatar() {
     if (url == null) {
-      return <Avatar style={T.avatar} alt="Dummy profile" src={Profile} />;
+      return <Avatar style={T.avatar} alt='Dummy profile' src={Profile} />;
     } else {
-      return <Avatar style={T.avatar} alt="Dummy profile" src={url} />;
+      return <Avatar style={T.avatar} alt='Dummy profile' src={url} />;
     }
   }
 
@@ -80,61 +80,63 @@ const Traffic = () => {
     return re.test(String(email).toLowerCase());
   }
 
-  useEffect(()=>{
-    if(contactError.length > 0 || emailError.length > 0 || passwordError.length > 0){
-      setVerifyForm(true)
-    }
-    else setVerifyForm(false);
-  },[contactError, passwordError, emailError])
+  useEffect(() => {
+    if (
+      contactError.length > 0 ||
+      emailError.length > 0 ||
+      passwordError.length > 0
+    ) {
+      setVerifyForm(true);
+    } else setVerifyForm(false);
+  }, [contactError, passwordError, emailError]);
 
   return (
     <Container style={T.bg}>
-      <Typography variant="h5" style={T.text}>
+      <Typography variant='h5' style={T.text}>
         Lets get you registered for Lifeline Traffic App!
       </Typography>
       {renderAvatar()}
-      <Box component="form" style={T.Form}>
+      <Box component='form' style={T.Form}>
         <TextField
           required
-          label="Name"
-          type="text"
+          label='Name'
+          type='text'
           value={name}
-          placeholder="Enter your name"
+          placeholder='Enter your name'
           onChange={(e) => setName(e.target.value)}
           style={T.input}
         />
         <TextField
           required
-          label="Email"
-          type="email"
+          label='Email'
+          type='email'
           value={email}
-          placeholder="Enter your email"
+          placeholder='Enter your email'
           style={T.input}
-          onChange={(e) => {setEmail(e.target.value)
-            if(validateEmail(email)|| e.target.value.length <= 0){
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (validateEmail(email) || e.target.value.length <= 0) {
               setEmailError('');
-            }
-            else{
+            } else {
               setEmailError('Invalid email!');
             }
-            }}
-            helperText={emailError}
-            error={validateEmail(email)|| email.length <= 0?false: true}
+          }}
+          helperText={emailError}
+          error={validateEmail(email) || email.length <= 0 ? false : true}
         />
         <TextField
           required
-          label="Contact"
-          type="number"
+          label='Contact'
+          type='number'
           value={contact}
-          placeholder="Enter your mobile no."
+          placeholder='Enter your mobile no.'
           style={T.input}
-          
-          onChange={(e) => {          
-            setContact(e.target.value)
-            if(e.target.value.length === 10){
-              setContactError('')
-            }else{
-              setContactError('Invalid contact!')
+          onChange={(e) => {
+            setContact(e.target.value);
+            if (e.target.value.length === 10) {
+              setContactError('');
+            } else {
+              setContactError('Invalid contact!');
             }
           }}
           helperText={contactError}
@@ -142,18 +144,17 @@ const Traffic = () => {
         />
         <TextField
           required
-          label="Password"
-          type="password"
+          label='Password'
+          type='password'
           value={password}
-          placeholder="Enter your password"
-          autoComplete="current-password"
+          placeholder='Enter your password'
+          autoComplete='current-password'
           style={T.input}
           onChange={(e) => {
-            setPassword(e.target.value)
-            if(e.target.value.length < 8){
+            setPassword(e.target.value);
+            if (e.target.value.length < 8) {
               setPasswordError('password of min 8 characters required.');
-            }
-            else{
+            } else {
               setPasswordError('');
             }
           }}
@@ -161,62 +162,71 @@ const Traffic = () => {
           error={password.length < 8 ? true : false}
         />
 
-{
-          cropToggle && (
-            <div style={T.containerCropper}>
-				{url ? (
-					<>
-						<div style={T.cropper}>
-							<Cropper
-								image={url}
-								crop={crop}
-								zoom={zoom}
-								aspect={1}
-								onCropChange={setCrop}
-								onZoomChange={setZoom}
-								onCropComplete={onCropComplete}
-							/>
-						</div>
-
-						<div className='slider'>
-							<Slider
-								min={1}
-								max={3}
-								step={0.1}
-								value={zoom}
-                onChange={(e, zoom) => setZoom(zoom)}
-                style={
-                  {
-                    width: '60%',
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    margin: 'auto',
-                  }
-                }
-							/>
-						</div>
-
-            <Button
-            variant="outlined"
-            color="secondary"
-            onClick={(e) => handleCrop(e)}
-            style={T.cropButton}
+        {cropToggle && (
+          <div
+            style={{
+              ...T.containerCropper,
+              pointerEvents: url ? 'auto' : 'none',
+            }}
           >
-            Crop
-          </Button>
-					</>
-				) : null}
-			</div>
-          )
-        }
+            {url ? (
+              <>
+                <div style={T.cropper}>
+                  <Cropper
+                    image={url}
+                    crop={crop}
+                    zoom={zoom}
+                    aspect={1}
+                    onCropChange={setCrop}
+                    onZoomChange={setZoom}
+                    onCropComplete={onCropComplete}
+                  />
+                </div>
 
+                <div className='slider'>
+                  <Slider
+                    min={1}
+                    max={3}
+                    step={0.1}
+                    value={zoom}
+                    onChange={(e, zoom) => setZoom(zoom)}
+                    style={{
+                      width: '60%',
+                      position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      margin: 'auto',
+                    }}
+                  />
+                </div>
 
-        <Upload setUpload={setUpload} handlePreview={handlePreview} setCropToggle={setCropToggle} />
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  onClick={(e) => handleCrop(e)}
+                  style={T.cropButton}
+                >
+                  Crop
+                </Button>
+              </>
+            ) : null}
+          </div>
+        )}
 
-        <Buttons title="Submit" loading={loading} onSubmit={postTrafficData} disabled={verifyForm} />
+        <Upload
+          setUpload={setUpload}
+          handlePreview={handlePreview}
+          setCropToggle={setCropToggle}
+        />
+
+        <Buttons
+          title='Submit'
+          loading={loading}
+          onSubmit={postTrafficData}
+          disabled={verifyForm}
+        />
         <Success
-          title={"Traffic Officer"}
+          title={'Traffic Officer'}
           Contact={contact}
           Password={password}
           open={success}
@@ -225,9 +235,9 @@ const Traffic = () => {
         <Failure
           open={fail}
           handleClose={handleClose}
-          title={"Failed Registration!"}
+          title={'Failed Registration!'}
           message={
-            "Error processing data. Please fill all (*) required data and try again."
+            'Error processing data. Please fill all (*) required data and try again.'
           }
         />
       </Box>

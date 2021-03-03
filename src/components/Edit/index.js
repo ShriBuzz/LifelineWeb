@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 // hooks
 import useUpdate from '../../hooks/useUpdate';
@@ -16,8 +16,8 @@ import {
   Button,
 } from '@material-ui/core';
 
-import Cropper from "react-easy-crop";
-import Slider from "@material-ui/core/Slider";
+import Cropper from 'react-easy-crop';
+import Slider from '@material-ui/core/Slider';
 
 import Upload from '../Upload';
 
@@ -43,32 +43,31 @@ const Edit = React.memo(
       loading,
       setUpload,
       handlePreview,
-      generateDownload
+      generateDownload,
     } = useUpdate(o_contact, type);
 
-  const [cropToggle, setCropToggle] = useState(false);
-  const [contactError, setContactError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [verifyForm, setVerifyForm] = useState(false);
-  const [croppedArea, setCroppedArea] = useState(null);
-	const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
+    const [cropToggle, setCropToggle] = useState(false);
+    const [contactError, setContactError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [verifyForm, setVerifyForm] = useState(false);
+    const [croppedArea, setCroppedArea] = useState(null);
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
 
-  const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
-    setCroppedArea(croppedAreaPixels);
-  };
-  
-  const handleCrop = (e) => {
-    setCropToggle(false);
-    generateDownload(url, croppedArea);
-  }
+    const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
+      setCroppedArea(croppedAreaPixels);
+    };
 
-  useEffect(()=>{
-    if(contactError.length > 0 || emailError.length > 0){
-      setVerifyForm(true)
-    }
-    else setVerifyForm(false);
-  },[contactError, emailError])
+    const handleCrop = (e) => {
+      setCropToggle(false);
+      generateDownload(url, croppedArea);
+    };
+
+    useEffect(() => {
+      if (contactError.length > 0 || emailError.length > 0) {
+        setVerifyForm(true);
+      } else setVerifyForm(false);
+    }, [contactError, emailError]);
 
     function chooseUpdate(e) {
       if (type === 'driver') {
@@ -112,55 +111,56 @@ const Edit = React.memo(
       >
         <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
 
-        {
-          cropToggle && (
-            <div style={E.containerCropper}>
-				{url ? (
-					<>
-						<div style={E.cropper}>
-							<Cropper
-								image={url}
-								crop={crop}
-								zoom={zoom}
-								aspect={1}
-								onCropChange={setCrop}
-								onZoomChange={setZoom}
-								onCropComplete={onCropComplete}
-							/>
-						</div>
-
-						<div className='slider'>
-							<Slider
-								min={1}
-								max={3}
-								step={0.1}
-								value={zoom}
-                onChange={(e, zoom) => setZoom(zoom)}
-                style={
-                  {
-                    width: '60%',
-                    position: 'absolute',
-                    left: 0,
-                    right: 0,
-                    margin: 'auto',
-                  }
-                }
-							/>
-						</div>
-
-            <Button
-            variant="outlined"
-            color="secondary"
-            onClick={(e) => handleCrop(e)}
-            style={E.cropButton}
+        {cropToggle && (
+          <div
+            style={{
+              ...E.containerCropper,
+              pointerEvents: url ? 'auto' : 'none',
+            }}
           >
-            Crop
-          </Button>
-					</>
-				  ) : null}
-			  </div>
-          )
-        }     
+            {url ? (
+              <>
+                <div style={E.cropper}>
+                  <Cropper
+                    image={url}
+                    crop={crop}
+                    zoom={zoom}
+                    aspect={1}
+                    onCropChange={setCrop}
+                    onZoomChange={setZoom}
+                    onCropComplete={onCropComplete}
+                  />
+                </div>
+
+                <div className='slider'>
+                  <Slider
+                    min={1}
+                    max={3}
+                    step={0.1}
+                    value={zoom}
+                    onChange={(e, zoom) => setZoom(zoom)}
+                    style={{
+                      width: '60%',
+                      position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      margin: 'auto',
+                    }}
+                  />
+                </div>
+
+                <Button
+                  variant='contained'
+                  color='secondary'
+                  onClick={(e) => handleCrop(e)}
+                  style={E.cropButton}
+                >
+                  Crop
+                </Button>
+              </>
+            ) : null}
+          </div>
+        )}
 
         <DialogContent>
           {loading || !user ? (
@@ -170,7 +170,11 @@ const Edit = React.memo(
               {/* <Avatar style={{ width: 90, height: 90 }} src={urls} /> */}
               <Box component='div' style={E.Upload}>
                 {renderAvatar()}
-                <Upload setUpload={setUpload} handlePreview={handlePreview} setCropToggle={setCropToggle}/>
+                <Upload
+                  setUpload={setUpload}
+                  handlePreview={handlePreview}
+                  setCropToggle={setCropToggle}
+                />
               </Box>
 
               <Box style={E.Form}>
@@ -186,12 +190,12 @@ const Edit = React.memo(
                   type='text'
                   value={contact}
                   style={E.Input}
-                  onChange={(e) => {          
-                    setContact(e.target.value)
-                    if(e.target.value.length === 10){
-                      setContactError('')
-                    }else{
-                      setContactError('Invalid contact!')
+                  onChange={(e) => {
+                    setContact(e.target.value);
+                    if (e.target.value.length === 10) {
+                      setContactError('');
+                    } else {
+                      setContactError('Invalid contact!');
                     }
                   }}
                   helperText={contactError}
@@ -202,16 +206,18 @@ const Edit = React.memo(
                   type='text'
                   value={email}
                   style={E.Input}
-                  onChange={(e) => {setEmail(e.target.value)
-                    if(validateEmail(email) || e.target.value.length <= 0){
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (validateEmail(email) || e.target.value.length <= 0) {
                       setEmailError('');
-                    }
-                    else{
+                    } else {
                       setEmailError('Invalid email!');
                     }
-                    }}
-                    helperText={emailError}
-                    error={validateEmail(email) || email.length <= 0 ? false : true}
+                  }}
+                  helperText={emailError}
+                  error={
+                    validateEmail(email) || email.length <= 0 ? false : true
+                  }
                 />
                 {type === 'driver' ? (
                   <TextField
@@ -227,7 +233,11 @@ const Edit = React.memo(
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={(e) => chooseUpdate(e)} color='secondary' disabled={verifyForm}>
+          <Button
+            onClick={(e) => chooseUpdate(e)}
+            color='secondary'
+            disabled={verifyForm}
+          >
             Save
           </Button>
           <Button onClick={handleClose} color='secondary'>
