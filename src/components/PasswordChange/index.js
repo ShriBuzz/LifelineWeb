@@ -21,28 +21,33 @@ const PasswordChange = ({ title, open, handleClose, o_contact, type }) => {
   const [passwordError, setPasswordError] = useState('');
 
   const handlePassChange = (contact) => {
-    if (type === 'driver') {
-      axios
-        .put(`/driver_password/` + contact, {
-          password,
-        })
-        .then((res) => {
-          toast.success('succesfully updated!');
-          setPassword('');
-          handleClose();
-        })
-        .catch((e) => console.log(e));
+    if (password.length < 8) {
+      toast.error('Invalid entry.');
+      return;
     } else {
-      axios
-        .put(`/traffic_password/` + contact, {
-          password,
-        })
-        .then((res) => {
-          toast.success('succesfully updated!');
-          setPassword('');
-          handleClose();
-        })
-        .catch((e) => console.log(e));
+      if (type === 'driver') {
+        axios
+          .put(`/driver_password/` + contact, {
+            password,
+          })
+          .then((res) => {
+            toast.success('succesfully updated!');
+            setPassword('');
+            handleClose();
+          })
+          .catch((e) => console.log(e));
+      } else {
+        axios
+          .put(`/traffic_password/` + contact, {
+            password,
+          })
+          .then((res) => {
+            toast.success('succesfully updated!');
+            setPassword('');
+            handleClose();
+          })
+          .catch((e) => console.log(e));
+      }
     }
   };
 
