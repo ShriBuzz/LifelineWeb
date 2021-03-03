@@ -13,7 +13,7 @@ export const bg = {
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   backgroundColor: 'white',
-  backgroundAttachment: 'fixed'
+  backgroundAttachment: 'fixed',
 };
 
 export const avatar = {
@@ -67,11 +67,11 @@ export const containerCropper = {
   left: 0,
   top: 0,
   zIndex: 2,
-}
+};
 
 export const cropper = {
   height: '90%',
-}
+};
 
 export const cropButton = {
   zIndex: 2,
@@ -80,4 +80,4 @@ export const cropButton = {
   left: 0,
   right: 0,
   bottom: '10%',
-}
+};
