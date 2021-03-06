@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 // hooks
 import useUpdate from '../../hooks/useUpdate';
+import { LoginContext } from '../../hooks/LoginContext';
 
 // package
 import {
@@ -53,6 +54,8 @@ const Edit = React.memo(
     const [croppedArea, setCroppedArea] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
+    const { Dusers, Tusers } = useContext(LoginContext);
+    const [imgSrc, setSrc] = useState('');
 
     const onCropComplete = (croppedAreaPercentage, croppedAreaPixels) => {
       setCroppedArea(croppedAreaPixels);
@@ -69,6 +72,21 @@ const Edit = React.memo(
       } else setVerifyForm(false);
     }, [contactError, emailError]);
 
+    useEffect(() => {
+      if (type === 'driver') {
+        let user = Dusers.filter(function (e) {
+          return e.contact === o_contact;
+        });
+        console.log(user);
+        setSrc(`data:image/jpeg;base64,${user[0].pic}`);
+      } else {
+        let user = Tusers.filter(function (e) {
+          return e.contact === o_contact;
+        });
+        setSrc(`data:image/jpeg;base64,${user[0].pic}`);
+      }
+    }, [type, o_contact, Dusers, Tusers]);
+
     function chooseUpdate(e) {
       if (type === 'driver') {
         handleDriverUpdate(e);
@@ -80,18 +98,18 @@ const Edit = React.memo(
     }
 
     function renderAvatar() {
-      if (url == null) {
+      if (imgSrc || url !== null) {
         return (
           <Avatar
             style={{ width: 90, height: 90, marginBottom: 18 }}
-            src={urls}
+            src={url ? url : imgSrc}
           />
         );
       } else {
         return (
           <Avatar
             style={{ width: 90, height: 90, marginBottom: 18 }}
-            src={url}
+            src={urls}
           />
         );
       }

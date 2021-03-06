@@ -48,6 +48,7 @@ const Cards = ({ type, setKey, setOpen, setPassOpen, searchResult }) => {
       .delete(`${process.env.REACT_APP_BASE_URL}${url}`)
       .then((res) => {
         toast.success('Succesfully deleted.');
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
