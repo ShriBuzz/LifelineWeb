@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 
 // package
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 
 // hook
 import { LoginContext } from '../hooks/LoginContext';
@@ -32,17 +32,17 @@ function Routes() {
     [success, setSuccess, Dusers, setDusers, Tusers, setTusers]
   );
   return (
-    <Router history={history} basename='/'>
+    <Router history={history}>
       <Switch>
         <LoginContext.Provider value={providerValue}>
           <Route path='/' exact component={Login} />
-          <PrivateRoute exact path='/Home'>
+          <PrivateRoute path='/Home'>
             <Home />
           </PrivateRoute>
-          <PrivateRoute exact path='/Dlist'>
+          <PrivateRoute path='/Dlist'>
             <DriverList />
           </PrivateRoute>
-          <PrivateRoute exact path='/Tlist'>
+          <PrivateRoute path='/Tlist'>
             <TrafficList />
           </PrivateRoute>
         </LoginContext.Provider>
