@@ -1,20 +1,20 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo } from 'react';
 
 // package
-import { Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from 'react-router-dom';
 
 // hook
-import { LoginContext } from "../hooks/LoginContext";
+import { LoginContext } from '../hooks/LoginContext';
 
 // routes
-import history from "./history";
+import history from './history';
 import PrivateRoute from './PrivateRoute';
 
 // screens
-import Login from "../screens/Login";
-import Home from "../screens/Home";
-import DriverList from "../screens/Driver List";
-import TrafficList from "../screens/Traffic List";
+import Login from '../screens/Login';
+import Home from '../screens/Home';
+import DriverList from '../screens/Driver List';
+import TrafficList from '../screens/Traffic List';
 
 function Routes() {
   const [success, setSuccess] = useState(true);
@@ -35,15 +35,15 @@ function Routes() {
     <Router history={history}>
       <Switch>
         <LoginContext.Provider value={providerValue}>
-          <Route path="/" exact component={Login} />
-          <PrivateRoute path="/Home" >
-            <Home/>
+          <Route path='/' exact component={Login} />
+          <PrivateRoute exact path='/Home'>
+            <Home />
           </PrivateRoute>
-          <PrivateRoute path="/Dlist" >
-            <DriverList/>
+          <PrivateRoute exact path='/Dlist'>
+            <DriverList />
           </PrivateRoute>
-          <PrivateRoute path="/Tlist" >
-            <TrafficList/>
+          <PrivateRoute exact path='/Tlist'>
+            <TrafficList />
           </PrivateRoute>
         </LoginContext.Provider>
       </Switch>
