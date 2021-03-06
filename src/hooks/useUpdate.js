@@ -157,7 +157,7 @@ const useUpdate = (o_contact, type) => {
       .then((response) => {
         handleDriverUpload();
         toast.success('succesfully updated!');
-        // window.location.reload(false);
+        window.location.reload();
       })
       .catch((error) => {
         toast.error('failed to update!');
@@ -176,7 +176,7 @@ const useUpdate = (o_contact, type) => {
         .then((response) => {
           // console.log(response.statusText, "Sent image!!!!!");
           toast.success('Successfully uploaded image.');
-          // window.location.reload();
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
