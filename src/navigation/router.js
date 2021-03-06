@@ -32,7 +32,7 @@ function Routes() {
     [success, setSuccess, Dusers, setDusers, Tusers, setTusers]
   );
   return (
-    <Router history={history} base>
+    <Router history={history} basename='/'>
       <Switch>
         <LoginContext.Provider value={providerValue}>
           <Route path='/' exact component={Login} />
