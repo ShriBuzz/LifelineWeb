@@ -201,7 +201,7 @@ const useUpdate = (o_contact, type) => {
       .then((response) => {
         handleTrafficUpload();
         toast.success('succesfully updated!');
-        // window.location.reload(false);
+        window.location.reload();
       })
       .catch((error) => {
         toast.error('failed to update!');
@@ -219,7 +219,7 @@ const useUpdate = (o_contact, type) => {
         .post(`${process.env.REACT_APP_BASE_URL}${traffic_pic}`, file, {})
         .then((response) => {
           toast.success('Successfully uploaded image.');
-          // window.location.reload();
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
