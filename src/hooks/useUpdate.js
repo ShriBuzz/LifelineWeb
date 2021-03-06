@@ -18,8 +18,8 @@ const useUpdate = (o_contact, type) => {
   const [loading, setLoading] = useState(true);
   const [upload, setUpload] = useState(null);
   const [url, setUrl] = useState(null);
-  const driver_pic = '/driver_pic/' + o_contact;
-  const traffic_pic = '/traffic_pic/' + o_contact;
+  const driver_pic = 'driver_pic/' + o_contact;
+  const traffic_pic = 'traffic_pic/' + o_contact;
 
   useEffect(() => {
     if (type === 'driver') {
@@ -144,7 +144,7 @@ const useUpdate = (o_contact, type) => {
 
     await axios
       .put(
-        `/driver/` + o_contact,
+        `${process.env.REACT_APP_BASE_URL}driver/` + o_contact,
         {
           // data to be sent
           name,
@@ -172,7 +172,7 @@ const useUpdate = (o_contact, type) => {
       let file = new FormData();
       file.append('file', upload, upload.name);
       await axios
-        .post(driver_pic, file, {})
+        .post(`${process.env.REACT_APP_BASE_URL}${driver_pic}`, file, {})
         .then((response) => {
           // console.log(response.statusText, "Sent image!!!!!");
           toast.success('Successfully uploaded image.');
@@ -189,7 +189,7 @@ const useUpdate = (o_contact, type) => {
 
     await axios
       .put(
-        `/traffic/` + o_contact,
+        `${process.env.REACT_APP_BASE_URL}traffic/` + o_contact,
         {
           // data to be sent
           name,
@@ -216,7 +216,7 @@ const useUpdate = (o_contact, type) => {
       let file = new FormData();
       file.append('file', upload, upload.name);
       await axios
-        .post(traffic_pic, file, {})
+        .post(`${process.env.REACT_APP_BASE_URL}${traffic_pic}`, file, {})
         .then((response) => {
           toast.success('Successfully uploaded image.');
           window.location.reload();

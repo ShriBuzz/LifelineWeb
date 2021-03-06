@@ -15,8 +15,8 @@ const useSubmit = () => {
   const [success, setSuccess] = useState(false);
   const [fail, setFail] = useState(false);
   const [url, setUrl] = useState(null);
-  const driver_pic = '/driver_pic/' + contact;
-  const traffic_pic = '/traffic_pic/' + contact;
+  const driver_pic = 'driver_pic/' + contact;
+  const traffic_pic = 'traffic_pic/' + contact;
 
   const createImage = (url) =>
     new Promise((resolve, reject) => {
@@ -108,7 +108,7 @@ const useSubmit = () => {
       let file = new FormData();
       file.append('file', upload, upload.name);
       await axios
-        .post(driver_pic, file, {})
+        .post(`${process.env.REACT_APP_BASE_URL}${driver_pic}`, file, {})
         .then((response) => {
           console.log(response.statusText, 'Sent image!!!!!');
           toast.success('Successfully uploaded image.');
@@ -153,7 +153,7 @@ const useSubmit = () => {
     if (upload) {
       await axios
         .post(
-          `/driver_signup`,
+          `${process.env.REACT_APP_BASE_URL}driver_signup`,
           {
             // data to be sent
             name,
@@ -194,7 +194,7 @@ const useSubmit = () => {
     //API call here
     if (upload) {
       await axios
-        .post(`/traffic_signup`, {
+        .post(`${process.env.REACT_APP_BASE_URL}traffic_signup`, {
           // data to be sent
           name,
           email,
@@ -225,7 +225,7 @@ const useSubmit = () => {
       let file = new FormData();
       file.append('file', upload, upload.name);
       await axios
-        .post(traffic_pic, file, {})
+        .post(`${process.env.REACT_APP_BASE_URL}${traffic_pic}`, file, {})
         .then((response) => {
           toast.success('Successfully uploaded image.');
           resetForm();

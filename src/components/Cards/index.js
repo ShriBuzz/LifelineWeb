@@ -45,7 +45,7 @@ const Cards = ({ type, setKey, setOpen, setPassOpen, searchResult }) => {
 
   const handleDelete = (url) => {
     axios
-      .delete(url)
+      .delete(`${process.env.REACT_APP_BASE_URL}${url}`)
       .then((res) => {
         toast.success('Succesfully deleted.');
       })
@@ -145,9 +145,9 @@ const Cards = ({ type, setKey, setOpen, setPassOpen, searchResult }) => {
               color='secondary'
               onClick={() => {
                 if (type === 'driver') {
-                  url = '/driver/' + data.contact;
+                  url = 'driver/' + data.contact;
                 } else {
-                  url = '/traffic/' + data.contact;
+                  url = 'traffic/' + data.contact;
                 }
                 newData(data.contact);
                 handleDelete(url);

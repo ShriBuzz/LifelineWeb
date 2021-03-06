@@ -27,7 +27,7 @@ const PasswordChange = ({ title, open, handleClose, o_contact, type }) => {
     } else {
       if (type === 'driver') {
         axios
-          .put(`/driver_password/` + contact, {
+          .put(`${process.env.REACT_APP_BASE_URL}driver_password/` + contact, {
             password,
           })
           .then((res) => {
@@ -38,7 +38,7 @@ const PasswordChange = ({ title, open, handleClose, o_contact, type }) => {
           .catch((e) => console.log(e));
       } else {
         axios
-          .put(`/traffic_password/` + contact, {
+          .put(`${process.env.REACT_APP_BASE_URL}traffic_password/` + contact, {
             password,
           })
           .then((res) => {

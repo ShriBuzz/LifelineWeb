@@ -48,12 +48,16 @@ const TrafficList = () => {
     if (searchValue.length > 2) {
       if (parseInt(searchValue)) {
         // contact query
-        axios.get(`/traffic?&contact=${searchValue}`).then((res) => {
-          setSearchResult(res.data);
-        });
+        axios
+          .get(
+            `${process.env.REACT_APP_BASE_URL}traffic?&contact=${searchValue}`
+          )
+          .then((res) => {
+            setSearchResult(res.data);
+          });
       } else {
         axios
-          .get(`/traffic?&name=${searchValue}`)
+          .get(`${process.env.REACT_APP_BASE_URL}traffic?&name=${searchValue}`)
           .then((res) => setSearchResult(res.data));
         // username query
       }
