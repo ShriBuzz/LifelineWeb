@@ -55,24 +55,26 @@ const Cards = ({ type, setKey, setOpen, setPassOpen, searchResult }) => {
       });
   };
 
-  const renderAvatar = (key) => {
+  const renderAvatar = (key, pic) => {
     if (key === null) {
       return <Avatar style={{ width: 90, height: 90 }} src={Dummy} />;
     } else {
       if (type === 'driver') {
-        const url =
-          process.env.REACT_APP_BASE_URL +
-          'driver_pic/' +
-          key +
-          `?&timestamp=${new Date().getTime()}`;
-        return <Avatar style={{ width: 90, height: 90 }} src={url} />;
+        // const url = process.env.REACT_APP_BASE_URL + 'driver_pic/' + key;
+        return (
+          <Avatar
+            style={{ width: 90, height: 90 }}
+            src={`data:image/jpeg;base64,${pic}`}
+          />
+        );
       } else {
-        const url =
-          process.env.REACT_APP_BASE_URL +
-          'traffic_pic/' +
-          key +
-          `?&timestamp=${new Date().getTime()}`;
-        return <Avatar style={{ width: 90, height: 90 }} src={url} />;
+        // const url = `data:image/jpeg;base64,${pic}`
+        return (
+          <Avatar
+            style={{ width: 90, height: 90 }}
+            src={`data:image/jpeg;base64,${pic}`}
+          />
+        );
       }
     }
   };
@@ -110,7 +112,7 @@ const Cards = ({ type, setKey, setOpen, setPassOpen, searchResult }) => {
       <>
         <Card style={C.Container} key={data.contact}>
           <CardActionArea style={C.CardContainer}>
-            {renderAvatar(data.contact)}
+            {renderAvatar(data.contact, data.pic)}
             <CardContent>
               <Typography gutterBottom variant='h5' component='h2'>
                 {data.name}
