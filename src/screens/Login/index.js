@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // packages
 import {
@@ -21,15 +21,11 @@ import Failure from '../../components/Failure';
 // style
 import * as L from './styles';
 
-// hook
-import { LoginContext } from '../../hooks/LoginContext';
-
 function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [fail, setFail] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { success, setSuccess } = useContext(LoginContext);
   // console.log(success);
   let auth = localStorage.getItem('auth');
 
@@ -40,7 +36,6 @@ function Login() {
   const handleSubmit = async () => {
     if (name === 'admin' && password === 'admin@123') {
       localStorage.setItem('auth', true);
-      setSuccess(true);
       history.push('/Home');
     } else {
       setFail(true);
@@ -49,15 +44,13 @@ function Login() {
   };
 
   useEffect(() => {
-    if(auth==='true'){
+    if (auth === 'true') {
       setLoading(true);
-      setSuccess(true);
       setTimeout(() => {
         history.push('/Home');
-      }, 2000)
-      
+      }, 2000);
     }
-  },[auth, setSuccess])
+  }, [auth]);
 
   return (
     <Backdrop
@@ -72,9 +65,7 @@ function Login() {
         onSubmit={() => handleSubmit()}
       >
         <Typography style={L.Header}>Lifeline Admin Login</Typography>
-        {
-          loading && ( <Typography>Logging in ...</Typography>)
-        }
+        {loading && <Typography>Logging in ...</Typography>}
         <Grid container spacing={1} style={L.Form}>
           <Grid item>
             <AccountCircle style={L.Icon} />
@@ -107,7 +98,11 @@ function Login() {
             />
           </Grid>
         </Grid>
-        <Buttons title={'Submit'} loading={loading} onSubmit={() => handleSubmit()} />
+        <Buttons
+          title={'Submit'}
+          loading={loading}
+          onSubmit={() => handleSubmit()}
+        />
         <Failure
           open={fail}
           handleClose={handleClose}
