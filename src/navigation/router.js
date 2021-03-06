@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 
 // package
-import { Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // hook
 import { LoginContext } from '../hooks/LoginContext';
@@ -32,7 +32,7 @@ function Routes() {
     [success, setSuccess, Dusers, setDusers, Tusers, setTusers]
   );
   return (
-    <Router history={history}>
+    <Router history={history} base>
       <Switch>
         <LoginContext.Provider value={providerValue}>
           <Route path='/' exact component={Login} />
