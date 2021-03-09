@@ -143,7 +143,17 @@ const useSubmit = () => {
   const postData = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (!upload) {
+    if (!name) {
+      toast.warn('Please enter name.');
+    } else if (!contact) {
+      toast.warn('Please enter contact.');
+    } else if (!email) {
+      toast.warn('Please enter email.');
+    } else if (!password) {
+      toast.warn('Please enter password.');
+    } else if (!driver_id) {
+      toast.warn('Please enter driver id.');
+    } else if (!upload) {
       toast.error('Please upload an image!');
       setLoading(false);
       return;
@@ -184,8 +194,15 @@ const useSubmit = () => {
   const postTrafficData = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    if (!upload) {
+    if (!name) {
+      toast.warn('Please enter name.');
+    } else if (!contact) {
+      toast.warn('Please enter contact.');
+    } else if (!email) {
+      toast.warn('Please enter email.');
+    } else if (!password) {
+      toast.warn('Please enter password.');
+    } else if (!upload) {
       toast.error('Please upload an image!');
       setLoading(false);
       return;
